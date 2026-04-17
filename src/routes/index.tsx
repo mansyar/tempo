@@ -1,14 +1,29 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useIdentity } from '../hooks/useIdentity'
+import { useMutation } from 'convex/react'
+import { api } from '../../convex/_generated/api'
 
 export const Route = createFileRoute('/')({ component: App })
 
-export function App() {
-  const { nickname, setNickname } = useIdentity()
+function generateSlug() {
+  return Math.random().toString(36).substring(2, 10)
+}
 
-  const handleCreateRoom = () => {
-    // This will be implemented in a later task with Convex
-    console.log('Create Room with nickname:', nickname)
+export function App() {
+  const { nickname, setNickname, identityId } = useIdentity()
+  const navigate = useNavigate()
+  const createRoom = useMutation(api.rooms.create)
+
+  const handleCreateRoom = async () => {
+    if (!nickname.trim()) return
+
+    const slug = generateSlug()
+    try {
+      await createRoom({ slug, facilitatorId: identityId })
+      navigate({ to: '/room/$slug', params: { slug } })
+    } catch (error) {
+      console.error('Failed to create room:', error)
+    }
   }
 
   return (

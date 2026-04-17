@@ -1,8 +1,10 @@
-import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
+import { HeadContent, Scripts, createRootRoute, Outlet } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
 import Footer from '../components/Footer'
 import Header from '../components/Header'
+import { ConvexProvider, ConvexReactClient } from "convex/react";
+import { useState } from 'react';
 
 import appCss from '../styles.css?url'
 
@@ -19,7 +21,7 @@ export const Route = createRootRoute({
         content: 'width=device-width, initial-scale=1',
       },
       {
-        title: 'TanStack Start Starter',
+        title: 'Pointy - Planning Poker',
       },
     ],
     links: [
@@ -29,8 +31,20 @@ export const Route = createRootRoute({
       },
     ],
   }),
-  shellComponent: RootDocument,
+  component: RootComponent,
 })
+
+function RootComponent() {
+  const [convex] = useState(() => new ConvexReactClient(import.meta.env.VITE_CONVEX_URL));
+
+  return (
+    <ConvexProvider client={convex}>
+      <RootDocument>
+        <Outlet />
+      </RootDocument>
+    </ConvexProvider>
+  )
+}
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
