@@ -13,7 +13,7 @@
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: Project Scaffolding' (Protocol in workflow.md)
 
 ## Phase 2: Landing Page & Anonymous Entry Flow
-- [ ] Task: Build Landing Page (`/`) with "Create Room" CTA
+- [x] Task: Build Landing Page (`/`) with "Create Room" CTA da6514b
   - [ ] Write Tests
   - [ ] Implement Feature
 - [ ] Task: Build Room join modal to capture Nickname and manage `localStorage` identity
