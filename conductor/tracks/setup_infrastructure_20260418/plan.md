@@ -16,7 +16,7 @@
 - [x] Task: Build Landing Page (`/`) with "Create Room" CTA da6514b
   - [ ] Write Tests
   - [ ] Implement Feature
-- [ ] Task: Build Room join modal to capture Nickname and manage `localStorage` identity
+- [x] Task: Build Room join modal to capture Nickname and manage `localStorage` identity 5a3f5f5
   - [ ] Write Tests
   - [ ] Implement Feature
 - [ ] Task: Implement `rooms.create` and `players.join` Convex mutations
