@@ -16,4 +16,11 @@ describe('Project Initialization', () => {
     const packageJson = JSON.parse(readFileSync(join(process.cwd(), 'package.json'), 'utf8'));
     expect(packageJson.dependencies).toHaveProperty('convex');
   });
+
+  it('should have the expected plugins in vite.config.ts', () => {
+    const viteConfigContent = readFileSync(join(process.cwd(), 'vite.config.ts'), 'utf8');
+    expect(viteConfigContent).toContain('tailwindcss()');
+    expect(viteConfigContent).toContain('tanstackStart()');
+    expect(viteConfigContent).toContain('viteReact()');
+  });
 });
