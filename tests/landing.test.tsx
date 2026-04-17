@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { App } from '../src/routes/index';
+import { LandingPage as App } from '../src/components/LandingPage';
 import { describe, it, expect, vi } from 'vitest';
 
 vi.mock('@tanstack/react-router', () => ({

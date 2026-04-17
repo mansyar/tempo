@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { App } from '../src/routes/index';
+import { LandingPage as App } from '../src/components/LandingPage';
 import { describe, it, expect, vi } from 'vitest';
 import { useNavigate } from '@tanstack/react-router';
 import { useMutation } from 'convex/react';

@@ -16,6 +16,8 @@ function getInitialMode(): ThemeMode {
 }
 
 function applyThemeMode(mode: ThemeMode) {
+  if (typeof window === 'undefined') return
+
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
   const resolved = mode === 'auto' ? (prefersDark ? 'dark' : 'light') : mode
 
@@ -33,15 +35,17 @@ function applyThemeMode(mode: ThemeMode) {
 
 export default function ThemeToggle() {
   const [mode, setMode] = useState<ThemeMode>('auto')
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
+    setMounted(true)
     const initialMode = getInitialMode()
     setMode(initialMode)
     applyThemeMode(initialMode)
   }, [])
 
   useEffect(() => {
-    if (mode !== 'auto') {
+    if (!mounted || mode !== 'auto') {
       return
     }
 
@@ -52,7 +56,7 @@ export default function ThemeToggle() {
     return () => {
       media.removeEventListener('change', onChange)
     }
-  }, [mode])
+  }, [mode, mounted])
 
   function toggleMode() {
     const nextMode: ThemeMode =
@@ -66,6 +70,18 @@ export default function ThemeToggle() {
     mode === 'auto'
       ? 'Theme mode: auto (system). Click to switch to light mode.'
       : `Theme mode: ${mode}. Click to switch mode.`
+
+  if (!mounted) {
+    return (
+      <button
+        type="button"
+        disabled
+        className="rounded-full border border-[var(--chip-line)] bg-[var(--chip-bg)] px-3 py-1.5 text-sm font-semibold text-[var(--sea-ink)] shadow-[0_8px_22px_rgba(30,90,72,0.08)] opacity-50"
+      >
+        ...
+      </button>
+    )
+  }
 
   return (
     <button

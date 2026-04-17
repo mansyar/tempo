@@ -4,7 +4,7 @@ import { TanStackDevtools } from '@tanstack/react-devtools'
 import Footer from '../components/Footer'
 import Header from '../components/Header'
 import { ConvexProvider, ConvexReactClient } from "convex/react";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import appCss from '../styles.css?url'
 
@@ -31,44 +31,24 @@ export const Route = createRootRoute({
       },
     ],
   }),
-  shellComponent: RootDocument,
   component: RootComponent,
 })
 
 function RootComponent() {
-  const [convex] = useState(() => new ConvexReactClient(import.meta.env.VITE_CONVEX_URL));
+  const [convex, setConvex] = useState<ConvexReactClient | null>(null);
+
+  useEffect(() => {
+    setConvex(new ConvexReactClient(import.meta.env.VITE_CONVEX_URL));
+  }, []);
+
+  if (!convex) {
+    // Return the basic shell during hydration to match SSR
+    return <Outlet />;
+  }
 
   return (
     <ConvexProvider client={convex}>
       <Outlet />
     </ConvexProvider>
-  )
-}
-
-function RootDocument({ children }: { children: React.ReactNode }) {
-  return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
-        <HeadContent />
-      </head>
-      <body className="font-sans antialiased [overflow-wrap:anywhere] selection:bg-[rgba(79,184,178,0.24)]">
-        <Header />
-        {children}
-        <Footer />
-        <TanStackDevtools
-          config={{
-            position: 'bottom-right',
-          }}
-          plugins={[
-            {
-              name: 'Tanstack Router',
-              render: <TanStackRouterDevtoolsPanel />,
-            },
-          ]}
-        />
-        <Scripts />
-      </body>
-    </html>
   )
 }
