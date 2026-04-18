@@ -258,7 +258,7 @@ export function RoomPage({ slug }: RoomPageProps) {
             )}
           </section>
 
-          <aside className="space-y-8 flex flex-col h-full overflow-hidden min-h-[500px]">
+          <aside className="space-y-8 flex flex-col min-h-[500px]">
             <div className="island-shell rounded-2xl flex-1 flex flex-col overflow-hidden">
               <TopicSidebar
                 roomId={room._id}

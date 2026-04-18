@@ -89,7 +89,7 @@ export function TopicSidebar({
   };
 
   return (
-    <aside className="w-80 flex flex-col h-full border-l border-[var(--border-subtle)] bg-[var(--bg-secondary)] overflow-hidden">
+    <div className="flex flex-col h-full bg-[var(--bg-secondary)] overflow-hidden">
       {/* Header */}
       <div className="p-4 border-b border-[var(--border-subtle)] flex items-center justify-between bg-[var(--bg-secondary)] z-10">
         <div className="flex items-center gap-2">
@@ -265,6 +265,6 @@ export function TopicSidebar({
           onSubmit={handleBatchAdd}
         />
       )}
-    </aside>
+    </div>
   );
 }
