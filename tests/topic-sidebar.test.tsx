@@ -32,6 +32,7 @@ describe('TopicSidebar', () => {
         roomId={'room1' as unknown as Id<'rooms'>}
         facilitatorId="user1"
         identityId="user2"
+        onOpenBatchAdd={vi.fn()}
       />
     );
 
@@ -48,6 +49,7 @@ describe('TopicSidebar', () => {
         roomId={'room1' as unknown as Id<'rooms'>}
         facilitatorId="facilitator-id"
         identityId="player-id"
+        onOpenBatchAdd={vi.fn()}
       />
     );
 
@@ -62,10 +64,12 @@ describe('TopicSidebar', () => {
         roomId={'room1' as unknown as Id<'rooms'>}
         facilitatorId="facilitator-id"
         identityId="facilitator-id"
+        onOpenBatchAdd={vi.fn()}
       />
     );
 
     expect(screen.getByPlaceholderText(/Add a topic/i)).toBeDefined();
+    expect(screen.getByLabelText(/Batch Add/i)).toBeDefined();
   });
 
   it('renders empty states when there are no topics', () => {
@@ -76,6 +80,7 @@ describe('TopicSidebar', () => {
         roomId={'room1' as unknown as Id<'rooms'>}
         facilitatorId="user1"
         identityId="user2"
+        onOpenBatchAdd={vi.fn()}
       />
     );
 
@@ -93,6 +98,7 @@ describe('TopicSidebar', () => {
         roomId={'room1' as unknown as Id<'rooms'>}
         facilitatorId="user1"
         identityId="user1"
+        onOpenBatchAdd={vi.fn()}
       />
     );
 
@@ -124,6 +130,7 @@ describe('TopicSidebar', () => {
         roomId={'room1' as unknown as Id<'rooms'>}
         facilitatorId="user1"
         identityId="user1"
+        onOpenBatchAdd={vi.fn()}
       />
     );
 
@@ -149,6 +156,7 @@ describe('TopicSidebar', () => {
         roomId={'room1' as unknown as Id<'rooms'>}
         facilitatorId="user1"
         identityId="user1"
+        onOpenBatchAdd={vi.fn()}
       />
     );
 
@@ -160,5 +168,24 @@ describe('TopicSidebar', () => {
       identityId: 'user1',
       newOrder: 2,
     });
+  });
+
+  it('calls onOpenBatchAdd when batch add button is clicked', () => {
+    const onOpenBatchAdd = vi.fn();
+    vi.mocked(useQuery).mockReturnValue([]);
+
+    render(
+      <TopicSidebar
+        roomId={'room1' as unknown as Id<'rooms'>}
+        facilitatorId="user1"
+        identityId="user1"
+        onOpenBatchAdd={onOpenBatchAdd}
+      />
+    );
+
+    const batchAddButton = screen.getByLabelText(/Batch Add/i);
+    fireEvent.click(batchAddButton);
+
+    expect(onOpenBatchAdd).toHaveBeenCalled();
   });
 });

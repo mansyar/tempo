@@ -4,6 +4,7 @@ import { useIdentity } from '../hooks/useIdentity';
 import JoinModal from './JoinModal';
 import { PresenceSidebar } from './PresenceSidebar';
 import { TopicSidebar } from './TopicSidebar';
+import { BatchAddModal } from './BatchAddModal';
 import { ClaimBanner } from './ClaimBanner';
 import { CardGrid } from './CardGrid';
 import { CardDeck } from './CardDeck';
@@ -37,9 +38,11 @@ export function RoomPage({ slug }: RoomPageProps) {
   const castVote = useMutation(api.votes.cast);
   const revealVotes = useMutation(api.rooms.reveal);
   const resetRound = useMutation(api.rooms.reset);
+  const addBatch = useMutation(api.topics.addBatch);
 
   // Local state to track if we've joined this session
   const [hasJoined, setHasJoined] = useState(false);
+  const [isBatchAddOpen, setIsBatchAddOpen] = useState(false);
 
   // Auto-join if we have a nickname and haven't joined yet
   useEffect(() => {
@@ -105,6 +108,20 @@ export function RoomPage({ slug }: RoomPageProps) {
       });
     } catch (error) {
       console.error('Failed to cast vote:', error);
+    }
+  };
+
+  const handleBatchAdd = async (titlesString: string) => {
+    if (!room) return;
+    try {
+      await addBatch({
+        roomId: room._id,
+        identityId: identityId!,
+        titlesString,
+      });
+      setIsBatchAddOpen(false);
+    } catch (err) {
+      console.error('Failed to batch add topics:', err);
     }
   };
 
@@ -264,6 +281,7 @@ export function RoomPage({ slug }: RoomPageProps) {
                 roomId={room._id}
                 facilitatorId={room.facilitatorId}
                 identityId={identityId!}
+                onOpenBatchAdd={() => setIsBatchAddOpen(true)}
               />
             </div>
             <div className="island-shell p-6 rounded-2xl shrink-0">
@@ -277,6 +295,15 @@ export function RoomPage({ slug }: RoomPageProps) {
       </div>
 
       <CardDeck onSelect={handleVote} selectedVote={myVote} />
+
+      {isFacilitator && (
+        <BatchAddModal
+          roomId={room._id}
+          isOpen={isBatchAddOpen}
+          onClose={() => setIsBatchAddOpen(false)}
+          onSubmit={handleBatchAdd}
+        />
+      )}
     </div>
   );
 }

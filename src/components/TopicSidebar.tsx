@@ -12,26 +12,25 @@ import {
   Layers,
 } from 'lucide-react';
 import { useState } from 'react';
-import { BatchAddModal } from './BatchAddModal';
 
 interface TopicSidebarProps {
   roomId: Id<'rooms'>;
   facilitatorId: string;
   identityId: string;
+  onOpenBatchAdd: () => void;
 }
 
 export function TopicSidebar({
   roomId,
   facilitatorId,
   identityId,
+  onOpenBatchAdd,
 }: TopicSidebarProps) {
   const [newTopicTitle, setNewTopicTitle] = useState('');
-  const [isBatchAddOpen, setIsBatchAddOpen] = useState(false);
   const topics = useQuery(api.topics.listByRoom, { roomId });
   const isFacilitator = facilitatorId === identityId;
 
   const addTopic = useMutation(api.topics.add);
-  const addBatch = useMutation(api.topics.addBatch);
   const removeTopic = useMutation(api.topics.remove);
   const reorderTopic = useMutation(api.topics.reorder);
 
@@ -51,19 +50,6 @@ export function TopicSidebar({
       setNewTopicTitle('');
     } catch (err) {
       console.error('Failed to add topic:', err);
-    }
-  };
-
-  const handleBatchAdd = async (titlesString: string) => {
-    try {
-      await addBatch({
-        roomId,
-        identityId,
-        titlesString,
-      });
-      setIsBatchAddOpen(false);
-    } catch (err) {
-      console.error('Failed to batch add topics:', err);
     }
   };
 
@@ -100,7 +86,7 @@ export function TopicSidebar({
         </div>
         {isFacilitator && (
           <button
-            onClick={() => setIsBatchAddOpen(true)}
+            onClick={onOpenBatchAdd}
             className="p-1.5 rounded-sm bg-[var(--bg-tertiary)] hover:bg-[var(--accent)] text-[var(--text-secondary)] hover:text-white transition-all"
             aria-label="Batch Add"
             title="Batch Add"
@@ -111,7 +97,7 @@ export function TopicSidebar({
       </div>
 
       {/* Content */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-6">
+      <div className="flex-1 overflow-y-auto p-4 space-y-6 text-left">
         {/* Add Topic Input (Facilitator Only) */}
         {isFacilitator && (
           <section>
@@ -161,7 +147,7 @@ export function TopicSidebar({
                     }`}
                   >
                     <span
-                      className={`text-xs font-mono px-1.5 py-0.5 rounded ${
+                      className={`text-xs font-mono px-1.5 py-0.5 rounded shrink-0 ${
                         topic.status === 'active'
                           ? 'bg-[var(--accent)] text-white'
                           : 'bg-[var(--bg-tertiary)] text-[var(--text-secondary)]'
@@ -212,7 +198,7 @@ export function TopicSidebar({
                     )}
 
                     {topic.status === 'active' && (
-                      <div className="w-2 h-2 rounded-full bg-[var(--accent)] animate-pulse" />
+                      <div className="w-2 h-2 rounded-full bg-[var(--accent)] animate-pulse shrink-0" />
                     )}
                   </div>
                 ))
@@ -245,9 +231,8 @@ export function TopicSidebar({
                     <span className="text-sm text-[var(--text-secondary)] flex-1 break-words py-0.5">
                       {topic.title}
                     </span>
-
                     {topic.finalEstimate && (
-                      <span className="text-sm font-mono font-bold text-[var(--accent)]">
+                      <span className="text-sm font-mono font-bold text-[var(--accent)] shrink-0">
                         {topic.finalEstimate}
                       </span>
                     )}
@@ -257,15 +242,6 @@ export function TopicSidebar({
           </div>
         </section>
       </div>
-
-      {isFacilitator && (
-        <BatchAddModal
-          roomId={roomId}
-          isOpen={isBatchAddOpen}
-          onClose={() => setIsBatchAddOpen(false)}
-          onSubmit={handleBatchAdd}
-        />
-      )}
     </div>
   );
 }
