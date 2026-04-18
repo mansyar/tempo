@@ -28,9 +28,9 @@
 - [x] Task: Create 3D Tilt Poker Card Components (d503da5)
   - [ ] Write tests for `PokerCard` tilt and selection states
   - [ ] Implement `PokerCard` using Framer Motion (perspective + tilt)
-- [ ] Task: Implement The Reveal Animation Sequence
-  - [ ] Write tests for staggered reveal logic
-  - [ ] Implement staggered Y-axis flip sequence on `revealed` state
+- [x] Task: Implement The Reveal Animation Sequence (67d291b)
+  - [x] Write tests for staggered reveal logic
+  - [x] Implement staggered Y-axis flip sequence on `revealed` state
 - [ ] Task: Build Responsive Mobile Card Deck
   - [ ] Write tests for mobile card grid vs desktop row layouts
   - [ ] Implement responsive `CardDeck` container
