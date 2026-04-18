@@ -7,7 +7,7 @@
     - [ ] `format`: `prettier --check .`
     - [ ] `typecheck`: `tsc --noEmit`
     - [ ] `test:coverage`: `vitest run --coverage`
-- [ ] Task: Create `scripts/check-file-length.ts` to verify file line counts.
+- [x] Task: Create `scripts/check-file-length.ts` to verify file line counts. 35ecf88
     - [ ] Implement logic to scan `src/` and `convex/` (excluding `_generated/`).
     - [ ] Add check for > 500 lines.
     - [ ] Add refactor suggestion message on failure.
