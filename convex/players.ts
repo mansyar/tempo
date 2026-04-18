@@ -37,6 +37,24 @@ export const join = mutation({
       updatedAt: Date.now(),
     });
 
+    // Auto-assign facilitator if current is offline
+    const room = await ctx.db.get(args.roomId);
+    if (room) {
+      const currentFacilitator = await ctx.db
+        .query('players')
+        .withIndex('by_identity', (q) =>
+          q.eq('roomId', args.roomId).eq('identityId', room.facilitatorId)
+        )
+        .unique();
+
+      if (!currentFacilitator || !currentFacilitator.isOnline) {
+        await ctx.db.patch(args.roomId, {
+          facilitatorId: args.identityId,
+          updatedAt: Date.now(),
+        });
+      }
+    }
+
     return playerId;
   },
 });
@@ -65,5 +83,32 @@ export const markOffline = mutation({
         await ctx.db.patch(player._id, { isOnline: false });
       }
     }
+  },
+});
+
+export const claimFacilitator = mutation({
+  args: {
+    roomId: v.id('rooms'),
+    identityId: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const room = await ctx.db.get(args.roomId);
+    if (!room) throw new Error('Room not found');
+
+    const currentFacilitator = await ctx.db
+      .query('players')
+      .withIndex('by_identity', (q) =>
+        q.eq('roomId', args.roomId).eq('identityId', room.facilitatorId)
+      )
+      .unique();
+
+    if (currentFacilitator?.isOnline) {
+      throw new Error('Current facilitator is still online');
+    }
+
+    await ctx.db.patch(args.roomId, {
+      facilitatorId: args.identityId,
+      updatedAt: Date.now(),
+    });
   },
 });
