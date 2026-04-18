@@ -27,8 +27,8 @@ export function ConfirmEstimateModal({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (estimate.trim()) {
-      onConfirm(estimate.trim());
+    if (String(estimate).trim()) {
+      onConfirm(String(estimate).trim());
     }
   };
 
@@ -103,7 +103,7 @@ export function ConfirmEstimateModal({
             </button>
             <button
               type="submit"
-              disabled={!estimate.trim()}
+              disabled={!String(estimate).trim()}
               className="px-8 py-3 bg-[var(--accent)] text-white text-sm font-bold rounded-xl hover:bg-[var(--accent-hover)] transition-all shadow-lg shadow-[var(--accent)]/20 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Save & Next

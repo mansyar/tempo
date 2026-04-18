@@ -11,6 +11,7 @@
 import type * as crons from "../crons.js";
 import type * as players from "../players.js";
 import type * as rooms from "../rooms.js";
+import type * as topics from "../topics.js";
 import type * as votes from "../votes.js";
 
 import type {
@@ -23,6 +24,7 @@ declare const fullApi: ApiFromModules<{
   crons: typeof crons;
   players: typeof players;
   rooms: typeof rooms;
+  topics: typeof topics;
   votes: typeof votes;
 }>;
 

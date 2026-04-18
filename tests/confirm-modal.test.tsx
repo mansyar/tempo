@@ -47,4 +47,21 @@ describe('ConfirmEstimateModal', () => {
     const input = screen.getByDisplayValue('13');
     expect(input).toBeDefined();
   });
+
+  it('handles numeric suggested estimate safely', () => {
+    render(
+      <ConfirmEstimateModal
+        isOpen={true}
+        onClose={vi.fn()}
+        onConfirm={vi.fn()}
+        suggestedEstimate={5 as unknown as string}
+        topicTitle="T"
+      />
+    );
+
+    const submitButton = screen.getByRole('button', {
+      name: /Save & Next/i,
+    }) as HTMLButtonElement;
+    expect(submitButton.disabled).toBe(false);
+  });
 });

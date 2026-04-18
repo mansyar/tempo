@@ -14,9 +14,15 @@ vi.mock('framer-motion', async (importOriginal) => {
       div: ({
         children,
         onClick,
+        whileHover: _whileHover,
+        whileTap: _whileTap,
+        animate: _animate,
+        initial: _initial,
+        exit: _exit,
+        transition: _transition,
         ...props
-      }: {
-        children: React.ReactNode;
+      }: Record<string, unknown> & {
+        children?: React.ReactNode;
         onClick?: () => void;
       }) => (
         <div onClick={onClick} {...props}>

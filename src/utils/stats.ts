@@ -3,11 +3,14 @@ export interface VotingStats {
   median: number;
   mode: number[];
   count: number;
+  participationCount: number;
 }
 
 export function calculateStats(
   rawVotes: (string | number | null)[]
 ): VotingStats {
+  const participationCount = rawVotes.filter((v) => v !== null).length;
+
   const numericVotes = rawVotes
     .filter(
       (v): v is number | string =>
@@ -16,7 +19,7 @@ export function calculateStats(
     .map((v) => Number(v));
 
   if (numericVotes.length === 0) {
-    return { average: 0, median: 0, mode: [], count: 0 };
+    return { average: 0, median: 0, mode: [], count: 0, participationCount };
   }
 
   // Average
@@ -48,6 +51,7 @@ export function calculateStats(
     median,
     mode,
     count: numericVotes.length,
+    participationCount,
   };
 }
 

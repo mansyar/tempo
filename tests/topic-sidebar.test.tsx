@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, act } from '@testing-library/react';
 import { TopicSidebar } from '../src/components/TopicSidebar';
 import { describe, it, expect, vi } from 'vitest';
 import { useQuery, useMutation } from 'convex/react';
@@ -126,7 +126,7 @@ describe('TopicSidebar', () => {
     expect(screen.getByText(/Empty history/i)).toBeDefined();
   });
 
-  it('allows facilitator to add a topic', () => {
+  it('allows facilitator to add a topic', async () => {
     const addMutation = vi.fn();
     vi.mocked(useQuery).mockReturnValue([]);
     vi.mocked(useMutation).mockReturnValue(addMutation);
@@ -142,7 +142,9 @@ describe('TopicSidebar', () => {
 
     const input = screen.getByPlaceholderText(/Add a topic/i);
     fireEvent.change(input, { target: { value: 'New Topic' } });
-    fireEvent.keyDown(input, { key: 'Enter', code: 'Enter' });
+    await act(async () => {
+      fireEvent.keyDown(input, { key: 'Enter', code: 'Enter' });
+    });
 
     expect(addMutation).toHaveBeenCalledWith({
       roomId: 'room1',
@@ -151,7 +153,7 @@ describe('TopicSidebar', () => {
     });
   });
 
-  it('allows facilitator to remove a topic', () => {
+  it('allows facilitator to remove a topic', async () => {
     const removeMutation = vi.fn();
     vi.mocked(useQuery).mockReturnValue([
       {
@@ -173,7 +175,9 @@ describe('TopicSidebar', () => {
     );
 
     const deleteButton = screen.getByLabelText(/Remove Topic/i);
-    fireEvent.click(deleteButton);
+    await act(async () => {
+      fireEvent.click(deleteButton);
+    });
 
     expect(removeMutation).toHaveBeenCalledWith({
       topicId: '1',
@@ -181,7 +185,7 @@ describe('TopicSidebar', () => {
     });
   });
 
-  it('allows facilitator to reorder topics', () => {
+  it('allows facilitator to reorder topics', async () => {
     const reorderMutation = vi.fn();
     vi.mocked(useQuery).mockReturnValue([
       { _id: '1' as Id<'topics'>, title: 'T1', order: 1, status: 'pending' },
@@ -199,7 +203,9 @@ describe('TopicSidebar', () => {
     );
 
     const moveDownButton = screen.getAllByLabelText(/Move Down/i)[0];
-    fireEvent.click(moveDownButton);
+    await act(async () => {
+      fireEvent.click(moveDownButton);
+    });
 
     expect(reorderMutation).toHaveBeenCalledWith({
       topicId: '1',
