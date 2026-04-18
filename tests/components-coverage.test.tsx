@@ -7,6 +7,7 @@ import { RoomPage } from '../src/components/RoomPage';
 import { Route as RootLayout } from '../src/routes/__root';
 import { ReactNode } from 'react';
 import * as convex from 'convex/react';
+import type { Id } from '../convex/_generated/dataModel';
 
 // Mock TanStack Router
 vi.mock('@tanstack/react-router', async (importOriginal) => {
@@ -135,11 +136,32 @@ describe('RoomPage Component', () => {
     vi.mocked(convex.useMutation).mockReturnValue(
       vi.fn().mockResolvedValue({})
     );
-    vi.mocked(convex.useQuery).mockReturnValue({
-      _id: 'room-id',
-      slug: 'test-room',
-      status: 'voting',
-    });
+    // Mock multiple queries
+    vi.mocked(convex.useQuery).mockImplementation(
+      (apiFn: unknown, args: unknown) => {
+        const a = args as Record<string, unknown>;
+        if (a && a.slug !== undefined) {
+          return {
+            _id: 'room-id' as unknown as Id<'rooms'>,
+            slug: a.slug as string,
+            status: 'voting',
+            facilitatorId: 'tester-id',
+          };
+        }
+        if (a && a.roomId !== undefined) {
+          return [
+            {
+              _id: '1' as unknown as Id<'players'>,
+              identityId: 'tester-id',
+              name: 'Tester',
+              isOnline: true,
+            },
+          ];
+        }
+        return null;
+      }
+    );
+
     render(<RoomPage slug="test-room" />);
 
     const joinBtn = screen.getByText('Mock Join');
@@ -218,11 +240,30 @@ describe('RoomRoute', () => {
     vi.mocked(convex.useMutation).mockReturnValue(
       vi.fn().mockResolvedValue({})
     );
-    vi.mocked(convex.useQuery).mockReturnValue({
-      _id: 'room-id',
-      slug: 'test-room',
-      status: 'voting',
-    });
+    vi.mocked(convex.useQuery).mockImplementation(
+      (apiFn: unknown, args: unknown) => {
+        const a = args as Record<string, unknown>;
+        if (a && a.slug !== undefined) {
+          return {
+            _id: 'room-id' as unknown as Id<'rooms'>,
+            slug: a.slug as string,
+            status: 'voting',
+            facilitatorId: 'tester-id',
+          };
+        }
+        if (a && a.roomId !== undefined) {
+          return [
+            {
+              _id: '1' as unknown as Id<'players'>,
+              identityId: 'tester-id',
+              name: 'Tester',
+              isOnline: true,
+            },
+          ];
+        }
+        return null;
+      }
+    );
     const route = RoomRoute as unknown as {
       options: { component: React.ComponentType };
     };

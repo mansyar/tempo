@@ -1,5 +1,15 @@
-import { mutation } from './_generated/server';
+import { mutation, query } from './_generated/server';
 import { v } from 'convex/values';
+
+export const listByRoom = query({
+  args: { roomId: v.id('rooms') },
+  handler: async (ctx, args) => {
+    return await ctx.db
+      .query('players')
+      .withIndex('by_room', (q) => q.eq('roomId', args.roomId))
+      .collect();
+  },
+});
 
 export const join = mutation({
   args: {
@@ -60,12 +70,43 @@ export const join = mutation({
 });
 
 export const heartbeat = mutation({
-  args: { playerId: v.id('players') },
+  args: {
+    roomId: v.id('rooms'),
+    identityId: v.string(),
+  },
   handler: async (ctx, args) => {
-    await ctx.db.patch(args.playerId, {
-      lastHeartbeat: Date.now(),
-      isOnline: true,
-    });
+    const player = await ctx.db
+      .query('players')
+      .withIndex('by_identity', (q) =>
+        q.eq('roomId', args.roomId).eq('identityId', args.identityId)
+      )
+      .unique();
+
+    if (player) {
+      await ctx.db.patch(player._id, {
+        lastHeartbeat: Date.now(),
+        isOnline: true,
+      });
+    }
+  },
+});
+
+export const leave = mutation({
+  args: {
+    roomId: v.id('rooms'),
+    identityId: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const player = await ctx.db
+      .query('players')
+      .withIndex('by_identity', (q) =>
+        q.eq('roomId', args.roomId).eq('identityId', args.identityId)
+      )
+      .unique();
+
+    if (player) {
+      await ctx.db.patch(player._id, { isOnline: false });
+    }
   },
 });
 
