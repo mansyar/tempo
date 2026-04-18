@@ -1,0 +1,8 @@
+{
+  "track_id": "core_gameplay_loop_20260418",
+  "type": "feature",
+  "status": "new",
+  "created_at": "2026-04-18T14:30:00Z",
+  "updated_at": "2026-04-18T14:30:00Z",
+  "description": "Implementing the Core Gameplay Loop: Presence, The Mask voting, 3D animations, and results dashboard."
+}
