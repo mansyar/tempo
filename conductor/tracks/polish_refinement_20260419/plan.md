@@ -25,9 +25,9 @@
 - [x] Task: Update Landing Page with Feature Highlight Cards 1461be8
   - [x] Write tests for landing page rendering and card interactions
   - [x] Implement 3D, glassmorphic, icon-centric cards in `LandingPage.tsx`
-- [ ] Task: Implement Dynamic Tab Title Synchronization
-  - [ ] Write tests for document title changes based on room state
-  - [ ] Implement a custom hook or effect in `RoomPage.tsx` to manage `document.title`
+- [x] Task: Implement Dynamic Tab Title Synchronization 49728a1
+  - [x] Write tests for document title changes based on room state
+  - [x] Implement a custom hook or effect in `RoomPage.tsx` to manage `document.title`
 - [ ] Task: Conductor - User Manual Verification 'Phase 3: Hero Experience & Landing Page' (Protocol in workflow.md)
 
 ## Phase 4: UX Polish & Final Audit [checkpoint: ]
