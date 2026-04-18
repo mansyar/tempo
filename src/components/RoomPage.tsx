@@ -12,6 +12,7 @@ import { CardGrid } from './CardGrid';
 import { CardDeck } from './CardDeck';
 import { EmojiActionBar } from './EmojiActionBar';
 import { EmojiBurst } from './EmojiBurst';
+import { announce } from './AriaLiveAnnouncer';
 import { usePresence } from '../hooks/usePresence';
 import { useEmojiReactions } from '../hooks/useEmojiReactions';
 import { useSound } from '../hooks/useSound';
@@ -48,6 +49,21 @@ export function RoomPage({ slug }: RoomPageProps) {
   const addBatch = useMutation(api.topics.addBatch);
   const nextTopic = useMutation(api.rooms.nextTopic);
   const setFinalEstimate = useMutation(api.topics.setFinalEstimate);
+
+  const activeTopic = topics?.find((t) => t._id === room?.currentTopicId);
+
+  // Accessibility Announcements for State Changes
+  useEffect(() => {
+    if (room?.status === 'revealed') {
+      announce('Votes Revealed');
+    }
+  }, [room?.status]);
+
+  useEffect(() => {
+    if (activeTopic?.title) {
+      announce(`New Topic: ${activeTopic.title}`);
+    }
+  }, [activeTopic?._id, activeTopic?.title]);
 
   // Local state to track if we've joined this session
   const [hasJoined, setHasJoined] = useState(() => !!nickname);
@@ -89,6 +105,7 @@ export function RoomPage({ slug }: RoomPageProps) {
       if (isUnanimous(voteValues)) {
         play('confetti');
         vibrate(patterns.success); // Celebrate consensus!
+        announce('Consensus Reached! Everyone agreed.');
         if (juiceEnabled) {
           confetti({
             particleCount: 150,
@@ -222,7 +239,6 @@ export function RoomPage({ slug }: RoomPageProps) {
 
   const isFacilitator = room.facilitatorId === identityId;
   const myVote = votes?.find((v) => v.identityId === identityId)?.value;
-  const activeTopic = topics?.find((t) => t._id === room.currentTopicId);
 
   // Logic to disable reveal if not everyone has voted
   const onlinePlayers = players?.filter((p) => p.isOnline) || [];
