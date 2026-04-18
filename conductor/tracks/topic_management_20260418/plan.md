@@ -31,12 +31,12 @@
 
 ## Phase 3: Estimation Workflow & Session History [checkpoint: ]
 
-- [ ] Task: Implement Active Topic Header & Status Sync
-  - [ ] Write tests for `ActiveTopicHeader` and room status synchronization
-  - [ ] Implement header display in the main voting area
-- [ ] Task: Build "Confirm & Next" Workflow
-  - [ ] Write tests for the facilitator's confirm-estimate-and-advance flow
-  - [ ] Implement UI for confirming final estimate and triggering `nextTopic`
+- [x] Task: Implement Active Topic Header & Status Sync e468029
+  - [x] Write tests for `ActiveTopicHeader` and room status synchronization
+  - [x] Implement header display in the main voting area
+- [x] Task: Build "Confirm & Next" Workflow e468029
+  - [x] Write tests for the facilitator's confirm-estimate-and-advance flow
+  - [x] Implement UI for confirming final estimate and triggering `nextTopic`
 - [ ] Task: Implement Topic History Display
   - [ ] Write tests for completed topics list with saved estimates
   - [ ] Update sidebar history section with actual data and formatted results
