@@ -19,7 +19,7 @@
 - [x] Task: Implement Haptic Triggers (`navigator.vibrate`) (b52e86f)
   - [ ] Write tests for safe vibration invocation (graceful fallback)
   - [ ] Implement vibration logic for Card Selection, The Reveal, and Unanimous Consensus
-- [ ] Task: Update Juice/Settings Toggle
+- [x] Task: Update Juice/Settings Toggle (bc04bb0)
   - [ ] Write tests to verify the unified toggle controls both audio and haptics
   - [ ] Update `JuiceToggle` component to manage the unified global state
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: Sensory "Juice" & Haptics' (Protocol in workflow.md)
