@@ -12,7 +12,7 @@
   - [x] Register `cleanup.staleRooms` cron job to run every hour
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Database & Backend Logic' (88f260e)
 
-## Phase 2: Reaction UI & Real-Time Sync
+## Phase 2: Reaction UI & Real-Time Sync [checkpoint: 63cf464]
 
 - [x] Task: Build Emoji Reaction Bar (fe81cdc)
   - [x] Write tests for `EmojiActionBar` component rendering and keyboard accessibility
