@@ -12,12 +12,12 @@
 
 ## Phase 2: Result Insights & Outlier Discussion [checkpoint: ]
 
-- [~] Task: Implement "Needs Discussion" Badge for Outliers
-  - [ ] Write tests for `StatsPanel` outlier detection and badge rendering
-  - [ ] Add the red text badge next to outlier names in `PresenceSidebar.tsx` or wherever outliers are listed in the results view
-- [ ] Task: Add Descriptive Tooltips to Stats
-  - [ ] Write tests for tooltip presence and content on Average/Median/Mode stats
-  - [ ] Implement tooltips (using accessible titles or a simple hover state) in the stats component
+- [x] Task: Implement "Needs Discussion" Badge for Outliers 98c24c5
+  - [x] Write tests for `StatsPanel` outlier detection and badge rendering
+  - [x] Add the red text badge next to outlier names in `PresenceSidebar.tsx` or wherever outliers are listed in the results view
+- [x] Task: Add Descriptive Tooltips to Stats 98c24c5
+  - [x] Write tests for tooltip presence and content on Average/Median/Mode stats
+  - [x] Implement tooltips (using accessible titles or a simple hover state) in the stats component
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: Result Insights & Outlier Discussion' (Protocol in workflow.md)
 
 ## Phase 3: Hero Experience & Landing Page [checkpoint: ]
