@@ -17,9 +17,9 @@
 - [x] Task: Build Emoji Reaction Bar (fe81cdc)
   - [x] Write tests for `EmojiActionBar` component rendering and keyboard accessibility
   - [x] Implement `EmojiActionBar` with predefined emojis (❤️, 👏, 🔥, 😂, 🎉)
-- [ ] Task: Implement Optimistic Batching Logic
-  - [ ] Write tests for local throttling/batching utility function
-  - [ ] Wire up the UI action bar to trigger immediate local state and delayed/batched Convex mutations
+- [x] Task: Implement Optimistic Batching Logic (9644610)
+  - [x] Write tests for local throttling/batching utility function
+  - [x] Wire up the UI action bar to trigger immediate local state and delayed/batched Convex mutations
 - [ ] Task: Integrate `reactions.listRecent` Subscription
   - [ ] Write tests for real-time subscription hook consuming recent reactions
   - [ ] Implement UI state subscription to merge local optimistic reactions with remote incoming reactions
