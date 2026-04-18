@@ -41,9 +41,9 @@
 - [x] Task: Implement Statistics Calculation and Outlier Logic (6e02dcd)
   - [x] Write unit tests for Avg/Median/Mode and Outlier detection
   - [x] Implement utility functions for consensus and outlier highlighting
-- [ ] Task: Generate and Integrate UI Sound Assets
-  - [ ] Create Python script to generate pop/whoosh/confetti audio files
-  - [ ] Implement `useSound` hook and integrate into voting/reveal actions
+- [x] Task: Generate and Integrate UI Sound Assets (d2c3f07)
+  - [x] Create Python script to generate pop/whoosh/confetti audio files
+  - [x] Implement `useSound` hook and integrate into voting/reveal actions
 - [ ] Task: Implement Celebration Effects (Confetti)
   - [ ] Write tests for unanimous consensus trigger
   - [ ] Integrate `canvas-confetti` and trigger on unanimous results
