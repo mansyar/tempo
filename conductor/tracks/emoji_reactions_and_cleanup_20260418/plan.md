@@ -25,7 +25,7 @@
   - [x] Implement UI state subscription to merge local optimistic reactions with remote incoming reactions
 - [x] Task: Conductor - User Manual Verification 'Phase 2: Reaction UI & Real-Time Sync' (8fd1424)
 
-## Phase 3: The "Juice" (Animations & A11y Fallbacks)
+## Phase 3: The "Juice" (Animations & A11y Fallbacks) [checkpoint: 6a15dfe]
 
 - [x] Task: Implement Framer Motion Emoji Burst (9df6e99)
   - [x] Write tests to verify `framer-motion` variants for emoji burst from player's card
