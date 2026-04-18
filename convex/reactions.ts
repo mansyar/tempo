@@ -17,6 +17,25 @@ export const send = mutation({
   },
 });
 
+export const sendBatch = mutation({
+  args: {
+    roomId: v.id('rooms'),
+    identityId: v.string(),
+    reactions: v.array(v.string()),
+  },
+  handler: async (ctx, args) => {
+    const now = Date.now();
+    for (const emoji of args.reactions) {
+      await ctx.db.insert('reactions', {
+        roomId: args.roomId,
+        identityId: args.identityId,
+        emoji,
+        createdAt: now,
+      });
+    }
+  },
+});
+
 export const listRecent = query({
   args: {
     roomId: v.id('rooms'),

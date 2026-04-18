@@ -10,7 +10,9 @@ import { ActiveTopicHeader } from './ActiveTopicHeader';
 import { ClaimBanner } from './ClaimBanner';
 import { CardGrid } from './CardGrid';
 import { CardDeck } from './CardDeck';
+import { EmojiActionBar } from './EmojiActionBar';
 import { usePresence } from '../hooks/usePresence';
+import { useEmojiReactions } from '../hooks/useEmojiReactions';
 import { useSound } from '../hooks/useSound';
 import { useJuice } from './JuiceToggle';
 import { useState, useEffect } from 'react';
@@ -53,6 +55,12 @@ export function RoomPage({ slug }: RoomPageProps) {
     isOpen: boolean;
     suggested: string;
   }>({ isOpen: false, suggested: '' });
+
+  // Emoji Reactions hook
+  const { localReactions, sendReaction } = useEmojiReactions(
+    room?._id,
+    identityId
+  );
 
   // Auto-join background sync if we have a nickname
   useEffect(() => {
@@ -352,6 +360,17 @@ export function RoomPage({ slug }: RoomPageProps) {
       </div>
 
       <CardDeck onSelect={handleVote} selectedVote={myVote} />
+
+      <div className="fixed bottom-24 right-4 z-50 pointer-events-auto sm:right-8 sm:bottom-28">
+        <EmojiActionBar onSelect={sendReaction} />
+        <div className="flex flex-col gap-1 mt-2 items-end overflow-hidden h-32 pointer-events-none">
+          {localReactions.map((r) => (
+            <span key={r.id} className="text-2xl animate-bounce">
+              {r.emoji}
+            </span>
+          ))}
+        </div>
+      </div>
 
       {isFacilitator && (
         <>
