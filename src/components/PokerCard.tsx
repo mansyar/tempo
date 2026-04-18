@@ -8,6 +8,7 @@ interface PokerCardProps {
   revealed?: boolean;
   onSelect: (value: string | number) => void;
   children?: ReactNode;
+  [key: string]: unknown;
 }
 
 export function PokerCard({
@@ -16,6 +17,7 @@ export function PokerCard({
   disabled,
   revealed = true,
   onSelect,
+  ...props
 }: PokerCardProps) {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -49,6 +51,7 @@ export function PokerCard({
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onClick={() => !disabled && onSelect(value)}
+      {...props}
       style={{
         rotateX,
         rotateY,

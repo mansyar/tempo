@@ -1,5 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { PokerCard } from '../src/components/PokerCard';
+import { CardGrid } from '../src/components/CardGrid';
 import { describe, it, expect, vi } from 'vitest';
 
 // Mock framer-motion to avoid animation issues in tests
@@ -17,7 +18,7 @@ vi.mock('framer-motion', async (importOriginal) => {
         children: React.ReactNode;
         onClick?: () => void;
       }) => (
-        <div onClick={onClick} {...props} data-testid="motion-div">
+        <div onClick={onClick} {...props}>
           {children}
         </div>
       ),
@@ -53,12 +54,26 @@ describe('PokerCard', () => {
   });
 
   it('handles mouse move and leave events', () => {
-    const { getByTestId } = render(<PokerCard value="Q" onSelect={() => {}} />);
-    const div = getByTestId('motion-div');
+    const { getByTestId } = render(
+      <PokerCard value="Q" onSelect={() => {}} data-testid="poker-card" />
+    );
+    const div = getByTestId('poker-card');
 
-    // We can't easily test the exact motion value changes because of the mock complexity,
-    // but we can trigger the events to cover the lines.
     fireEvent.mouseMove(div, { clientX: 10, clientY: 10 });
     fireEvent.mouseLeave(div);
+  });
+});
+
+describe('CardGrid', () => {
+  it('renders cards for all players', () => {
+    const players = [
+      { identityId: '1', name: 'Alice' },
+      { identityId: '2', name: 'Bob' },
+    ];
+    const votes = [{ identityId: '1', value: '5' }];
+
+    render(<CardGrid players={players} votes={votes} revealed={false} />);
+
+    expect(screen.getAllByTestId('player-card-wrapper').length).toBe(2);
   });
 });
