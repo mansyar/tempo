@@ -11,6 +11,7 @@ import { ClaimBanner } from './ClaimBanner';
 import { CardGrid } from './CardGrid';
 import { CardDeck } from './CardDeck';
 import { EmojiActionBar } from './EmojiActionBar';
+import { EmojiBurst } from './EmojiBurst';
 import { usePresence } from '../hooks/usePresence';
 import { useEmojiReactions } from '../hooks/useEmojiReactions';
 import { useSound } from '../hooks/useSound';
@@ -363,14 +364,9 @@ export function RoomPage({ slug }: RoomPageProps) {
 
       <div className="fixed bottom-24 right-4 z-50 pointer-events-auto sm:right-8 sm:bottom-28">
         <EmojiActionBar onSelect={sendReaction} />
-        <div className="flex flex-col gap-1 mt-2 items-end overflow-hidden h-32 pointer-events-none">
-          {localReactions.map((r) => (
-            <span key={r.id} className="text-2xl animate-bounce">
-              {r.emoji}
-            </span>
-          ))}
-        </div>
       </div>
+
+      <EmojiBurst reactions={localReactions} />
 
       {isFacilitator && (
         <>

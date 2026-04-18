@@ -19,6 +19,7 @@ export function CardGrid({ players, votes, revealed }: CardGridProps) {
             <motion.div
               key={player.identityId}
               data-testid="player-card-wrapper"
+              data-player-id={player.identityId}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.05 }}
