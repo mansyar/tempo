@@ -8,6 +8,7 @@ import { CardGrid } from './CardGrid';
 import { CardDeck } from './CardDeck';
 import { usePresence } from '../hooks/usePresence';
 import { useSound } from '../hooks/useSound';
+import { useJuice } from './JuiceToggle';
 import { useState, useEffect } from 'react';
 import confetti from 'canvas-confetti';
 import { calculateStats, isUnanimous } from '../utils/stats';
@@ -21,6 +22,7 @@ interface RoomPageProps {
 export function RoomPage({ slug }: RoomPageProps) {
   const { identityId, nickname } = useIdentity();
   const { play } = useSound();
+  const { enabled: juiceEnabled } = useJuice();
   const room = useQuery(api.rooms.getBySlug, { slug });
   const players = useQuery(api.players.listByRoom, {
     roomId: room?._id as Id<'rooms'>,
@@ -64,15 +66,17 @@ export function RoomPage({ slug }: RoomPageProps) {
       const voteValues = votes.map((v) => v.value);
       if (isUnanimous(voteValues)) {
         play('confetti');
-        confetti({
-          particleCount: 150,
-          spread: 70,
-          origin: { y: 0.6 },
-          colors: ['#6366f1', '#a855f7', '#ec4899'],
-        });
+        if (juiceEnabled) {
+          confetti({
+            particleCount: 150,
+            spread: 70,
+            origin: { y: 0.6 },
+            colors: ['#6366f1', '#a855f7', '#ec4899'],
+          });
+        }
       }
     }
-  }, [room?.status, votes, play]);
+  }, [room?.status, votes, play, juiceEnabled]);
 
   const handleJoin = async (nickname: string) => {
     if (!room) return;

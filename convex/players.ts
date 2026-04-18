@@ -116,7 +116,7 @@ export const markOffline = mutation({
     const cutoff = Date.now() - 30000; // 30 seconds timeout
     const onlinePlayers = await ctx.db
       .query('players')
-      .filter((q) => q.eq(q.field('isOnline'), true))
+      .withIndex('by_online', (q) => q.eq('isOnline', true))
       .collect();
 
     for (const player of onlinePlayers) {

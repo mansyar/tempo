@@ -1,5 +1,6 @@
-import { Link } from '@tanstack/react-router'
-import ThemeToggle from './ThemeToggle'
+import { Link } from '@tanstack/react-router';
+import ThemeToggle from './ThemeToggle';
+import JuiceToggle from './JuiceToggle';
 
 export default function Header() {
   return (
@@ -16,6 +17,8 @@ export default function Header() {
         </h2>
 
         <div className="ml-auto flex items-center gap-1.5 sm:ml-0 sm:gap-2">
+          <JuiceToggle />
+          <ThemeToggle />
           <a
             href="https://github.com/mansyar/pointy-planning-poker"
             target="_blank"
@@ -30,8 +33,6 @@ export default function Header() {
               />
             </svg>
           </a>
-
-          <ThemeToggle />
         </div>
 
         <div className="order-3 flex w-full flex-wrap items-center gap-x-4 gap-y-1 pb-1 text-sm font-semibold sm:order-2 sm:w-auto sm:flex-nowrap sm:pb-0 ml-6">
@@ -45,5 +46,5 @@ export default function Header() {
         </div>
       </nav>
     </header>
-  )
+  );
 }

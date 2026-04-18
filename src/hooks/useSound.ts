@@ -1,16 +1,22 @@
 import { useCallback } from 'react';
+import { useJuice } from '../components/JuiceToggle';
 
 type SoundType = 'pop' | 'whoosh' | 'confetti';
 
 export function useSound() {
-  const play = useCallback((type: SoundType) => {
-    // In a real app, we might preload these
-    const audio = new Audio(`/sounds/${type}.wav`);
-    audio.play().catch((e) => {
-      // Audio might fail if user hasn't interacted with page yet
-      console.warn('Sound playback failed:', e);
-    });
-  }, []);
+  const { enabled } = useJuice();
+
+  const play = useCallback(
+    (type: SoundType) => {
+      if (!enabled) return;
+
+      const audio = new Audio(`/sounds/${type}.wav`);
+      audio.play().catch((e) => {
+        console.warn('Sound playback failed:', e);
+      });
+    },
+    [enabled]
+  );
 
   return { play };
 }
