@@ -22,8 +22,8 @@ export function PokerCard({
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
-  const mouseXSpring = useSpring(x);
-  const mouseYSpring = useSpring(y);
+  const mouseXSpring = useSpring(x, { stiffness: 300, damping: 30 });
+  const mouseYSpring = useSpring(y, { stiffness: 300, damping: 30 });
 
   const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ['15deg', '-15deg']);
   const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ['-15deg', '15deg']);
