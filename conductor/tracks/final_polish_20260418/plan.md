@@ -16,7 +16,7 @@
 
 ## Phase 2: Sensory "Juice" & Haptics
 
-- [ ] Task: Implement Haptic Triggers (`navigator.vibrate`)
+- [x] Task: Implement Haptic Triggers (`navigator.vibrate`) (b52e86f)
   - [ ] Write tests for safe vibration invocation (graceful fallback)
   - [ ] Implement vibration logic for Card Selection, The Reveal, and Unanimous Consensus
 - [ ] Task: Update Juice/Settings Toggle
