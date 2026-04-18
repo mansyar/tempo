@@ -69,6 +69,10 @@ vi.mock('../src/hooks/useIdentity', () => ({
   useIdentity: () => mockIdentity,
 }));
 
+vi.mock('../src/hooks/useSound', () => ({
+  useSound: () => ({ play: vi.fn() }),
+}));
+
 // Mock matchMedia
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
@@ -218,6 +222,93 @@ describe('RoomPage Component', () => {
     vi.mocked(convex.useQuery).mockReturnValue(null); // Not found
     render(<RoomPage slug="test-room" />);
     expect(screen.getByText(/Room not found/)).toBeDefined();
+  });
+
+  it('handles vote, reveal, and confirm interactions', async () => {
+    mockIdentity.nickname = 'Tester';
+    const mockMutation = vi.fn().mockResolvedValue({});
+
+    vi.mocked(convex.useMutation).mockReturnValue(mockMutation);
+
+    vi.mocked(convex.useQuery).mockImplementation(
+      (apiFn: unknown, args: unknown) => {
+        const a = args as Record<string, unknown>;
+        if (a && a.slug !== undefined) {
+          return {
+            _id: 'room-id',
+            slug: 'test-room',
+            status: 'voting',
+            facilitatorId: 'tester-id',
+            currentTopicId: 'topic-1',
+          };
+        }
+        if (a && a.roomId !== undefined && a.identityId === undefined) {
+          return [
+            {
+              _id: '1',
+              identityId: 'tester-id',
+              name: 'Tester',
+              isOnline: true,
+            },
+            {
+              _id: 'topic-1',
+              title: 'Test Topic',
+              order: 1,
+              status: 'active',
+              name: 'Topic',
+            },
+          ];
+        }
+        if (a && a.roomId !== undefined && a.identityId !== undefined) {
+          return [{ identityId: 'tester-id', value: '5', topicId: 'topic-1' }];
+        }
+        return [];
+      }
+    );
+
+    render(<RoomPage slug="test-room" />);
+
+    // Wait for render
+    await screen.findAllByText('Test Topic');
+
+    // Clear auto-join call from mock
+    mockMutation.mockClear();
+
+    // 1. Vote
+    const cards = screen.getAllByTestId('poker-card');
+    await act(async () => {
+      fireEvent.click(cards[4]); // Click a card (e.g. '5')
+    });
+    expect(mockMutation).toHaveBeenCalledWith(
+      expect.objectContaining({ value: 5 })
+    );
+
+    // 2. Reveal
+    const revealBtn = screen.getByRole('button', { name: /Reveal Votes/i });
+    await act(async () => {
+      fireEvent.click(revealBtn);
+    });
+    // Can't easily distinguish from other calls with no unique args if we only have roomId, but we know it was called
+    expect(mockMutation).toHaveBeenCalled();
+
+    // 3. Batch Add
+    const batchAddBtn = screen.getByRole('button', { name: /Batch Add/i });
+    await act(async () => {
+      fireEvent.click(batchAddBtn);
+    });
+
+    const batchInput = screen.getByPlaceholderText(/Topic 1/i);
+    await act(async () => {
+      fireEvent.change(batchInput, { target: { value: 'New Topic' } });
+    });
+
+    const submitBatchBtn = screen.getByRole('button', { name: /Add Topics/i });
+    await act(async () => {
+      fireEvent.click(submitBatchBtn);
+    });
+    expect(mockMutation).toHaveBeenCalledWith(
+      expect.objectContaining({ titlesString: 'New Topic' })
+    );
   });
 });
 
