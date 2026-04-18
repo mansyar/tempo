@@ -1,6 +1,6 @@
 # Implementation Plan: Emoji Reactions & Automated Cleanup
 
-## Phase 1: Database & Backend Logic
+## Phase 1: Database & Backend Logic [checkpoint: cf0388a]
 
 - [x] Task: Implement reactions Schema and Mutations (de7f803)
   - [x] Write unit tests for `reactions:send` and `reactions:listRecent`
