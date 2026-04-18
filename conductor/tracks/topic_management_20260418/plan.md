@@ -21,9 +21,9 @@
 - [x] Task: Build Topic Sidebar Shell and List 568d7f6
   - [x] Write tests for `TopicSidebar` component (read-only vs facilitator views)
   - [x] Implement `TopicSidebar` displaying pending topics and history
-- [ ] Task: Implement Add & Manage Topic UI
-  - [ ] Write tests for inline add input and topic action buttons (Edit/Delete/Reorder)
-  - [ ] Implement inline addition and item management controls in sidebar
+- [x] Task: Implement Add & Manage Topic UI bcef400
+  - [x] Write tests for inline add input and topic action buttons (Edit/Delete/Reorder)
+  - [x] Implement inline addition and item management controls in sidebar
 - [ ] Task: Create Batch Add Modal
   - [ ] Write tests for `BatchAddModal` validation and submission
   - [ ] Implement modal with multi-line textarea and bulk submission logic
