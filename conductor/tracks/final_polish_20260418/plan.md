@@ -14,7 +14,7 @@
   - [ ] Implement logic to sync `theme_color` with the Dark/Light mode toggle
 - [x] Task: Conductor - User Manual Verification 'Phase 1: PWA & Offline Resilience' (Protocol in workflow.md) (bc52e91)
 
-## Phase 2: Sensory "Juice" & Haptics
+## Phase 2: Sensory "Juice" & Haptics [checkpoint: 357e44a]
 
 - [x] Task: Implement Haptic Triggers (`navigator.vibrate`) (b52e86f)
   - [ ] Write tests for safe vibration invocation (graceful fallback)
@@ -22,7 +22,7 @@
 - [x] Task: Update Juice/Settings Toggle (bc04bb0)
   - [ ] Write tests to verify the unified toggle controls both audio and haptics
   - [ ] Update `JuiceToggle` component to manage the unified global state
-- [ ] Task: Conductor - User Manual Verification 'Phase 2: Sensory "Juice" & Haptics' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 2: Sensory "Juice" & Haptics' (Protocol in workflow.md) (357e44a)
 
 ## Phase 3: Accessibility Announcements
 
