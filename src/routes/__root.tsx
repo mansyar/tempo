@@ -9,6 +9,7 @@ import { TanStackDevtools } from '@tanstack/react-devtools';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import { OfflineBanner } from '../components/OfflineBanner';
+import { AriaLiveAnnouncer } from '../components/AriaLiveAnnouncer';
 import { ConvexProvider, ConvexReactClient } from 'convex/react';
 import { useState, useEffect } from 'react';
 
@@ -76,6 +77,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body className="font-sans antialiased [overflow-wrap:anywhere] selection:bg-[rgba(79,184,178,0.24)]">
+        <AriaLiveAnnouncer />
         <OfflineBanner />
         <Header />
         {children}
