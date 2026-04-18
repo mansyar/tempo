@@ -1,7 +1,7 @@
 # Implementation Plan: Setup pre-commit and pre-push checks
 
 ## Phase 1: Setup Tooling
-- [ ] Task: Install `husky` and `lint-staged` as dev dependencies using pnpm.
+- [x] Task: Install `husky` and `lint-staged` as dev dependencies using pnpm. 071bee1
 - [ ] Task: Add quality check scripts to `package.json`.
     - [ ] `lint`: `eslint .`
     - [ ] `format`: `prettier --check .`
