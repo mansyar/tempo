@@ -30,9 +30,9 @@
   - [x] Implement a custom hook or effect in `RoomPage.tsx` to manage `document.title`
 - [x] Task: Conductor - User Manual Verification 'Phase 3: Hero Experience & Landing Page' (Protocol in workflow.md) edf4ea7
 
-## Phase 4: UX Polish & Final Audit [checkpoint: ]
+## Phase 4: UX Polish & Final Audit [checkpoint: a36fb1d]
 
 - [x] Task: Refine Topic State Visibility in History fe8b22a
   - [x] Write tests for visual distinction between topic states
   - [x] Update CSS/Styles in `TopicSidebar` for better state clarity
-- [ ] Task: Conductor - User Manual Verification 'Phase 4: UX Polish & Final Audit' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 4: UX Polish & Final Audit' (Protocol in workflow.md) a36fb1d
