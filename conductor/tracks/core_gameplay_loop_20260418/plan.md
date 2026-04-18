@@ -2,7 +2,7 @@
 
 ## Phase 1: Real-Time Presence & Facilitator Logic
 
-- [ ] Task: Implement Presence Heartbeat and Timeout in Convex
+- [x] Task: Implement Presence Heartbeat and Timeout in Convex (f51ee0d)
   - [ ] Write tests for `players:heartbeat` and cron-based offline marking
   - [ ] Implement `players:heartbeat` mutation and `cleanup:offlinePlayers` cron
 - [ ] Task: Implement Facilitator Handoff and Claiming
