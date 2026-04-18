@@ -26,7 +26,7 @@
 
 ## Phase 3: Accessibility Announcements
 
-- [ ] Task: Implement ARIA Live Announcer
+- [x] Task: Implement ARIA Live Announcer (e3148cf)
   - [ ] Write tests for `AriaLiveAnnouncer` component
   - [ ] Implement an invisible, polite `aria-live` region for screen readers
 - [ ] Task: Announce Game State Changes
