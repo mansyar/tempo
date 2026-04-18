@@ -170,7 +170,7 @@ describe('RoomPage Component', () => {
     });
 
     expect(await screen.findByText(/test-room/)).toBeDefined();
-    expect(screen.getByText(/Voting Area/)).toBeDefined();
+    expect(screen.getByText(/Choose your estimate/)).toBeDefined();
   });
 
   it('handles join error', async () => {

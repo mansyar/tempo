@@ -4,8 +4,11 @@ import { useIdentity } from '../hooks/useIdentity';
 import JoinModal from './JoinModal';
 import { PresenceSidebar } from './PresenceSidebar';
 import { ClaimBanner } from './ClaimBanner';
+import { CardGrid } from './CardGrid';
+import { CardDeck } from './CardDeck';
 import { usePresence } from '../hooks/usePresence';
 import { useState, useEffect } from 'react';
+import type { Id } from '../../convex/_generated/dataModel';
 
 interface RoomPageProps {
   slug: string;
@@ -14,7 +17,18 @@ interface RoomPageProps {
 export function RoomPage({ slug }: RoomPageProps) {
   const { identityId, nickname } = useIdentity();
   const room = useQuery(api.rooms.getBySlug, { slug });
+  const players = useQuery(api.players.listByRoom, {
+    roomId: room?._id as Id<'rooms'>,
+  });
+  const votes = useQuery(api.votes.listByRoom, {
+    roomId: room?._id as Id<'rooms'>,
+    identityId: identityId!,
+  });
+
   const joinRoom = useMutation(api.players.join);
+  const castVote = useMutation(api.votes.cast);
+  const revealVotes = useMutation(api.rooms.reveal);
+  const resetRound = useMutation(api.rooms.reset);
 
   // Local state to track if we've joined this session
   const [hasJoined, setHasJoined] = useState(false);
@@ -53,6 +67,19 @@ export function RoomPage({ slug }: RoomPageProps) {
     }
   };
 
+  const handleVote = async (value: string | number) => {
+    if (!room) return;
+    try {
+      await castVote({
+        roomId: room._id,
+        identityId: identityId!,
+        value,
+      });
+    } catch (error) {
+      console.error('Failed to cast vote:', error);
+    }
+  };
+
   if (room === undefined) {
     return (
       <div className="flex min-h-[60vh] items-center justify-center">
@@ -86,55 +113,94 @@ export function RoomPage({ slug }: RoomPageProps) {
     return <JoinModal roomSlug={slug} onJoin={handleJoin} />;
   }
 
+  const isFacilitator = room.facilitatorId === identityId;
+  const myVote = votes?.find((v) => v.identityId === identityId)?.value;
+
   return (
-    <div className="page-wrap px-4 py-8">
-      <ClaimBanner
-        roomId={room._id}
-        facilitatorId={room.facilitatorId}
-        identityId={identityId!}
-      />
+    <div className="min-h-screen flex flex-col">
+      <div className="flex-1 page-wrap px-4 py-8">
+        <ClaimBanner
+          roomId={room._id}
+          facilitatorId={room.facilitatorId}
+          identityId={identityId!}
+        />
 
-      <header className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">{slug}</h1>
-          <p className="text-sm text-[var(--text-secondary)] uppercase tracking-widest font-semibold mt-1">
-            Planning Poker Room
-          </p>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:bg-green-900/30 dark:text-green-400">
-            Live
-          </span>
-          <button
-            onClick={() => navigator.clipboard.writeText(window.location.href)}
-            className="text-xs font-semibold text-[var(--text-tertiary)] hover:text-[var(--text-primary)] transition-colors"
-          >
-            Copy Invite Link
-          </button>
-        </div>
-      </header>
+        <header className="mb-12 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight">{slug}</h1>
+            <p className="text-sm text-[var(--text-secondary)] uppercase tracking-widest font-semibold mt-1">
+              Planning Poker Room
+            </p>
+          </div>
 
-      <div className="grid gap-8 lg:grid-cols-4">
-        <section className="lg:col-span-3">
-          <div className="island-shell min-h-[400px] flex items-center justify-center border-2 border-dashed border-[var(--border-subtle)] rounded-[2rem]">
-            <div className="text-center text-[var(--text-tertiary)]">
-              <p className="text-lg font-semibold mb-1">Voting Area</p>
-              <p className="text-sm italic">
-                Coming soon: Feature implementation in progress
-              </p>
+          <div className="flex items-center gap-4">
+            {isFacilitator && (
+              <div className="flex items-center gap-2 pr-4 border-r border-[var(--border-subtle)]">
+                {room.status === 'voting' ? (
+                  <button
+                    onClick={() =>
+                      revealVotes({ roomId: room._id, identityId: identityId! })
+                    }
+                    className="px-4 py-2 bg-[var(--accent)] text-[var(--bg-primary)] text-sm font-bold rounded-xl hover:brightness-110 transition-all shadow-lg"
+                  >
+                    Reveal Votes
+                  </button>
+                ) : (
+                  <button
+                    onClick={() =>
+                      resetRound({ roomId: room._id, identityId: identityId! })
+                    }
+                    className="px-4 py-2 bg-[var(--bg-tertiary)] text-[var(--text-primary)] text-sm font-bold rounded-xl border border-[var(--border-subtle)] hover:border-[var(--accent)] transition-all"
+                  >
+                    Reset Round
+                  </button>
+                )}
+              </div>
+            )}
+
+            <div className="flex items-center gap-2">
+              <span className="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:bg-green-900/30 dark:text-green-400">
+                Live
+              </span>
+              <button
+                onClick={() =>
+                  navigator.clipboard.writeText(window.location.href)
+                }
+                className="text-xs font-semibold text-[var(--text-tertiary)] hover:text-[var(--text-primary)] transition-colors"
+              >
+                Copy Invite
+              </button>
             </div>
           </div>
-        </section>
+        </header>
 
-        <aside>
-          <div className="island-shell p-6 rounded-2xl h-full">
-            <PresenceSidebar
-              roomId={room._id}
-              facilitatorId={room.facilitatorId}
-            />
-          </div>
-        </aside>
+        <div className="grid gap-12 lg:grid-cols-4">
+          <section className="lg:col-span-3">
+            {players && votes ? (
+              <CardGrid
+                players={players}
+                votes={votes}
+                revealed={room.status === 'revealed'}
+              />
+            ) : (
+              <div className="h-64 flex items-center justify-center italic text-[var(--text-tertiary)]">
+                Loading voting area...
+              </div>
+            )}
+          </section>
+
+          <aside>
+            <div className="island-shell p-6 rounded-2xl">
+              <PresenceSidebar
+                roomId={room._id}
+                facilitatorId={room.facilitatorId}
+              />
+            </div>
+          </aside>
+        </div>
       </div>
+
+      <CardDeck onSelect={handleVote} selectedVote={myVote} />
     </div>
   );
 }
