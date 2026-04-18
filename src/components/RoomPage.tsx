@@ -40,13 +40,14 @@ export function RoomPage({ slug }: RoomPageProps) {
   const resetRound = useMutation(api.rooms.reset);
   const addBatch = useMutation(api.topics.addBatch);
 
-  // Local state to track if we've joined this session
-  const [hasJoined, setHasJoined] = useState(false);
+  // Synchronously determine if we *should* already be considered "joined"
+  // based on whether we have a nickname. This prevents flicker.
+  const [hasJoined, setHasJoined] = useState(() => !!nickname);
   const [isBatchAddOpen, setIsBatchAddOpen] = useState(false);
 
-  // Auto-join if we have a nickname and haven't joined yet
+  // Auto-join background sync if we have a nickname
   useEffect(() => {
-    if (room && identityId && nickname && !hasJoined) {
+    if (room && identityId && nickname) {
       joinRoom({
         roomId: room._id,
         identityId: identityId,
@@ -59,7 +60,7 @@ export function RoomPage({ slug }: RoomPageProps) {
           console.error('Failed to auto-join room:', error);
         });
     }
-  }, [room, identityId, nickname, hasJoined, joinRoom]);
+  }, [room, identityId, nickname, joinRoom]);
 
   // Presence hook
   usePresence(room?._id, identityId!, hasJoined);
@@ -153,8 +154,8 @@ export function RoomPage({ slug }: RoomPageProps) {
     );
   }
 
-  // If not joined yet, show the join modal
-  if (!hasJoined) {
+  // If we don't have a nickname, show the join modal immediately
+  if (!nickname && !hasJoined) {
     return <JoinModal roomSlug={slug} onJoin={handleJoin} />;
   }
 

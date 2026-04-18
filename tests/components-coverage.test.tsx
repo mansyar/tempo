@@ -59,12 +59,14 @@ vi.mock('@tanstack/react-router-devtools', () => ({
 }));
 
 // Mock identity
+const mockIdentity = {
+  nickname: 'Tester',
+  identityId: 'tester-id',
+  setNickname: vi.fn(),
+};
+
 vi.mock('../src/hooks/useIdentity', () => ({
-  useIdentity: () => ({
-    nickname: 'Tester',
-    identityId: 'tester-id',
-    setNickname: vi.fn(),
-  }),
+  useIdentity: () => mockIdentity,
 }));
 
 // Mock matchMedia
@@ -133,6 +135,7 @@ describe('RoomPage Component', () => {
   });
 
   it('renders room content when loaded and joined', async () => {
+    mockIdentity.nickname = ''; // Start empty to trigger JoinModal
     vi.mocked(convex.useMutation).mockReturnValue(
       vi.fn().mockResolvedValue({})
     );
@@ -148,7 +151,8 @@ describe('RoomPage Component', () => {
             facilitatorId: 'tester-id',
           };
         }
-        if (a && a.roomId !== undefined) {
+        if (a && a.roomId !== undefined && a.identityId === undefined) {
+          // players list
           return [
             {
               _id: '1' as unknown as Id<'players'>,
@@ -158,6 +162,10 @@ describe('RoomPage Component', () => {
             },
           ];
         }
+        if (a && a.roomId !== undefined && a.identityId !== undefined) {
+          // votes list
+          return [];
+        }
         return null;
       }
     );
@@ -166,6 +174,7 @@ describe('RoomPage Component', () => {
 
     const joinBtn = screen.getByText('Mock Join');
     await act(async () => {
+      mockIdentity.nickname = 'Tester'; // Simulate name entered
       fireEvent.click(joinBtn);
     });
 
@@ -174,12 +183,24 @@ describe('RoomPage Component', () => {
   });
 
   it('handles join error', async () => {
+    mockIdentity.nickname = '';
     vi.spyOn(console, 'error').mockImplementation(() => {});
-    vi.mocked(convex.useQuery).mockReturnValue({
-      _id: 'room-id',
-      slug: 'test-room',
-      status: 'voting',
-    });
+    vi.mocked(convex.useQuery).mockImplementation(
+      (apiFn: unknown, args: unknown) => {
+        const a = args as Record<string, unknown>;
+        if (a && a.slug !== undefined) {
+          return {
+            _id: 'room-id' as unknown as Id<'rooms'>,
+            slug: a.slug as string,
+            status: 'voting',
+          };
+        }
+        if (a && a.roomId !== undefined && a.identityId !== undefined) {
+          return []; // votes
+        }
+        return null;
+      }
+    );
     vi.mocked(convex.useMutation).mockReturnValue(() => {
       return Promise.reject(new Error('Join failed'));
     });
@@ -237,6 +258,7 @@ describe('IndexRoute', () => {
 
 describe('RoomRoute', () => {
   it('renders room route', async () => {
+    mockIdentity.nickname = '';
     vi.mocked(convex.useMutation).mockReturnValue(
       vi.fn().mockResolvedValue({})
     );
@@ -251,7 +273,8 @@ describe('RoomRoute', () => {
             facilitatorId: 'tester-id',
           };
         }
-        if (a && a.roomId !== undefined) {
+        if (a && a.roomId !== undefined && a.identityId === undefined) {
+          // players
           return [
             {
               _id: '1' as unknown as Id<'players'>,
@@ -260,6 +283,10 @@ describe('RoomRoute', () => {
               isOnline: true,
             },
           ];
+        }
+        if (a && a.roomId !== undefined && a.identityId !== undefined) {
+          // votes
+          return [];
         }
         return null;
       }
@@ -272,6 +299,7 @@ describe('RoomRoute', () => {
 
     const joinBtn = screen.getByText('Mock Join');
     await act(async () => {
+      mockIdentity.nickname = 'Tester';
       fireEvent.click(joinBtn);
     });
 
