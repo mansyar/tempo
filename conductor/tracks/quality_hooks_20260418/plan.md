@@ -2,7 +2,7 @@
 
 ## Phase 1: Setup Tooling
 - [x] Task: Install `husky` and `lint-staged` as dev dependencies using pnpm. 071bee1
-- [~] Task: Add quality check scripts to `package.json`.
+- [x] Task: Add quality check scripts to `package.json`. cf3ec9a
     - [ ] `lint`: `eslint .`
     - [ ] `format`: `prettier --check .`
     - [ ] `typecheck`: `tsc --noEmit`
