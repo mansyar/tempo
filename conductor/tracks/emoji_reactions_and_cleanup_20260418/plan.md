@@ -37,3 +37,7 @@
   - [x] Write tests verifying `prefers-reduced-motion` detection
   - [x] Implement static Fade In/Out variant instead of the burst animation for users with reduced motion enabled
 - [x] Task: Conductor - User Manual Verification 'Phase 3: The "Juice" (Animations & A11y Fallbacks)' (b442a0e)
+
+## Phase: Review Fixes
+
+- [x] Task: Apply review suggestions b14d6f7
