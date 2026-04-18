@@ -1,6 +1,6 @@
 # Implementation Plan: Final Product Polish & Refinement
 
-## Phase 1: Facilitator Queue Management (Inline Editing) [checkpoint: ]
+## Phase 1: Facilitator Queue Management (Inline Editing) [checkpoint: d4c138a]
 
 - [x] Task: Implement `topics:update` mutation in Convex 03943ce
   - [x] Write unit tests for `topics:update` mutation
