@@ -1,17 +1,17 @@
-import { mutation } from "./_generated/server";
-import { v } from "convex/values";
+import { mutation } from './_generated/server';
+import { v } from 'convex/values';
 
 export const join = mutation({
   args: {
-    roomId: v.id("rooms"),
+    roomId: v.id('rooms'),
     identityId: v.string(),
     name: v.string(),
   },
   handler: async (ctx, args) => {
     const existing = await ctx.db
-      .query("players")
-      .withIndex("by_identity", (q) =>
-        q.eq("roomId", args.roomId).eq("identityId", args.identityId)
+      .query('players')
+      .withIndex('by_identity', (q) =>
+        q.eq('roomId', args.roomId).eq('identityId', args.identityId)
       )
       .unique();
 
@@ -24,7 +24,7 @@ export const join = mutation({
       return existing._id;
     }
 
-    const playerId = await ctx.db.insert("players", {
+    const playerId = await ctx.db.insert('players', {
       roomId: args.roomId,
       identityId: args.identityId,
       name: args.name,
@@ -38,5 +38,32 @@ export const join = mutation({
     });
 
     return playerId;
+  },
+});
+
+export const heartbeat = mutation({
+  args: { playerId: v.id('players') },
+  handler: async (ctx, args) => {
+    await ctx.db.patch(args.playerId, {
+      lastHeartbeat: Date.now(),
+      isOnline: true,
+    });
+  },
+});
+
+export const markOffline = mutation({
+  args: {},
+  handler: async (ctx) => {
+    const cutoff = Date.now() - 30000; // 30 seconds timeout
+    const onlinePlayers = await ctx.db
+      .query('players')
+      .filter((q) => q.eq(q.field('isOnline'), true))
+      .collect();
+
+    for (const player of onlinePlayers) {
+      if (player.lastHeartbeat < cutoff) {
+        await ctx.db.patch(player._id, { isOnline: false });
+      }
+    }
   },
 });
