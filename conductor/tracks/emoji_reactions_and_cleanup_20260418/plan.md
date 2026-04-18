@@ -23,7 +23,7 @@
 - [x] Task: Integrate `reactions.listRecent` Subscription (b642615)
   - [x] Write tests for real-time subscription hook consuming recent reactions
   - [x] Implement UI state subscription to merge local optimistic reactions with remote incoming reactions
-- [ ] Task: Conductor - User Manual Verification 'Phase 2: Reaction UI & Real-Time Sync' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 2: Reaction UI & Real-Time Sync' (8fd1424)
 
 ## Phase 3: The "Juice" (Animations & A11y Fallbacks)
 
