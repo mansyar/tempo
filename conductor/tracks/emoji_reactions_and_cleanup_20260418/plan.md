@@ -27,13 +27,13 @@
 
 ## Phase 3: The "Juice" (Animations & A11y Fallbacks)
 
-- [ ] Task: Implement Framer Motion Emoji Burst
-  - [ ] Write tests to verify `framer-motion` variants for emoji burst from player's card
-  - [ ] Implement the `EmojiBurst` component utilizing physics-based layout and coordinate tracking from the voting table cards
-- [ ] Task: Implement Auto-Expiration
-  - [ ] Write tests for 5-second auto-expiration of rendered emojis
-  - [ ] Implement DOM removal logic for expired floating emojis
-- [ ] Task: Implement A11y Fallback (`prefers-reduced-motion`)
-  - [ ] Write tests verifying `prefers-reduced-motion` detection
-  - [ ] Implement static Fade In/Out variant instead of the burst animation for users with reduced motion enabled
+- [x] Task: Implement Framer Motion Emoji Burst (9df6e99)
+  - [x] Write tests to verify `framer-motion` variants for emoji burst from player's card
+  - [x] Implement the `EmojiBurst` component utilizing physics-based layout and coordinate tracking from the voting table cards
+- [x] Task: Implement Auto-Expiration (9df6e99)
+  - [x] Write tests for 5-second auto-expiration of rendered emojis
+  - [x] Implement DOM removal logic for expired floating emojis
+- [x] Task: Implement A11y Fallback (`prefers-reduced-motion`) (9df6e99)
+  - [x] Write tests verifying `prefers-reduced-motion` detection
+  - [x] Implement static Fade In/Out variant instead of the burst animation for users with reduced motion enabled
 - [ ] Task: Conductor - User Manual Verification 'Phase 3: The "Juice" (Animations & A11y Fallbacks)' (Protocol in workflow.md)
