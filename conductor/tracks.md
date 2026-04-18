@@ -4,5 +4,5 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-- [ ] **Track: Emoji Reactions & Automated Cleanup**
+- [x] **Track: Emoji Reactions & Automated Cleanup**
       _Link: [./tracks/emoji_reactions_and_cleanup_20260418/](./tracks/emoji_reactions_and_cleanup_20260418/)_
