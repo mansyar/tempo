@@ -37,7 +37,7 @@
 - [x] Task: Build "Confirm & Next" Workflow e468029
   - [x] Write tests for the facilitator's confirm-estimate-and-advance flow
   - [x] Implement UI for confirming final estimate and triggering `nextTopic`
-- [ ] Task: Implement Topic History Display
-  - [ ] Write tests for completed topics list with saved estimates
-  - [ ] Update sidebar history section with actual data and formatted results
+- [x] Task: Implement Topic History Display f7144ca
+  - [x] Write tests for completed topics list with saved estimates
+  - [x] Update sidebar history section with actual data and formatted results
 - [ ] Task: Conductor - User Manual Verification 'Phase 3: Estimation Workflow & Session History' (Protocol in workflow.md)
