@@ -16,6 +16,17 @@
     "test:coverage": "vitest run --coverage",
     "prepare": "husky"
   },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write",
+      "vitest related --run",
+      "pnpm tsx scripts/check-file-length.ts"
+    ],
+    "*.{js,json,md,css}": [
+      "prettier --write"
+    ]
+  },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.18",
     "@tanstack/react-devtools": "latest",
