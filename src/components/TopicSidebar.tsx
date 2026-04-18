@@ -9,8 +9,10 @@ import {
   Trash2,
   ChevronUp,
   ChevronDown,
+  Layers,
 } from 'lucide-react';
 import { useState } from 'react';
+import { BatchAddModal } from './BatchAddModal';
 
 interface TopicSidebarProps {
   roomId: Id<'rooms'>;
@@ -24,10 +26,12 @@ export function TopicSidebar({
   identityId,
 }: TopicSidebarProps) {
   const [newTopicTitle, setNewTopicTitle] = useState('');
+  const [isBatchAddOpen, setIsBatchAddOpen] = useState(false);
   const topics = useQuery(api.topics.listByRoom, { roomId });
   const isFacilitator = facilitatorId === identityId;
 
   const addTopic = useMutation(api.topics.add);
+  const addBatch = useMutation(api.topics.addBatch);
   const removeTopic = useMutation(api.topics.remove);
   const reorderTopic = useMutation(api.topics.reorder);
 
@@ -47,6 +51,19 @@ export function TopicSidebar({
       setNewTopicTitle('');
     } catch (err) {
       console.error('Failed to add topic:', err);
+    }
+  };
+
+  const handleBatchAdd = async (titlesString: string) => {
+    try {
+      await addBatch({
+        roomId,
+        identityId,
+        titlesString,
+      });
+      setIsBatchAddOpen(false);
+    } catch (err) {
+      console.error('Failed to batch add topics:', err);
     }
   };
 
@@ -81,6 +98,16 @@ export function TopicSidebar({
             Topic Queue
           </h2>
         </div>
+        {isFacilitator && (
+          <button
+            onClick={() => setIsBatchAddOpen(true)}
+            className="p-1.5 rounded-sm bg-[var(--bg-tertiary)] hover:bg-[var(--accent)] text-[var(--text-secondary)] hover:text-white transition-all"
+            aria-label="Batch Add"
+            title="Batch Add"
+          >
+            <Layers className="w-4 h-4" />
+          </button>
+        )}
       </div>
 
       {/* Content */}
@@ -229,6 +256,15 @@ export function TopicSidebar({
           </div>
         </section>
       </div>
+
+      {isFacilitator && (
+        <BatchAddModal
+          roomId={roomId}
+          isOpen={isBatchAddOpen}
+          onClose={() => setIsBatchAddOpen(false)}
+          onSubmit={handleBatchAdd}
+        />
+      )}
     </aside>
   );
 }
