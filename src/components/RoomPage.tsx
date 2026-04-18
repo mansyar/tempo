@@ -53,6 +53,26 @@ export function RoomPage({ slug }: RoomPageProps) {
 
   const activeTopic = topics?.find((t) => t._id === room?.currentTopicId);
 
+  // Dynamic tab title
+  useEffect(() => {
+    if (!room) {
+      document.title = 'Pointy Poker';
+      return;
+    }
+
+    if (activeTopic) {
+      const emoji = room.status === 'revealed' ? '✅' : '🤔';
+      const status = room.status === 'revealed' ? 'Revealed' : 'Voting';
+      document.title = `${emoji} ${status}: ${activeTopic.title} | Pointy`;
+    } else {
+      document.title = 'Pointy Poker';
+    }
+
+    return () => {
+      document.title = 'Pointy Poker';
+    };
+  }, [room?.status, activeTopic?.title, room]);
+
   // Accessibility Announcements for State Changes
   useEffect(() => {
     if (room?.status === 'revealed') {
