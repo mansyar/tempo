@@ -36,7 +36,7 @@
 
 ## Phase 4: Deployment Architecture
 
-- [ ] Task: Create Multi-stage Dockerfile
+- [x] Task: Create Multi-stage Dockerfile (6d4ac6c)
   - [ ] Create a `Dockerfile` using `node:22-alpine` as build and runtime environments
   - [ ] Configure `pnpm` installation, build steps, and expose the correct port
 - [ ] Task: Conductor - User Manual Verification 'Phase 4: Deployment Architecture' (Protocol in workflow.md)
