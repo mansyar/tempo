@@ -4,9 +4,13 @@ import type { Id } from '../../convex/_generated/dataModel';
 
 interface PresenceSidebarProps {
   roomId: Id<'rooms'>;
+  facilitatorId: string;
 }
 
-export function PresenceSidebar({ roomId }: PresenceSidebarProps) {
+export function PresenceSidebar({
+  roomId,
+  facilitatorId,
+}: PresenceSidebarProps) {
   const players = useQuery(api.players.listByRoom, { roomId });
 
   if (!players) return null;
@@ -35,11 +39,18 @@ export function PresenceSidebar({ roomId }: PresenceSidebarProps) {
                   }`}
                 />
               </div>
-              <span
-                className={`text-sm ${player.isOnline ? 'text-[var(--text-primary)]' : 'text-[var(--text-tertiary)]'}`}
-              >
-                {player.name}
-              </span>
+              <div className="flex flex-col">
+                <span
+                  className={`text-sm font-medium ${player.isOnline ? 'text-[var(--text-primary)]' : 'text-[var(--text-tertiary)]'}`}
+                >
+                  {player.name}
+                </span>
+                {player.identityId === facilitatorId && (
+                  <span className="text-[10px] uppercase tracking-tighter text-[var(--warning)] font-bold">
+                    👑 Facilitator
+                  </span>
+                )}
+              </div>
             </div>
           </li>
         ))}

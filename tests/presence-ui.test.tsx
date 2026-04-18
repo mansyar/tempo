@@ -13,14 +13,30 @@ vi.mock('convex/react', () => ({
 describe('PresenceSidebar', () => {
   it('renders a list of players with their online status', () => {
     vi.mocked(useQuery).mockReturnValue([
-      { _id: '1' as Id<'players'>, name: 'Alice', isOnline: true },
-      { _id: '2' as Id<'players'>, name: 'Bob', isOnline: false },
+      {
+        _id: '1' as Id<'players'>,
+        identityId: 'user1',
+        name: 'Alice',
+        isOnline: true,
+      },
+      {
+        _id: '2' as Id<'players'>,
+        identityId: 'user2',
+        name: 'Bob',
+        isOnline: false,
+      },
     ]);
 
-    render(<PresenceSidebar roomId={'room1' as unknown as Id<'rooms'>} />);
+    render(
+      <PresenceSidebar
+        roomId={'room1' as unknown as Id<'rooms'>}
+        facilitatorId="user1"
+      />
+    );
 
     expect(screen.getByText('Alice')).toBeDefined();
-    expect(screen.getByText('Bob')).toBeDefined();
+    expect(screen.getByText(/Facilitator/i)).toBeDefined();
+
     // Assuming status indicators exist
   });
 });

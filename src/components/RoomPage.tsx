@@ -111,7 +111,10 @@ export function RoomPage({ slug }: RoomPageProps) {
 
         <aside>
           <div className="island-shell p-6 rounded-2xl h-full">
-            <PresenceSidebar roomId={room._id} />
+            <PresenceSidebar
+              roomId={room._id}
+              facilitatorId={room.facilitatorId}
+            />
           </div>
         </aside>
       </div>
