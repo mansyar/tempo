@@ -10,10 +10,10 @@
   - [x] Write tests for `topics:addBatch` and `topics:reorder`
   - [x] Implement `addBatch` mutation for multi-line support
   - [x] Implement `reorder` mutation using `order` field increments
-- [ ] Task: Implement Session Workflow Mutations
-  - [ ] Write tests for `rooms:nextTopic` and `topics:setFinalEstimate`
-  - [ ] Implement `topics:setFinalEstimate` to update consensus
-  - [ ] Implement `rooms:nextTopic` to handle status transitions and vote resets
+- [x] Task: Implement Session Workflow Mutations f676bdc
+  - [x] Write tests for `rooms:nextTopic` and `topics:setFinalEstimate`
+  - [x] Implement `topics:setFinalEstimate` to update consensus
+  - [x] Implement `rooms:nextTopic` to handle status transitions and vote resets
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: Database & Backend Logic' (Protocol in workflow.md)
 
 ## Phase 2: Topic Management UI (Facilitator) [checkpoint: ]
