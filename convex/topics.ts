@@ -182,3 +182,26 @@ export const setFinalEstimate = mutation({
     });
   },
 });
+
+export const update = mutation({
+  args: {
+    topicId: v.id('topics'),
+    identityId: v.string(),
+    title: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const topic = await ctx.db.get(args.topicId);
+    if (!topic) throw new Error('Topic not found');
+
+    const room = await ctx.db.get(topic.roomId);
+    if (!room) throw new Error('Room not found');
+
+    if (room.facilitatorId !== args.identityId) {
+      throw new Error('Only the facilitator can manage topics');
+    }
+
+    await ctx.db.patch(args.topicId, {
+      title: args.title,
+    });
+  },
+});
