@@ -26,7 +26,7 @@ export const listByRoom = query({
 
       return {
         ...vote,
-        value: null, // Mask the value
+        value: vote.value === null ? null : 'voted', // Return placeholder if voted
       };
     });
   },

@@ -217,11 +217,9 @@ export function RoomPage({ slug }: RoomPageProps) {
 
   // Logic to disable reveal if not everyone has voted
   const onlinePlayers = players?.filter((p) => p.isOnline) || [];
-  // For the current topic, how many people have cast a non-null vote?
   const currentTopicVotes =
-    votes?.filter(
-      (v) => v.topicId === room.currentTopicId && v.value !== null
-    ) || [];
+    votes?.filter((v) => v.topicId === activeTopic?._id && v.value !== null) ||
+    [];
   const revealDisabled = currentTopicVotes.length < onlinePlayers.length;
 
   return (

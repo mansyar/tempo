@@ -42,7 +42,7 @@ test('votes:cast and masked votes:listByRoom', async () => {
     identityId: 'user2',
   });
   const user1VoteForUser2 = votesForUser2.find((v) => v.identityId === 'user1');
-  expect(user1VoteForUser2?.value).toBe(null);
+  expect(user1VoteForUser2?.value).toBe('voted');
 
   // 3. User 1 lists votes - should see own vote
   const votesForUser1 = await t.query(api.votes.listByRoom, {
