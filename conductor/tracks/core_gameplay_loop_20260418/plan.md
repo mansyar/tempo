@@ -1,21 +1,21 @@
 # Implementation Plan: Core Gameplay Loop
 
-## Phase 1: Real-Time Presence & Facilitator Logic
+## Phase 1: Real-Time Presence & Facilitator Logic [checkpoint: 4f95697]
 
 - [x] Task: Implement Presence Heartbeat and Timeout in Convex (f51ee0d)
-  - [ ] Write tests for `players:heartbeat` and cron-based offline marking
-  - [ ] Implement `players:heartbeat` mutation and `cleanup:offlinePlayers` cron
+  - [x] Write tests for `players:heartbeat` and cron-based offline marking
+  - [x] Implement `players:heartbeat` mutation and `cleanup:offlinePlayers` cron
 - [x] Task: Implement Facilitator Handoff and Claiming (824d6d0)
-  - [ ] Write tests for facilitator logic (auto-assign on join, claim if current is offline)
-  - [ ] Implement `players:claimFacilitator` mutation
+  - [x] Write tests for facilitator logic (auto-assign on join, claim if current is offline)
+  - [x] Implement `players:claimFacilitator` mutation
 - [x] Task: Build Presence Sidebar and Claim Banner (f6b5353)
-  - [ ] Write tests for `PresenceSidebar` and `ClaimBanner` components
-  - [ ] Implement UI for real-time player list and "Claim Facilitator" notification
-- [ ] Task: Conductor - User Manual Verification 'Presence & Facilitator Logic' (Protocol in workflow.md)
+  - [x] Write tests for `PresenceSidebar` and `ClaimBanner` components
+  - [x] Implement UI for real-time player list and "Claim Facilitator" notification
+- [x] Task: Conductor - User Manual Verification 'Presence & Facilitator Logic' (4f95697)
 
 ## Phase 2: "The Mask" – Secure Voting Backend
 
-- [ ] Task: Implement Masked Voting Schema and Mutations
+- [x] Task: Implement Masked Voting Schema and Mutations (e8b7f9b)
   - [ ] Write tests for `votes:cast` and masked `votes:listByRoom` query
   - [ ] Implement `votes:cast` and `votes:listByRoom` with server-side masking
 - [ ] Task: Implement Room State Controls (Reveal/Reset)
