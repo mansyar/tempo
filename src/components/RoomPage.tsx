@@ -28,7 +28,7 @@ interface RoomPageProps {
 
 export function RoomPage({ slug }: RoomPageProps) {
   const { identityId, nickname } = useIdentity();
-  const { play } = useSound();
+  const { play, vibrate, patterns } = useSound();
   const { enabled: juiceEnabled } = useJuice();
   const room = useQuery(api.rooms.getBySlug, { slug });
   const players = useQuery(api.players.listByRoom, {
@@ -82,13 +82,13 @@ export function RoomPage({ slug }: RoomPageProps) {
 
   // Presence hook
   usePresence(room?._id, identityId!, hasJoined);
-
   // Celebration Effect
   useEffect(() => {
     if (room?.status === 'revealed' && votes) {
       const voteValues = votes.map((v) => v.value);
       if (isUnanimous(voteValues)) {
         play('confetti');
+        vibrate(patterns.success); // Celebrate consensus!
         if (juiceEnabled) {
           confetti({
             particleCount: 150,
@@ -99,7 +99,7 @@ export function RoomPage({ slug }: RoomPageProps) {
         }
       }
     }
-  }, [room?.status, votes, play, juiceEnabled]);
+  }, [room?.status, votes, play, vibrate, patterns.success, juiceEnabled]);
 
   const handleJoin = async (nickname: string) => {
     if (!room) return;

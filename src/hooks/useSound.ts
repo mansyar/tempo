@@ -3,20 +3,50 @@ import { useJuice } from '../components/JuiceToggle';
 
 type SoundType = 'pop' | 'whoosh' | 'confetti';
 
+const HAPTIC_PATTERNS = {
+  pop: 10,
+  whoosh: 20,
+  confetti: [50, 30, 50],
+  success: 100,
+  reveal: [30, 50, 30],
+};
+
 export function useSound() {
   const { enabled } = useJuice();
+
+  // Simple vibration helper
+  const vibrate = useCallback(
+    (pattern: number | number[]) => {
+      if (!enabled) return;
+      if (typeof window !== 'undefined' && 'vibrate' in navigator) {
+        try {
+          navigator.vibrate(pattern);
+        } catch {
+          // Ignore haptic failures
+        }
+      }
+    },
+    [enabled]
+  );
 
   const play = useCallback(
     (type: SoundType) => {
       if (!enabled) return;
 
+      // Audio feedback
       const audio = new Audio(`/sounds/${type}.wav`);
       audio.play().catch((e) => {
-        console.warn('Sound playback failed:', e);
+        // Only warn if not a user-gesture error which is common in PWAs
+        if (e.name !== 'NotAllowedError') {
+          console.warn('Sound playback failed:', e);
+        }
       });
+
+      // Simultaneous Haptic feedback
+      vibrate(HAPTIC_PATTERNS[type]);
     },
-    [enabled]
+    [enabled, vibrate]
   );
 
-  return { play };
+  return { play, vibrate, patterns: HAPTIC_PATTERNS };
 }

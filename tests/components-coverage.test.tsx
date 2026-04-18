@@ -70,7 +70,11 @@ vi.mock('../src/hooks/useIdentity', () => ({
 }));
 
 vi.mock('../src/hooks/useSound', () => ({
-  useSound: () => ({ play: vi.fn() }),
+  useSound: () => ({
+    play: vi.fn(),
+    vibrate: vi.fn(),
+    patterns: { success: 100 },
+  }),
 }));
 
 // Mock matchMedia
