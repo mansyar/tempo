@@ -9,7 +9,7 @@
 - [x] Task: Implement Reconnecting Banner (ebf4283)
   - [ ] Write tests for `OfflineBanner` component rendering based on network state
   - [ ] Implement a subtle banner overlay to indicate disconnected status
-- [ ] Task: Dynamic Theme Color Integration
+- [x] Task: Dynamic Theme Color Integration (dbdda18)
   - [ ] Write tests for theme color `<meta>` tag synchronization
   - [ ] Implement logic to sync `theme_color` with the Dark/Light mode toggle
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: PWA & Offline Resilience' (Protocol in workflow.md)
