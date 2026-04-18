@@ -28,12 +28,18 @@ export function TopicSidebar({
 }: TopicSidebarProps) {
   const [newTopicTitle, setNewTopicTitle] = useState('');
   const [isExpanded, setIsExpanded] = useState(false);
+  const [editingTopicId, setEditingTopicId] = useState<Id<'topics'> | null>(
+    null
+  );
+  const [editingTitle, setEditingTitle] = useState('');
+
   const topics = useQuery(api.topics.listByRoom, { roomId });
   const isFacilitator = facilitatorId === identityId;
 
   const addTopic = useMutation(api.topics.add);
   const removeTopic = useMutation(api.topics.remove);
   const reorderTopic = useMutation(api.topics.reorder);
+  const updateTopic = useMutation(api.topics.update);
 
   const pendingTopics =
     topics
@@ -80,6 +86,31 @@ export function TopicSidebar({
     } catch (err) {
       console.error('Failed to reorder topic:', err);
     }
+  };
+
+  const startEditing = (topicId: Id<'topics'>, title: string) => {
+    if (!isFacilitator) return;
+    setEditingTopicId(topicId);
+    setEditingTitle(title);
+  };
+
+  const handleUpdateTopic = async () => {
+    if (!editingTopicId) return;
+    const trimmedTitle = editingTitle.trim();
+    const originalTopic = topics?.find((t) => t._id === editingTopicId);
+
+    if (trimmedTitle && trimmedTitle !== originalTopic?.title) {
+      try {
+        await updateTopic({
+          topicId: editingTopicId,
+          identityId,
+          title: trimmedTitle,
+        });
+      } catch (err) {
+        console.error('Failed to update topic:', err);
+      }
+    }
+    setEditingTopicId(null);
   };
 
   return (
@@ -162,15 +193,32 @@ export function TopicSidebar({
                     >
                       {topic.order}
                     </span>
-                    <span
-                      className={`text-sm flex-1 break-words py-0.5 ${
-                        topic.status === 'active'
-                          ? 'text-[var(--text-primary)] font-medium'
-                          : 'text-[var(--text-secondary)]'
-                      }`}
-                    >
-                      {topic.title}
-                    </span>
+
+                    {editingTopicId === topic._id ? (
+                      <input
+                        autoFocus
+                        type="text"
+                        value={editingTitle}
+                        onChange={(e) => setEditingTitle(e.target.value)}
+                        onBlur={handleUpdateTopic}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') handleUpdateTopic();
+                          if (e.key === 'Escape') setEditingTopicId(null);
+                        }}
+                        className="text-sm flex-1 bg-[var(--bg-secondary)] border border-[var(--accent)] rounded px-1 py-0.5 outline-none text-[var(--text-primary)]"
+                      />
+                    ) : (
+                      <span
+                        onClick={() => startEditing(topic._id, topic.title)}
+                        className={`text-sm flex-1 break-words py-0.5 ${
+                          topic.status === 'active'
+                            ? 'text-[var(--text-primary)] font-medium'
+                            : 'text-[var(--text-secondary)]'
+                        } ${isFacilitator ? 'cursor-pointer hover:text-[var(--text-primary)]' : ''}`}
+                      >
+                        {topic.title}
+                      </span>
+                    )}
 
                     {isFacilitator && topic.status !== 'active' && (
                       <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity shrink-0 self-start">
