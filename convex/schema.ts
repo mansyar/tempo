@@ -8,7 +8,9 @@ export default defineSchema({
     facilitatorId: v.string(), // identityId of current facilitator
     currentTopicId: v.optional(v.id('topics')),
     updatedAt: v.number(),
-  }).index('by_slug', ['slug']),
+  })
+    .index('by_slug', ['slug'])
+    .index('by_updated', ['updatedAt']),
 
   players: defineTable({
     roomId: v.id('rooms'),
