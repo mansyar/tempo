@@ -8,7 +8,7 @@
 - [x] Task: Implement Facilitator Handoff and Claiming (824d6d0)
   - [ ] Write tests for facilitator logic (auto-assign on join, claim if current is offline)
   - [ ] Implement `players:claimFacilitator` mutation
-- [ ] Task: Build Presence Sidebar and Claim Banner
+- [x] Task: Build Presence Sidebar and Claim Banner (f6b5353)
   - [ ] Write tests for `PresenceSidebar` and `ClaimBanner` components
   - [ ] Implement UI for real-time player list and "Claim Facilitator" notification
 - [ ] Task: Conductor - User Manual Verification 'Presence & Facilitator Logic' (Protocol in workflow.md)
