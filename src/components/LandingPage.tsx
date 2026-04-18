@@ -2,8 +2,9 @@ import { useNavigate } from '@tanstack/react-router';
 import { useIdentity } from '../hooks/useIdentity';
 import { useMutation } from 'convex/react';
 import { api } from '../../convex/_generated/api';
+import { useState } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { Zap, Target, Lock, LucideIcon } from 'lucide-react';
+import { Zap, Target, Lock, type LucideIcon } from 'lucide-react';
 
 function generateSlug() {
   return Math.random().toString(36).substring(2, 10);
@@ -93,6 +94,7 @@ function FeatureCard({
 
 export function LandingPage() {
   const { nickname, setNickname, identityId } = useIdentity();
+  const [joinSlug, setJoinSlug] = useState('');
   const navigate = useNavigate();
   const createRoom = useMutation(api.rooms.create);
 
@@ -106,6 +108,19 @@ export function LandingPage() {
     } catch (error) {
       console.error('Failed to create room:', error);
     }
+  };
+
+  const handleJoinRoom = () => {
+    if (!joinSlug.trim()) return;
+
+    // Extract slug from URL if pasted
+    let slug = joinSlug.trim();
+    if (slug.includes('/room/')) {
+      const parts = slug.split('/room/');
+      slug = parts[parts.length - 1].split('/')[0];
+    }
+
+    navigate({ to: '/room/$slug', params: { slug } });
   };
 
   return (
@@ -153,16 +168,27 @@ export function LandingPage() {
           <p className="text-xs text-[var(--text-tertiary)] mb-6 uppercase tracking-[0.2em] font-black">
             — Or Join Active Session —
           </p>
-          <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleJoinRoom();
+            }}
+            className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
+          >
             <input
               type="text"
               placeholder="Paste room link or slug..."
+              value={joinSlug}
+              onChange={(e) => setJoinSlug(e.target.value)}
               className="flex-grow rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-tertiary)] px-4 py-3 text-sm text-[var(--text-primary)] focus:outline-none transition-all"
             />
-            <button className="rounded-lg border border-[var(--border-subtle)] px-6 py-3 text-sm font-bold text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)] hover:text-[var(--text-primary)] transition-all">
+            <button
+              type="submit"
+              className="rounded-lg border border-[var(--border-subtle)] px-6 py-3 text-sm font-bold text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)] hover:text-[var(--text-primary)] transition-all"
+            >
               Join
             </button>
-          </div>
+          </form>
         </div>
       </section>
 
