@@ -2,10 +2,10 @@
 
 ## Phase 1: Database & Backend Logic [checkpoint: ]
 
-- [ ] Task: Implement Topic Schema and Core Mutations
-  - [ ] Write unit tests for `topics:add`, `topics:listByRoom`, and `topics:remove`
-  - [ ] Update `convex/schema.ts` with `topics` table and indexes
-  - [ ] Implement `topics.ts` with `add`, `listByRoom`, and `remove` functions
+- [x] Task: Implement Topic Schema and Core Mutations bc2a37d
+  - [x] Write unit tests for `topics:add`, `topics:listByRoom`, and `topics:remove`
+  - [x] Update `convex/schema.ts` with `topics` table and indexes
+  - [x] Implement `topics.ts` with `add`, `listByRoom`, and `remove` functions
 - [ ] Task: Implement Batch Add and Reorder Mutations
   - [ ] Write tests for `topics:addBatch` and `topics:reorder`
   - [ ] Implement `addBatch` mutation for multi-line support
