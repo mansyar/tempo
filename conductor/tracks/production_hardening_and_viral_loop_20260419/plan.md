@@ -2,9 +2,9 @@
 
 ## Phase 1: Human-Readable Slugs & Social Sharing [checkpoint: ]
 
-- [ ] Task: Implement Human-Readable Slug Generator in Convex
-  - [ ] Write tests for slug uniqueness and format (adjective-noun-number)
-  - [ ] Implement slug generation logic using `unique-names-generator` in `convex/rooms.ts`
+- [x] Task: Implement Human-Readable Slug Generator in Convex bc95ffb
+  - [x] Write tests for slug uniqueness and format (adjective-noun-number)
+  - [x] Implement slug generation logic using `unique-names-generator` in `convex/rooms.ts`
 - [ ] Task: Build `InviteModal.tsx` and Integrate QR Code
   - [ ] Write tests for `InviteModal` rendering, QR code generation, and clipboard interaction
   - [ ] Implement `InviteModal.tsx` featuring a QR code (via `qrcode.react`), a "Copy Link" button, and Web Share API integration
