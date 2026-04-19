@@ -6,6 +6,7 @@ import { PresenceSidebar } from './PresenceSidebar';
 import { TopicSidebar } from './TopicSidebar';
 import { BatchAddModal } from './BatchAddModal';
 import { ConfirmEstimateModal } from './ConfirmEstimateModal';
+import InviteModal from './InviteModal';
 import { ActiveTopicHeader } from './ActiveTopicHeader';
 import { ClaimBanner } from './ClaimBanner';
 import { CardGrid } from './CardGrid';
@@ -89,6 +90,7 @@ export function RoomPage({ slug }: RoomPageProps) {
   // Local state to track if we've joined this session
   const [hasJoined, setHasJoined] = useState(() => !!nickname);
   const [isBatchAddOpen, setIsBatchAddOpen] = useState(false);
+  const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
   const [confirmEstimateState, setConfirmEstimateState] = useState<{
     isOpen: boolean;
     suggested: string;
@@ -290,9 +292,7 @@ export function RoomPage({ slug }: RoomPageProps) {
               Live
             </span>
             <button
-              onClick={() =>
-                navigator.clipboard.writeText(window.location.href)
-              }
+              onClick={() => setIsInviteModalOpen(true)}
               className="text-xs font-semibold text-[var(--text-tertiary)] hover:text-[var(--text-primary)] transition-colors"
             >
               Copy Invite
@@ -397,6 +397,12 @@ export function RoomPage({ slug }: RoomPageProps) {
           />
         </>
       )}
+
+      <InviteModal
+        isOpen={isInviteModalOpen}
+        onClose={() => setIsInviteModalOpen(false)}
+        roomUrl={typeof window !== 'undefined' ? window.location.href : ''}
+      />
     </div>
   );
 }
