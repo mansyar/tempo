@@ -15,9 +15,9 @@
 
 ## Phase 2: Unified Feedback & Resilience [checkpoint: ]
 
-- [ ] Task: Integrate `sonner` for Global Toasts
-  - [ ] Write tests for toast triggers on success/error events
-  - [ ] Setup `Toaster` in `__root.tsx` and replace existing alerts with `toast()` for copy-success and errors
+- [x] Task: Integrate `sonner` for Global Toasts aef1986
+  - [x] Write tests for toast triggers on success/error events
+  - [x] Setup `Toaster` in `__root.tsx` and replace existing alerts with `toast()` for copy-success and errors
 - [ ] Task: Implement Scoped Error Boundaries
   - [ ] Write tests for component-level crash recovery (fallback UI)
   - [ ] Implement `SectionErrorBoundary` wrapper and apply to Sidebar and Table components
