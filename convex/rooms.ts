@@ -1,14 +1,48 @@
-import { mutation, query } from './_generated/server';
+import { mutation, query, MutationCtx } from './_generated/server';
 import { v } from 'convex/values';
+import {
+  uniqueNamesGenerator,
+  adjectives,
+  animals,
+  NumberDictionary,
+} from 'unique-names-generator';
+
+async function generateUniqueSlug(ctx: MutationCtx): Promise<string> {
+  const numberDictionary = NumberDictionary.generate({ min: 10, max: 99 });
+  const config = {
+    dictionaries: [adjectives, animals, numberDictionary],
+    separator: '-',
+  };
+
+  for (let i = 0; i < 5; i++) {
+    const slug = uniqueNamesGenerator(config);
+    const existing = await ctx.db
+      .query('rooms')
+      .withIndex('by_slug', (q) => q.eq('slug', slug))
+      .unique();
+    if (!existing) return slug;
+  }
+  // Fallback to a longer one if collisions occur
+  return uniqueNamesGenerator({
+    ...config,
+    dictionaries: [
+      adjectives,
+      animals,
+      NumberDictionary.generate({ min: 100, max: 999 }),
+    ],
+  });
+}
 
 export const create = mutation({
   args: {
-    slug: v.string(),
+    slug: v.optional(v.string()),
     facilitatorId: v.string(),
   },
   handler: async (ctx, args) => {
+    const slug = args.slug ?? (await generateUniqueSlug(ctx));
+
     const roomId = await ctx.db.insert('rooms', {
-      slug: args.slug,
+      slug,
       facilitatorId: args.facilitatorId,
       status: 'voting',
       updatedAt: Date.now(),
