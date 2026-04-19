@@ -1,6 +1,7 @@
 import { useQuery, useMutation } from 'convex/react';
 import { api } from '../../convex/_generated/api';
 import type { Id } from '../../convex/_generated/dataModel';
+import { toast } from 'sonner';
 import {
   ListPlus,
   History,
@@ -62,16 +63,18 @@ export function TopicSidebar({
         title: newTopicTitle.trim(),
       });
       setNewTopicTitle('');
-    } catch (err) {
-      console.error('Failed to add topic:', err);
+      toast.success('Topic added!');
+    } catch {
+      toast.error('Failed to add topic');
     }
   };
 
   const handleRemoveTopic = async (topicId: Id<'topics'>) => {
     try {
       await removeTopic({ topicId, identityId });
-    } catch (err) {
-      console.error('Failed to remove topic:', err);
+      toast.success('Topic removed');
+    } catch {
+      toast.error('Failed to remove topic');
     }
   };
 
@@ -83,8 +86,8 @@ export function TopicSidebar({
     const newOrder = direction === 'up' ? currentOrder - 1 : currentOrder + 1;
     try {
       await reorderTopic({ topicId, identityId, newOrder });
-    } catch (err) {
-      console.error('Failed to reorder topic:', err);
+    } catch {
+      toast.error('Failed to reorder topic');
     }
   };
 
@@ -106,8 +109,9 @@ export function TopicSidebar({
           identityId,
           title: trimmedTitle,
         });
-      } catch (err) {
-        console.error('Failed to update topic:', err);
+        toast.success('Topic updated');
+      } catch {
+        toast.error('Failed to update topic');
       }
     }
     setEditingTopicId(null);

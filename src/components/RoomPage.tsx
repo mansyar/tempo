@@ -19,6 +19,7 @@ import { useEmojiReactions } from '../hooks/useEmojiReactions';
 import { useSound } from '../hooks/useSound';
 import { useJuice } from './JuiceToggle';
 import { useState, useEffect } from 'react';
+import { toast } from 'sonner';
 import confetti from 'canvas-confetti';
 import { calculateStats, isUnanimous } from '../utils/stats';
 import { StatsPanel } from './StatsPanel';
@@ -150,8 +151,8 @@ export function RoomPage({ slug }: RoomPageProps) {
         name: nickname,
       });
       setHasJoined(true);
-    } catch (error) {
-      console.error('Failed to join room:', error);
+    } catch {
+      toast.error('Failed to join room');
     }
   };
 
@@ -165,8 +166,9 @@ export function RoomPage({ slug }: RoomPageProps) {
         topicId: room.currentTopicId,
         value,
       });
-    } catch (error) {
-      console.error('Failed to cast vote:', error);
+      toast.success('Vote cast!');
+    } catch {
+      toast.error('Failed to cast vote');
     }
   };
 
@@ -179,8 +181,9 @@ export function RoomPage({ slug }: RoomPageProps) {
         titlesString,
       });
       setIsBatchAddOpen(false);
-    } catch (err) {
-      console.error('Failed to batch add topics:', err);
+      toast.success('Topics added!');
+    } catch {
+      toast.error('Failed to add topics');
     }
   };
 
@@ -192,8 +195,9 @@ export function RoomPage({ slug }: RoomPageProps) {
         roomId: room._id,
         identityId: identityId!,
       });
-    } catch (error) {
-      console.error('Failed to reveal votes:', error);
+      toast.success('Votes revealed!');
+    } catch {
+      toast.error('Failed to reveal votes');
     }
   };
 
@@ -222,8 +226,9 @@ export function RoomPage({ slug }: RoomPageProps) {
         identityId: identityId!,
       });
       setConfirmEstimateState({ isOpen: false, suggested: '' });
-    } catch (error) {
-      console.error('Failed to advance topic:', error);
+      toast.success('Topic advanced!');
+    } catch {
+      toast.error('Failed to advance topic');
     }
   };
 

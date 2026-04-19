@@ -12,6 +12,7 @@ import { OfflineBanner } from '../components/OfflineBanner';
 import { AriaLiveAnnouncer } from '../components/AriaLiveAnnouncer';
 import { JuiceProvider } from '../components/JuiceToggle';
 import { ConvexProvider, ConvexReactClient } from 'convex/react';
+import { Toaster } from 'sonner';
 import { useState, useEffect } from 'react';
 
 import appCss from '#/styles.css?url';
@@ -85,6 +86,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body className="font-sans antialiased [overflow-wrap:anywhere] selection:bg-[rgba(79,184,178,0.24)]">
         <JuiceProvider>
+          <Toaster richColors closeButton position="top-center" />
           <AriaLiveAnnouncer />
           <OfflineBanner />
           <Header />

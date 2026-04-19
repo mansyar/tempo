@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import { X, Copy, Check, Share } from 'lucide-react';
+import { toast } from 'sonner';
 
 interface InviteModalProps {
   isOpen: boolean;
@@ -28,8 +29,9 @@ export default function InviteModal({
     try {
       await navigator.clipboard.writeText(roomUrl);
       setCopied(true);
-    } catch (err) {
-      console.error('Failed to copy: ', err);
+      toast.success('Link copied to clipboard!');
+    } catch {
+      toast.error('Failed to copy link');
     }
   };
 
