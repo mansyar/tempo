@@ -46,3 +46,7 @@
   - [ ] Update `convex/schema.ts` with `autoReveal` toggle and `scaleType` in the `rooms` table
   - [ ] Update `CardDeck.tsx` and `StatsPanel.tsx` to support the T-Shirt Sizing scale (S, M, L, XL, ?)
 - [x] Task: Conductor - User Manual Verification 'Phase 3: Session Exporter & Advanced Settings' (Protocol in workflow.md) f2afb23
+
+## Phase: Review Fixes
+
+- [x] Task: Apply review suggestions 798c922
