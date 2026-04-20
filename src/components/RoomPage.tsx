@@ -336,7 +336,10 @@ export function RoomPage({ slug }: RoomPageProps) {
 
         {activeTopic ? (
           <ActiveTopicHeader
+            roomId={room._id}
+            identityId={identityId!}
             roomStatus={room.status}
+            timerStartedAt={room.timerStartedAt}
             activeTopic={activeTopic}
             isFacilitator={isFacilitator}
             onReveal={handleReveal}

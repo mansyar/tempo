@@ -4,6 +4,7 @@ import { useIdentity } from '../hooks/useIdentity';
 import { CardDeck } from './CardDeck';
 import { EmojiActionBar } from './EmojiActionBar';
 import { useSound } from '../hooks/useSound';
+import { RoundTimer } from './RoundTimer';
 import { toast } from 'sonner';
 import type { Id } from '../../convex/_generated/dataModel';
 import { Smartphone, LogOut, Play, RotateCcw, Eye } from 'lucide-react';
@@ -84,13 +85,23 @@ export default function MobileController({
             </p>
           </div>
         </div>
-        <button
-          onClick={onExit}
-          className="p-3 bg-[var(--bg-tertiary)] rounded-full text-[var(--text-tertiary)] active:bg-[var(--bg-glass)]"
-          aria-label="Exit Controller"
-        >
-          <LogOut className="w-5 h-5" />
-        </button>
+        <div className="flex items-center gap-2">
+          {room.status === 'voting' && (
+            <RoundTimer
+              roomId={room._id}
+              identityId={identityId!}
+              timerStartedAt={room.timerStartedAt}
+              isFacilitator={isFacilitator}
+            />
+          )}
+          <button
+            onClick={onExit}
+            className="p-3 bg-[var(--bg-tertiary)] rounded-full text-[var(--text-tertiary)] active:bg-[var(--bg-glass)]"
+            aria-label="Exit Controller"
+          >
+            <LogOut className="w-5 h-5" />
+          </button>
+        </div>
       </header>
 
       <main className="flex-1 flex flex-col items-center justify-center text-center">

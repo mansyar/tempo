@@ -2,11 +2,22 @@ import { render, screen } from '@testing-library/react';
 import { ActiveTopicHeader } from '../src/components/ActiveTopicHeader';
 import { describe, it, expect, vi } from 'vitest';
 import type { Id } from '../convex/_generated/dataModel';
+import React from 'react';
+
+// Mock convex
+vi.mock('convex/react', () => ({
+  useMutation: vi.fn().mockReturnValue(vi.fn()),
+}));
 
 describe('ActiveTopicHeader', () => {
+  const roomId = 'room-1' as Id<'rooms'>;
+  const identityId = 'user-1';
+
   it('renders active topic details', () => {
     render(
       <ActiveTopicHeader
+        roomId={roomId}
+        identityId={identityId}
         roomStatus="voting"
         activeTopic={{
           _id: '1' as Id<'topics'>,
@@ -27,6 +38,8 @@ describe('ActiveTopicHeader', () => {
   it('shows Reveal button for facilitator when voting', () => {
     render(
       <ActiveTopicHeader
+        roomId={roomId}
+        identityId={identityId}
         roomStatus="voting"
         activeTopic={{
           _id: '1' as Id<'topics'>,
@@ -46,6 +59,8 @@ describe('ActiveTopicHeader', () => {
   it('can disable Reveal button via prop', () => {
     render(
       <ActiveTopicHeader
+        roomId={roomId}
+        identityId={identityId}
         roomStatus="voting"
         activeTopic={{
           _id: '1' as Id<'topics'>,
@@ -69,6 +84,8 @@ describe('ActiveTopicHeader', () => {
   it('shows Confirm & Next button for facilitator when revealed', () => {
     render(
       <ActiveTopicHeader
+        roomId={roomId}
+        identityId={identityId}
         roomStatus="revealed"
         activeTopic={{
           _id: '1' as Id<'topics'>,
@@ -90,6 +107,8 @@ describe('ActiveTopicHeader', () => {
   it('renders nothing if no active topic', () => {
     const { container } = render(
       <ActiveTopicHeader
+        roomId={roomId}
+        identityId={identityId}
         roomStatus="voting"
         activeTopic={undefined}
         isFacilitator={true}

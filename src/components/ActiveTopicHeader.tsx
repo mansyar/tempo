@@ -1,8 +1,12 @@
 import type { Id } from '../../convex/_generated/dataModel';
 import { Play, CheckCircle2 } from 'lucide-react';
+import { RoundTimer } from './RoundTimer';
 
 interface ActiveTopicHeaderProps {
+  roomId: Id<'rooms'>;
+  identityId: string;
   roomStatus: 'voting' | 'revealed';
+  timerStartedAt?: number;
   activeTopic?: {
     _id: Id<'topics'>;
     title: string;
@@ -16,7 +20,10 @@ interface ActiveTopicHeaderProps {
 }
 
 export function ActiveTopicHeader({
+  roomId,
+  identityId,
   roomStatus,
+  timerStartedAt,
   activeTopic,
   isFacilitator,
   onReveal,
@@ -41,33 +48,44 @@ export function ActiveTopicHeader({
         </div>
       </div>
 
-      {isFacilitator && (
-        <div className="flex items-center gap-3 shrink-0">
-          {roomStatus === 'voting' ? (
-            <button
-              onClick={onReveal}
-              disabled={revealDisabled}
-              className="group flex items-center gap-2 px-6 py-3 bg-[var(--accent)] text-white text-sm font-bold rounded-xl hover:brightness-110 transition-all shadow-lg active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:grayscale"
-              title={
-                revealDisabled
-                  ? 'Waiting for all players to vote'
-                  : 'Reveal votes'
-              }
-            >
-              <Play className="w-4 h-4 fill-current transition-transform group-hover:translate-x-0.5" />
-              Reveal Votes
-            </button>
-          ) : (
-            <button
-              onClick={onConfirmNext}
-              className="group flex items-center gap-2 px-6 py-3 bg-[var(--bg-tertiary)] text-[var(--text-primary)] text-sm font-bold rounded-xl border border-[var(--border-subtle)] hover:border-[var(--accent)] transition-all active:scale-95"
-            >
-              <CheckCircle2 className="w-4 h-4 text-[var(--success)] transition-transform group-hover:scale-110" />
-              Confirm & Next
-            </button>
-          )}
-        </div>
-      )}
+      <div className="flex items-center gap-6">
+        {roomStatus === 'voting' && (
+          <RoundTimer
+            roomId={roomId}
+            identityId={identityId}
+            timerStartedAt={timerStartedAt}
+            isFacilitator={isFacilitator}
+          />
+        )}
+
+        {isFacilitator && (
+          <div className="flex items-center gap-3 shrink-0">
+            {roomStatus === 'voting' ? (
+              <button
+                onClick={onReveal}
+                disabled={revealDisabled}
+                className="group flex items-center gap-2 px-6 py-3 bg-[var(--accent)] text-white text-sm font-bold rounded-xl hover:brightness-110 transition-all shadow-lg active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:grayscale"
+                title={
+                  revealDisabled
+                    ? 'Waiting for all players to vote'
+                    : 'Reveal votes'
+                }
+              >
+                <Play className="w-4 h-4 fill-current transition-transform group-hover:translate-x-0.5" />
+                Reveal Votes
+              </button>
+            ) : (
+              <button
+                onClick={onConfirmNext}
+                className="group flex items-center gap-2 px-6 py-3 bg-[var(--bg-tertiary)] text-[var(--text-primary)] text-sm font-bold rounded-xl border border-[var(--border-subtle)] hover:border-[var(--accent)] transition-all active:scale-95"
+              >
+                <CheckCircle2 className="w-4 h-4 text-[var(--success)] transition-transform group-hover:scale-110" />
+                Confirm & Next
+              </button>
+            )}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

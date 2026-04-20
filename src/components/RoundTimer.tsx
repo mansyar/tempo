@@ -1,0 +1,97 @@
+import { useState, useEffect } from 'react';
+import { Timer, RotateCcw, Play } from 'lucide-react';
+import { useMutation } from 'convex/react';
+import { api } from '../../convex/_generated/api';
+import type { Id } from '../../convex/_generated/dataModel';
+
+interface RoundTimerProps {
+  roomId: Id<'rooms'>;
+  identityId: string;
+  timerStartedAt?: number;
+  isFacilitator: boolean;
+}
+
+export function RoundTimer({
+  roomId,
+  identityId,
+  timerStartedAt,
+  isFacilitator,
+}: RoundTimerProps) {
+  const [timeLeft, setTimeLeft] = useState<number | null>(null);
+  const startTimer = useMutation(api.rooms.startTimer);
+  const resetTimer = useMutation(api.rooms.resetTimer);
+
+  const DURATION_SECONDS = 60;
+
+  useEffect(() => {
+    if (!timerStartedAt) {
+      setTimeLeft(null);
+      return;
+    }
+
+    const interval = setInterval(() => {
+      const elapsed = Math.floor((Date.now() - timerStartedAt) / 1000);
+      const remaining = Math.max(0, DURATION_SECONDS - elapsed);
+      setTimeLeft(remaining);
+
+      if (remaining === 0) {
+        clearInterval(interval);
+      }
+    }, 1000);
+
+    // Initial calculation
+    const elapsed = Math.floor((Date.now() - timerStartedAt) / 1000);
+    setTimeLeft(Math.max(0, DURATION_SECONDS - elapsed));
+
+    return () => clearInterval(interval);
+  }, [timerStartedAt]);
+
+  const handleStart = () => {
+    startTimer({ roomId, identityId });
+  };
+
+  const handleReset = () => {
+    resetTimer({ roomId, identityId });
+  };
+
+  if (timeLeft === null && !isFacilitator) {
+    return null;
+  }
+
+  const isUrgent = timeLeft !== null && timeLeft <= 10 && timeLeft > 0;
+
+  return (
+    <div className="flex items-center gap-3 bg-[var(--bg-tertiary)] px-4 py-2 rounded-2xl border border-[var(--border-subtle)] shadow-inner">
+      <div
+        className={`flex items-center gap-2 ${isUrgent ? 'animate-pulse text-red-500' : 'text-[var(--text-secondary)]'}`}
+      >
+        <Timer className="w-4 h-4" />
+        <span className="font-mono font-bold text-lg min-w-[3ch]">
+          {timeLeft !== null ? `${timeLeft}s` : '--'}
+        </span>
+      </div>
+
+      {isFacilitator && (
+        <div className="flex items-center gap-1 border-l border-[var(--border-subtle)] pl-2 ml-1">
+          {timeLeft === null ? (
+            <button
+              onClick={handleStart}
+              className="p-1.5 hover:bg-[var(--bg-secondary)] rounded-lg text-[var(--accent)] transition-colors"
+              title="Start Timer"
+            >
+              <Play className="w-4 h-4 fill-current" />
+            </button>
+          ) : (
+            <button
+              onClick={handleReset}
+              className="p-1.5 hover:bg-[var(--bg-secondary)] rounded-lg text-[var(--text-tertiary)] hover:text-[var(--text-primary)] transition-colors"
+              title="Reset Timer"
+            >
+              <RotateCcw className="w-4 h-4" />
+            </button>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
