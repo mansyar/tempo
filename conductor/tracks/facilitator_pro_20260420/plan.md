@@ -20,7 +20,7 @@
 
 ## Phase 2: Round Timer & Facilitator Nudge [checkpoint: none]
 
-- [ ] Task: Implement Round Timer Logic in Convex
+- [x] Task: Implement Round Timer Logic in Convex 87f9c23
   - [ ] Write tests for timer auto-start on first vote and manual reset
   - [ ] Update `convex/schema.ts` to include `timerStartedAt` in the `rooms` table
   - [ ] Implement `rooms:startTimer` and `rooms:resetTimer` mutations
