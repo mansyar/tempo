@@ -13,7 +13,7 @@
   - [x] Replace the simple `navigator.clipboard` logic with a state-controlled modal trigger
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Human-Readable Slugs & Social Sharing' (Protocol in workflow.md) e1aba8b
 
-## Phase 2: Unified Feedback & Resilience [checkpoint: ]
+## Phase 2: Unified Feedback & Resilience [checkpoint: cc25335]
 
 - [x] Task: Integrate `sonner` for Global Toasts aef1986
   - [x] Write tests for toast triggers on success/error events
@@ -21,7 +21,7 @@
 - [x] Task: Implement Scoped Error Boundaries 6fd2dfb
   - [x] Write tests for component-level crash recovery (fallback UI)
   - [x] Implement `SectionErrorBoundary` wrapper and apply to Sidebar and Table components
-- [ ] Task: Conductor - User Manual Verification 'Phase 2: Unified Feedback & Resilience' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 2: Unified Feedback & Resilience' (Protocol in workflow.md) cc25335
 
 ## Phase 3: Performance Audit & Asset Optimization [checkpoint: ]
 
