@@ -16,6 +16,7 @@
 - **State Management:**
   - **UI State:** TanStack Search Params (URL-shareable state).
   - **Session Identity:** `localStorage` for maintaining persistent player status without a backend login.
+  - **Identity Synchronization:** Secure, single-use token protocol for cross-device identity mirroring (persisted in Convex).
 
 ## Infrastructure & Deployment
 

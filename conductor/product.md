@@ -16,6 +16,10 @@
 4. **Results & Statistics:** Automatic calculation of average, median, mode, and consensus level, with prominent red "Needs Discussion" badges for outliers.
 5. **Interactive Feedback:** Fun elements like confetti on unanimous votes and real-time emoji reactions.
 6. **Facilitator Controls:** Full control over topic queues (including inline editing), resetting rounds, and revealing votes.
+7. **Session Identity Mirroring:** Secure, QR-based sync allowing mobile devices to adopt a desktop identity for a specialized "Controller Mode".
+8. **Round Timer & Nudge:** Facilitator-controlled pacing with a 60s round timer and a "Nudge" mechanism to prompt inactive players via haptics.
+9. **Session Export:** Export planning results in multiple formats including Markdown Table, Plain Text Summary, and CSV Data.
+10. **Advanced Room Settings:** Configurable room logic including Auto-Reveal (reveals once all online players vote) and alternative Estimation Scales (e.g., T-Shirt sizing).
 
 ## Non-Functional Goals
 
