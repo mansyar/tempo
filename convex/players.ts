@@ -115,10 +115,10 @@ export const markOffline = mutation({
   handler: async (ctx) => {
     const cutoff = Date.now() - 30000; // 30 seconds timeout
 
-    // We can't filter by roomId easily for all rooms at once with this index
-    // Let's use a simpler query or update the index
+    // Scan all online players to check for heartbeat timeouts
     const onlinePlayers = await ctx.db
       .query('players')
+      .withIndex('by_online')
       .filter((q) => q.eq(q.field('isOnline'), true))
       .collect();
 

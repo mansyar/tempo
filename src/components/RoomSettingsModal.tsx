@@ -14,7 +14,7 @@ interface RoomSettingsModalProps {
   initialScaleType?: 'fibonacci' | 'tshirt';
 }
 
-export default function RoomSettingsModal({
+export function RoomSettingsModal({
   isOpen,
   onClose,
   roomId,

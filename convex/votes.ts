@@ -87,21 +87,22 @@ export const cast = mutation({
     if (room && room.status === 'voting' && room.autoReveal) {
       const onlinePlayers = await ctx.db
         .query('players')
-        .filter(
-          (q) =>
-            q.eq(q.field('roomId'), args.roomId) &&
-            q.eq(q.field('isOnline'), true)
+        .withIndex('by_online', (q) =>
+          q.eq('roomId', args.roomId).eq('isOnline', true)
         )
         .collect();
 
-      const allVotes = await ctx.db
+      // Actually we need all votes for the topic in this room
+      const allTopicVotes = await ctx.db
         .query('votes')
-        .withIndex('by_room', (q) => q.eq('roomId', args.roomId))
+        .withIndex('by_topic', (q) =>
+          q.eq('roomId', args.roomId).eq('topicId', args.topicId)
+        )
         .collect();
 
       const uniqueOnlineIds = new Set(onlinePlayers.map((p) => p.identityId));
       const votedIds = new Set(
-        allVotes.filter((v) => v.value !== null).map((v) => v.identityId)
+        allTopicVotes.filter((v) => v.value !== null).map((v) => v.identityId)
       );
       const onlineVotedCount = Array.from(votedIds).filter((id) =>
         uniqueOnlineIds.has(id)

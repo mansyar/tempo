@@ -1,6 +1,8 @@
-# PRD: "Pointy" – Real-Time Ephemeral Planning Poker
+# PRD: Planning Poker Module
 
-> **Status:** Development-Ready · **Version:** 1.0 · **Last Updated:** 2026-04-18
+> **Product:** Tempo — Scrum Tools for Modern Teams  
+> **Module:** 🃏 Planning Poker  
+> **Status:** Shipped · **Version:** 1.0 · **Last Updated:** 2026-04-18
 
 ---
 

@@ -1,6 +1,6 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import RoomSettingsModal from '../src/components/RoomSettingsModal';
+import { RoomSettingsModal } from '../src/components/RoomSettingsModal';
 import { convexTest } from 'convex-test';
 import schema from '../convex/schema';
 import * as rooms from '../convex/rooms';

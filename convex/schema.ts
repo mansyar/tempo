@@ -34,8 +34,8 @@ export default defineSchema({
     value: v.union(v.string(), v.number(), v.null()),
   })
     .index('by_room', ['roomId'])
-    .index('by_topic', ['topicId'])
-    .index('by_voter', ['roomId', 'identityId', 'topicId']),
+    .index('by_voter', ['roomId', 'identityId', 'topicId'])
+    .index('by_topic', ['roomId', 'topicId']),
 
   topics: defineTable({
     roomId: v.id('rooms'),

@@ -7,7 +7,11 @@ interface JoinModalProps {
   onJoin: (nickname: string) => void;
 }
 
-export default function JoinModal({ roomSlug, playerCount = 0, onJoin }: JoinModalProps) {
+export function JoinModal({
+  roomSlug,
+  playerCount = 0,
+  onJoin,
+}: JoinModalProps) {
   const { nickname: savedNickname, setNickname: saveNickname } = useIdentity();
   const [nickname, setNicknameState] = useState(savedNickname || '');
 
@@ -27,13 +31,17 @@ export default function JoinModal({ roomSlug, playerCount = 0, onJoin }: JoinMod
           Welcome to Pointy
         </h2>
         <p className="mb-6 text-sm text-[var(--text-secondary)]">
-          Room: <span className="font-mono text-[var(--accent)]">{roomSlug}</span>
+          Room:{' '}
+          <span className="font-mono text-[var(--accent)]">{roomSlug}</span>
           {playerCount > 0 && ` · ${playerCount} players in room`}
         </p>
 
         <form onSubmit={handleJoin} className="space-y-4">
           <div className="text-left">
-            <label htmlFor="nickname" className="block text-xs font-semibold uppercase tracking-wider text-[var(--text-tertiary)] mb-2 ml-1">
+            <label
+              htmlFor="nickname"
+              className="block text-xs font-semibold uppercase tracking-wider text-[var(--text-tertiary)] mb-2 ml-1"
+            >
               Enter your nickname:
             </label>
             <input
@@ -46,7 +54,7 @@ export default function JoinModal({ roomSlug, playerCount = 0, onJoin }: JoinMod
               autoFocus
             />
           </div>
-          
+
           <button
             type="submit"
             disabled={!nickname.trim()}

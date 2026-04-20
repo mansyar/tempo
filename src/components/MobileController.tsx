@@ -14,10 +14,7 @@ interface MobileControllerProps {
   onExit: () => void;
 }
 
-export default function MobileController({
-  slug,
-  onExit,
-}: MobileControllerProps) {
+export function MobileController({ slug, onExit }: MobileControllerProps) {
   const { identityId, nickname } = useIdentity();
   const { play } = useSound();
   const room = useQuery(api.rooms.getBySlug, { slug });

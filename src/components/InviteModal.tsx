@@ -12,11 +12,7 @@ interface InviteModalProps {
   roomUrl: string;
 }
 
-export default function InviteModal({
-  isOpen,
-  onClose,
-  roomUrl,
-}: InviteModalProps) {
+export function InviteModal({ isOpen, onClose, roomUrl }: InviteModalProps) {
   const [copied, setCopied] = useState(false);
   const [activeTab, setActiveTab] = useState<'invite' | 'sync'>('invite');
   const [syncToken, setSyncToken] = useState<string | null>(null);

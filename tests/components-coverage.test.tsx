@@ -136,8 +136,7 @@ describe('ThemeToggle Component', () => {
 
 // Mock JoinModal
 vi.mock('../src/components/JoinModal', () => ({
-  __esModule: true,
-  default: ({ onJoin }: { onJoin: (nickname: string) => void }) => (
+  JoinModal: ({ onJoin }: { onJoin: (nickname: string) => void }) => (
     <button onClick={() => onJoin('Tester')}>Mock Join</button>
   ),
 }));

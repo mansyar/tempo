@@ -35,7 +35,13 @@ vi.mock('../src/components/JuiceToggle', () => ({
 
 // Mock InviteModal
 vi.mock('../src/components/InviteModal', () => ({
-  default: ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) =>
+  InviteModal: ({
+    isOpen,
+    onClose,
+  }: {
+    isOpen: boolean;
+    onClose: () => void;
+  }) =>
     isOpen ? (
       <div data-testid="invite-modal">
         <button onClick={onClose}>Close</button>

@@ -1,9 +1,9 @@
 import { useQuery, useMutation } from 'convex/react';
 import { api } from '../../convex/_generated/api';
 import { useIdentity } from '../hooks/useIdentity';
-import JoinModal from './JoinModal';
-import MobileController from './MobileController';
-import RoomSettingsModal from './RoomSettingsModal';
+import { JoinModal } from './JoinModal';
+import { MobileController } from './MobileController';
+import { RoomSettingsModal } from './RoomSettingsModal';
 import { PresenceSidebar } from './PresenceSidebar';
 import { TopicSidebar } from './TopicSidebar';
 import { ConfirmEstimateModal } from './ConfirmEstimateModal';
@@ -33,7 +33,9 @@ const BatchAddModal = lazy(() =>
 const StatsPanel = lazy(() =>
   import('./StatsPanel').then((m) => ({ default: m.StatsPanel }))
 );
-const InviteModal = lazy(() => import('./InviteModal'));
+const InviteModal = lazy(() =>
+  import('./InviteModal').then((m) => ({ default: m.InviteModal }))
+);
 
 interface RoomPageProps {
   slug: string;

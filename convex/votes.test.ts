@@ -102,7 +102,9 @@ test('votes:cast with topicId', async () => {
   const vote = await t.run(async (ctx) => {
     return await ctx.db
       .query('votes')
-      .withIndex('by_topic', (q) => q.eq('topicId', topicId))
+      .withIndex('by_topic', (q) =>
+        q.eq('roomId', roomId).eq('topicId', topicId)
+      )
       .unique();
   });
   expect(vote?.value).toBe('8');

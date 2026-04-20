@@ -1,5 +1,5 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import InviteModal from '../src/components/InviteModal';
+import { InviteModal } from '../src/components/InviteModal';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import React from 'react';
 
