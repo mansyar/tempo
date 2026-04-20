@@ -68,3 +68,30 @@ test('reactions:listRecent filters old reactions', async () => {
   expect(recent.length).toBe(1);
   expect(recent[0].emoji).toBe('NEW');
 });
+
+test('reactions:sendBatch', async () => {
+  const t = convexTest(schema, {
+    reactions: async () => reactions,
+    rooms: async () => rooms,
+    '_generated/api': async () => apiModule,
+    '_generated/server': async () => serverModule,
+  });
+
+  const { roomId } = await t.mutation(api.rooms.create, {
+    slug: 'test',
+    facilitatorId: 'user1',
+  });
+
+  // Send multiple reactions at once
+  await t.mutation(api.reactions.sendBatch, {
+    roomId,
+    identityId: 'user1',
+    reactions: ['❤️', '👍', '🎉'],
+  });
+
+  // List recent reactions
+  const recent = await t.query(api.reactions.listRecent, { roomId });
+  expect(recent.length).toBe(3);
+  expect(recent.map((r) => r.emoji).sort()).toEqual(['❤️', '👍', '🎉'].sort());
+  expect(recent[0].identityId).toBe('user1');
+});
