@@ -1,0 +1,48 @@
+# Implementation Plan: Facilitator Pro & Session Continuity
+
+## Phase 1: Identity Sync & Mobile Controller [checkpoint: none]
+
+- [ ] Task: Implement Sync Token Schema and Mutations
+  - [ ] Write unit tests for `sync:create` (token generation) and `sync:verify` (token consumption)
+  - [ ] Update `convex/schema.ts` with `sync_tokens` table (linked to `identityId`, includes `expiresAt` and `isUsed`)
+  - [ ] Implement `convex/sync.ts` with `create` and `verify` functions
+- [ ] Task: Build Sync Mobile Tab in `InviteModal.tsx`
+  - [ ] Write tests for `SyncMobileTab` rendering and QR code generation with the sync token
+  - [ ] Implement the UI for generating and displaying the "Sync Controller" QR code
+- [ ] Task: Implement Client-Side Identity Mirroring
+  - [ ] Write tests for token detection and `identityId` replacement logic in `useIdentity.ts`
+  - [ ] Implement logic in the root loader or `useIdentity` hook to detect `?sync=TOKEN` and call `sync:verify`
+- [ ] Task: Build "Mobile Controller Mode" UI
+  - [ ] Write tests for detecting mobile devices and synced sessions
+  - [ ] Create a compact `MobileController.tsx` component with haptic-first voting and facilitator controls
+  - [ ] Update `RoomPage.tsx` to conditionally render the controller mode for synced mobile users
+- [ ] Task: Conductor - User Manual Verification 'Phase 1: Identity Sync & Mobile Controller' (Protocol in workflow.md)
+
+## Phase 2: Round Timer & Facilitator Nudge [checkpoint: none]
+
+- [ ] Task: Implement Round Timer Logic in Convex
+  - [ ] Write tests for timer auto-start on first vote and manual reset
+  - [ ] Update `convex/schema.ts` to include `timerStartedAt` in the `rooms` table
+  - [ ] Implement `rooms:startTimer` and `rooms:resetTimer` mutations
+- [ ] Task: Build UI Timer Component
+  - [ ] Write tests for real-time timer countdown and synchronization across clients
+  - [ ] Implement `RoundTimer.tsx` and integrate it into the `ActiveTopicHeader.tsx`
+- [ ] Task: Implement "Nudge" Mutation and Haptic Triggers
+  - [ ] Write tests for `players:nudge` mutation (ensuring it's facilitator-only)
+  - [ ] Implement `players:nudge` mutation to broadcast a targeted nudge event
+  - [ ] Update `usePresence.ts` to listen for nudge events and trigger a haptic pulse/toast on the player's device
+- [ ] Task: Conductor - User Manual Verification 'Phase 2: Round Timer & Facilitator Nudge' (Protocol in workflow.md)
+
+## Phase 3: Session Exporter & Advanced Settings [checkpoint: none]
+
+- [ ] Task: Implement Session Export Utilities
+  - [ ] Write unit tests for Markdown Table, Summary List, and CSV format generators
+  - [ ] Implement `utils/exporter.ts` to transform completed topics and estimates into the requested formats
+- [ ] Task: Add Export UI to Topic Sidebar
+  - [ ] Write tests for the "Export Session" button and file download triggers
+  - [ ] Implement the export menu in `TopicSidebar.tsx` history section
+- [ ] Task: Implement Advanced Room Settings (Auto-Reveal & T-Shirt Sizing)
+  - [ ] Write tests for `Auto-Reveal` logic (revealing once all online players have voted)
+  - [ ] Update `convex/schema.ts` with `autoReveal` toggle and `scaleType` in the `rooms` table
+  - [ ] Update `CardDeck.tsx` and `StatsPanel.tsx` to support the T-Shirt Sizing scale (S, M, L, XL, ?)
+- [ ] Task: Conductor - User Manual Verification 'Phase 3: Session Exporter & Advanced Settings' (Protocol in workflow.md)
