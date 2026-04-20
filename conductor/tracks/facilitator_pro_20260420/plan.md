@@ -18,7 +18,7 @@
   - [ ] Update `RoomPage.tsx` to conditionally render the controller mode for synced mobile users
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Identity Sync & Mobile Controller' (Protocol in workflow.md) 21ccbb0
 
-## Phase 2: Round Timer & Facilitator Nudge [checkpoint: none]
+## Phase 2: Round Timer & Facilitator Nudge [checkpoint: 46e8d0d]
 
 - [x] Task: Implement Round Timer Logic in Convex 87f9c23
   - [ ] Write tests for timer auto-start on first vote and manual reset
@@ -31,7 +31,7 @@
   - [ ] Write tests for `players:nudge` mutation (ensuring it's facilitator-only)
   - [ ] Implement `players:nudge` mutation to broadcast a targeted nudge event
   - [ ] Update `usePresence.ts` to listen for nudge events and trigger a haptic pulse/toast on the player's device
-- [ ] Task: Conductor - User Manual Verification 'Phase 2: Round Timer & Facilitator Nudge' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 2: Round Timer & Facilitator Nudge' (Protocol in workflow.md) 46e8d0d
 
 ## Phase 3: Session Exporter & Advanced Settings [checkpoint: none]
 
