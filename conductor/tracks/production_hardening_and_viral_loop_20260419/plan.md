@@ -25,7 +25,7 @@
 
 ## Phase 3: Performance Audit & Asset Optimization [checkpoint: ]
 
-- [ ] Task: Bundle Size Audit & Lazy Loading
+- [~] Task: Bundle Size Audit & Lazy Loading
   - [ ] Run `pnpm run build` and analyze bundle (aim for <200KB gzipped)
   - [ ] Implement `React.lazy` for `BatchAddModal`, `StatsPanel`, and the new `InviteModal`
 - [ ] Task: Optimize Static Assets

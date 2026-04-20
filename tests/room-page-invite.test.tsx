@@ -62,12 +62,12 @@ describe('RoomPage Invite Flow', () => {
     vi.mocked(useMutation).mockReturnValue(vi.fn().mockResolvedValue({}));
   });
 
-  it('should open InviteModal when "Copy Invite" is clicked', () => {
+  it('should open InviteModal when "Copy Invite" is clicked', async () => {
     render(<RoomPage slug="test-room" />);
 
     const inviteButton = screen.getByRole('button', { name: /copy invite/i });
     fireEvent.click(inviteButton);
 
-    expect(screen.getByTestId('invite-modal')).toBeDefined();
+    expect(await screen.findByTestId('invite-modal')).toBeDefined();
   });
 });

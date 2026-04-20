@@ -4,9 +4,7 @@ import { useIdentity } from '../hooks/useIdentity';
 import JoinModal from './JoinModal';
 import { PresenceSidebar } from './PresenceSidebar';
 import { TopicSidebar } from './TopicSidebar';
-import { BatchAddModal } from './BatchAddModal';
 import { ConfirmEstimateModal } from './ConfirmEstimateModal';
-import InviteModal from './InviteModal';
 import SectionErrorBoundary from './SectionErrorBoundary';
 import { ActiveTopicHeader } from './ActiveTopicHeader';
 import { ClaimBanner } from './ClaimBanner';
@@ -19,13 +17,21 @@ import { usePresence } from '../hooks/usePresence';
 import { useEmojiReactions } from '../hooks/useEmojiReactions';
 import { useSound } from '../hooks/useSound';
 import { useJuice } from './JuiceToggle';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import { toast } from 'sonner';
 import confetti from 'canvas-confetti';
 import { calculateStats, isUnanimous } from '../utils/stats';
-import { StatsPanel } from './StatsPanel';
 
 import type { Id } from '../../convex/_generated/dataModel';
+
+// Lazy load heavy components
+const BatchAddModal = lazy(() =>
+  import('./BatchAddModal').then((m) => ({ default: m.BatchAddModal }))
+);
+const StatsPanel = lazy(() =>
+  import('./StatsPanel').then((m) => ({ default: m.StatsPanel }))
+);
+const InviteModal = lazy(() => import('./InviteModal'));
 
 interface RoomPageProps {
   slug: string;
@@ -338,7 +344,13 @@ export function RoomPage({ slug }: RoomPageProps) {
             {room.status === 'revealed' && votes && players && (
               <div className="mb-12">
                 <SectionErrorBoundary name="Statistics">
-                  <StatsPanel players={players} votes={votes} />
+                  <Suspense
+                    fallback={
+                      <div className="h-48 island-shell animate-pulse bg-[var(--bg-secondary)]" />
+                    }
+                  >
+                    <StatsPanel players={players} votes={votes} />
+                  </Suspense>
                 </SectionErrorBoundary>
               </div>
             )}
@@ -391,12 +403,14 @@ export function RoomPage({ slug }: RoomPageProps) {
 
       {isFacilitator && (
         <>
-          <BatchAddModal
-            roomId={room._id}
-            isOpen={isBatchAddOpen}
-            onClose={() => setIsBatchAddOpen(false)}
-            onSubmit={handleBatchAdd}
-          />
+          <Suspense fallback={null}>
+            <BatchAddModal
+              roomId={room._id}
+              isOpen={isBatchAddOpen}
+              onClose={() => setIsBatchAddOpen(false)}
+              onSubmit={handleBatchAdd}
+            />
+          </Suspense>
           <ConfirmEstimateModal
             isOpen={confirmEstimateState.isOpen}
             onClose={() =>
@@ -412,11 +426,13 @@ export function RoomPage({ slug }: RoomPageProps) {
         </>
       )}
 
-      <InviteModal
-        isOpen={isInviteModalOpen}
-        onClose={() => setIsInviteModalOpen(false)}
-        roomUrl={typeof window !== 'undefined' ? window.location.href : ''}
-      />
+      <Suspense fallback={null}>
+        <InviteModal
+          isOpen={isInviteModalOpen}
+          onClose={() => setIsInviteModalOpen(false)}
+          roomUrl={typeof window !== 'undefined' ? window.location.href : ''}
+        />
+      </Suspense>
     </div>
   );
 }
