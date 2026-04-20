@@ -2,7 +2,7 @@
 
 ## Phase 1: Identity Sync & Mobile Controller [checkpoint: none]
 
-- [ ] Task: Implement Sync Token Schema and Mutations
+- [x] Task: Implement Sync Token Schema and Mutations cbf65158
   - [ ] Write unit tests for `sync:create` (token generation) and `sync:verify` (token consumption)
   - [ ] Update `convex/schema.ts` with `sync_tokens` table (linked to `identityId`, includes `expiresAt` and `isUsed`)
   - [ ] Implement `convex/sync.ts` with `create` and `verify` functions
