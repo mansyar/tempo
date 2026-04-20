@@ -41,7 +41,7 @@
 - [x] Task: Add Export UI to Topic Sidebar 02850e7
   - [ ] Write tests for the "Export Session" button and file download triggers
   - [ ] Implement the export menu in `TopicSidebar.tsx` history section
-- [ ] Task: Implement Advanced Room Settings (Auto-Reveal & T-Shirt Sizing)
+- [x] Task: Implement Advanced Room Settings (Auto-Reveal & T-Shirt Sizing) a994d65
   - [ ] Write tests for `Auto-Reveal` logic (revealing once all online players have voted)
   - [ ] Update `convex/schema.ts` with `autoReveal` toggle and `scaleType` in the `rooms` table
   - [ ] Update `CardDeck.tsx` and `StatsPanel.tsx` to support the T-Shirt Sizing scale (S, M, L, XL, ?)
