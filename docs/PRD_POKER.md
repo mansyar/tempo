@@ -182,12 +182,13 @@ reactions:   by_room(roomId)
 
 ## 8. Route Inventory
 
-| Route         | Page        | Description                                               |
-| ------------- | ----------- | --------------------------------------------------------- |
-| `/`           | Landing     | Hero section, "Create Room" CTA, brief feature highlights |
-| `/room/:slug` | Room (Game) | Main poker table, topic queue, voting interface, stats    |
+| Route          | Page        | Description                                               |
+| -------------- | ----------- | --------------------------------------------------------- |
+| `/`            | Landing     | Hero section, "Create Room" CTA, brief feature highlights |
+| `/poker/:slug` | Room (Game) | Main poker table, topic queue, voting interface, stats    |
+| `/room/:slug`  | Redirect    | Legacy route → `/poker/:slug` (backward compat)           |
 
-> Only 2 routes — intentionally minimal. All room state is managed via Convex real-time subscriptions.
+> Routes with rebrand: `/poker/:slug` serves the poker experience, with `/room/:slug` as a redirect for backward compatibility.
 
 ## 9. Convex API Contract
 

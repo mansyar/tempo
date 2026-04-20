@@ -1,8 +1,0 @@
-{
-  "track_id": "facilitator_pro_20260420",
-  "type": "feature",
-  "status": "new",
-  "created_at": "2026-04-20T10:00:00Z",
-  "updated_at": "2026-04-20T10:00:00Z",
-  "description": "The \"Facilitator Pro & Session Continuity\" track elevates Pointy from a real-time prototype to a professional-grade power tool by bridging the gap between high-fidelity dashboards and mobile-first haptic controllers. It introduces a secure, token-based Identity Sync protocol that allows any participant to transform their mobile device into a dedicated \"PWA Hand\" while maintaining their desktop session as a shared \"Big Screen\" dashboard. To enhance meeting tempo, the track implements a facilitator-controlled Round Timer and a \"Nudge\" mechanism to prompt remaining voters via haptic feedback. Finally, it ensures project continuity with a Markdown Session Exporter for migrating ephemeral estimates into permanent task trackers, alongside advanced room configurations like Auto-Reveal and T-Shirt Sizing scales to support diverse team workflows."
-}

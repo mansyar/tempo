@@ -180,11 +180,11 @@ Based on a 4px grid:
 │  ┌────────────────────────────┐     ┌────────────────────────────┐       │
 │  │   ♠  Planning Poker       │     │   ⏱  Daily Standup        │       │
 │  │                           │     │                           │       │
-│  │   Estimate stories as a   │     │   Timebox your daily      │       │
-│  │   team with Fibonacci     │     │   sync with per-person    │       │
-│  │   cards and live stats    │     │   timers and speaker      │       │
-│  │                           │     │   queues                  │       │
-│  │   [🚀 Create Room]       │     │   [🚀 Create Room]       │       │
+│  │   Estimate stories as a   │     │   COMING SOON             │       │
+│  │   team with Fibonacci     │     │                           │       │
+│  │   cards and live stats    │     │   (v2.1)                  │       │
+│  │                           │     │                           │       │
+│  │   [🚀 Create Room]       │     │   [⏳ Not available]      │       │
 │  └────────────────────────────┘     └────────────────────────────┘       │
 │                                                                          │
 │           ─── or join an existing room ───                               │
