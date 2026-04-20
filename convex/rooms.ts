@@ -109,6 +109,11 @@ export const reset = mutation({
     for (const vote of roomVotes) {
       await ctx.db.delete(vote._id);
     }
+
+    // 3. Clear timer
+    await ctx.db.patch(args.roomId, {
+      timerStartedAt: undefined,
+    });
   },
 });
 
@@ -152,12 +157,14 @@ export const nextTopic = mutation({
       await ctx.db.patch(args.roomId, {
         currentTopicId: nextTopic._id,
         status: 'voting',
+        timerStartedAt: undefined, // Clear timer for new round
         updatedAt: Date.now(),
       });
     } else {
       await ctx.db.patch(args.roomId, {
         currentTopicId: undefined,
         status: 'voting',
+        timerStartedAt: undefined,
         updatedAt: Date.now(),
       });
     }
@@ -171,5 +178,45 @@ export const nextTopic = mutation({
     for (const vote of roomVotes) {
       await ctx.db.delete(vote._id);
     }
+  },
+});
+
+export const startTimer = mutation({
+  args: {
+    roomId: v.id('rooms'),
+    identityId: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const room = await ctx.db.get(args.roomId);
+    if (!room) throw new Error('Room not found');
+
+    if (room.facilitatorId !== args.identityId) {
+      throw new Error('Only the facilitator can start the timer');
+    }
+
+    await ctx.db.patch(args.roomId, {
+      timerStartedAt: Date.now(),
+      updatedAt: Date.now(),
+    });
+  },
+});
+
+export const resetTimer = mutation({
+  args: {
+    roomId: v.id('rooms'),
+    identityId: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const room = await ctx.db.get(args.roomId);
+    if (!room) throw new Error('Room not found');
+
+    if (room.facilitatorId !== args.identityId) {
+      throw new Error('Only the facilitator can reset the timer');
+    }
+
+    await ctx.db.patch(args.roomId, {
+      timerStartedAt: undefined,
+      updatedAt: Date.now(),
+    });
   },
 });

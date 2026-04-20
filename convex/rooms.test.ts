@@ -185,3 +185,69 @@ test('rooms:nextTopic flow', async () => {
   });
   expect(roomVotes.length).toBe(0);
 });
+
+test('rooms:startTimer and rooms:resetTimer', async () => {
+  const t = convexTest(schema, {
+    rooms: async () => rooms,
+    '_generated/api': async () => apiModule,
+    '_generated/server': async () => serverModule,
+  });
+
+  const { roomId } = await t.mutation(api.rooms.create, {
+    slug: 'timer-test',
+    facilitatorId: 'user1',
+  });
+
+  // 1. Start timer
+  await t.mutation(api.rooms.startTimer, { roomId, identityId: 'user1' });
+  let room = await t.run(async (ctx) => await ctx.db.get(roomId));
+  expect(room?.timerStartedAt).toBeDefined();
+  expect(typeof room?.timerStartedAt).toBe('number');
+
+  // 2. Reset timer
+  await t.mutation(api.rooms.resetTimer, { roomId, identityId: 'user1' });
+  room = await t.run(async (ctx) => await ctx.db.get(roomId));
+  expect(room?.timerStartedAt).toBeUndefined();
+});
+
+test('rooms:startTimer is facilitator-only', async () => {
+  const t = convexTest(schema, {
+    rooms: async () => rooms,
+    '_generated/api': async () => apiModule,
+    '_generated/server': async () => serverModule,
+  });
+
+  const { roomId } = await t.mutation(api.rooms.create, {
+    slug: 'timer-test',
+    facilitatorId: 'user1',
+  });
+
+  await expect(
+    t.mutation(api.rooms.startTimer, { roomId, identityId: 'user2' })
+  ).rejects.toThrow('Only the facilitator can start the timer');
+});
+
+test('timer auto-starts on first vote', async () => {
+  const t = convexTest(schema, {
+    rooms: async () => rooms,
+    votes: async () => votes,
+    '_generated/api': async () => apiModule,
+    '_generated/server': async () => serverModule,
+  });
+
+  const { roomId } = await t.mutation(api.rooms.create, {
+    slug: 'auto-timer-test',
+    facilitatorId: 'facilitator',
+  });
+
+  // Cast first vote
+  await t.mutation(api.votes.cast, {
+    roomId,
+    identityId: 'player1',
+    value: '5',
+  });
+
+  const room = await t.run(async (ctx) => await ctx.db.get(roomId));
+  expect(room?.timerStartedAt).toBeDefined();
+  expect(typeof room?.timerStartedAt).toBe('number');
+});

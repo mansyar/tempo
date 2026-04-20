@@ -7,6 +7,7 @@ export default defineSchema({
     status: v.union(v.literal('voting'), v.literal('revealed')),
     facilitatorId: v.string(), // identityId of current facilitator
     currentTopicId: v.optional(v.id('topics')),
+    timerStartedAt: v.optional(v.number()),
     updatedAt: v.number(),
   })
     .index('by_slug', ['slug'])

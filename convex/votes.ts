@@ -57,12 +57,31 @@ export const cast = mutation({
       return existing._id;
     }
 
+    // 1. Insert the vote
     const voteId = await ctx.db.insert('votes', {
       roomId: args.roomId,
       identityId: args.identityId,
       topicId: args.topicId,
       value: args.value,
     });
+
+    // 2. Check if we should auto-start the timer
+    const room = await ctx.db.get(args.roomId);
+    if (room && room.status === 'voting' && !room.timerStartedAt) {
+      // Is this the first vote in this room?
+      const roomVotes = await ctx.db
+        .query('votes')
+        .withIndex('by_room', (q) => q.eq('roomId', args.roomId))
+        .collect();
+
+      // If there's only one vote (the one we just inserted), start the timer
+      if (roomVotes.length === 1) {
+        await ctx.db.patch(args.roomId, {
+          timerStartedAt: Date.now(),
+          updatedAt: Date.now(),
+        });
+      }
+    }
 
     return voteId;
   },
