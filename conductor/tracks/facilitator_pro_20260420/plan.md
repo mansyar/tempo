@@ -24,7 +24,7 @@
   - [ ] Write tests for timer auto-start on first vote and manual reset
   - [ ] Update `convex/schema.ts` to include `timerStartedAt` in the `rooms` table
   - [ ] Implement `rooms:startTimer` and `rooms:resetTimer` mutations
-- [ ] Task: Build UI Timer Component
+- [x] Task: Build UI Timer Component 355b2f6
   - [ ] Write tests for real-time timer countdown and synchronization across clients
   - [ ] Implement `RoundTimer.tsx` and integrate it into the `ActiveTopicHeader.tsx`
 - [ ] Task: Implement "Nudge" Mutation and Haptic Triggers
