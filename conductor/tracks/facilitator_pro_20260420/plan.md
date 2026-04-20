@@ -38,7 +38,7 @@
 - [x] Task: Implement Session Export Utilities 7f13f76
   - [ ] Write unit tests for Markdown Table, Summary List, and CSV format generators
   - [ ] Implement `utils/exporter.ts` to transform completed topics and estimates into the requested formats
-- [ ] Task: Add Export UI to Topic Sidebar
+- [x] Task: Add Export UI to Topic Sidebar 02850e7
   - [ ] Write tests for the "Export Session" button and file download triggers
   - [ ] Implement the export menu in `TopicSidebar.tsx` history section
 - [ ] Task: Implement Advanced Room Settings (Auto-Reveal & T-Shirt Sizing)
