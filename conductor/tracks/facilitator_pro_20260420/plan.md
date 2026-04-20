@@ -1,6 +1,6 @@
 # Implementation Plan: Facilitator Pro & Session Continuity
 
-## Phase 1: Identity Sync & Mobile Controller [checkpoint: none]
+## Phase 1: Identity Sync & Mobile Controller [checkpoint: 21ccbb0]
 
 - [x] Task: Implement Sync Token Schema and Mutations cbf65158
   - [ ] Write unit tests for `sync:create` (token generation) and `sync:verify` (token consumption)
@@ -16,7 +16,7 @@
   - [ ] Write tests for detecting mobile devices and synced sessions
   - [ ] Create a compact `MobileController.tsx` component with haptic-first voting and facilitator controls
   - [ ] Update `RoomPage.tsx` to conditionally render the controller mode for synced mobile users
-- [ ] Task: Conductor - User Manual Verification 'Phase 1: Identity Sync & Mobile Controller' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 1: Identity Sync & Mobile Controller' (Protocol in workflow.md) 21ccbb0
 
 ## Phase 2: Round Timer & Facilitator Nudge [checkpoint: none]
 
