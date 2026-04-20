@@ -35,7 +35,7 @@
 
 ## Phase 3: Session Exporter & Advanced Settings [checkpoint: none]
 
-- [ ] Task: Implement Session Export Utilities
+- [x] Task: Implement Session Export Utilities 7f13f76
   - [ ] Write unit tests for Markdown Table, Summary List, and CSV format generators
   - [ ] Implement `utils/exporter.ts` to transform completed topics and estimates into the requested formats
 - [ ] Task: Add Export UI to Topic Sidebar
