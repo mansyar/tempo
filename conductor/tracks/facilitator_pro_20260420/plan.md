@@ -6,7 +6,7 @@
   - [ ] Write unit tests for `sync:create` (token generation) and `sync:verify` (token consumption)
   - [ ] Update `convex/schema.ts` with `sync_tokens` table (linked to `identityId`, includes `expiresAt` and `isUsed`)
   - [ ] Implement `convex/sync.ts` with `create` and `verify` functions
-- [ ] Task: Build Sync Mobile Tab in `InviteModal.tsx`
+- [x] Task: Build Sync Mobile Tab in InviteModal.tsx 34165fc
   - [ ] Write tests for `SyncMobileTab` rendering and QR code generation with the sync token
   - [ ] Implement the UI for generating and displaying the "Sync Controller" QR code
 - [ ] Task: Implement Client-Side Identity Mirroring
