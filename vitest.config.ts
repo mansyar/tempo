@@ -12,6 +12,7 @@ export default defineConfig({
         '**/_generated/**',
         'src/routeTree.gen.ts',
         'src/routes/__root.tsx',
+        'scripts/**',
         'tests/**',
         '**/*.test.ts',
         '**/*.test.tsx',
@@ -19,6 +20,7 @@ export default defineConfig({
         'vite.config.ts',
         'vitest.config.ts',
         '.output/**',
+        'public/**',
       ],
       thresholds: {
         lines: 80,

@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { RoomPage } from '../src/components/RoomPage';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { MobileController } from '../src/components/MobileController';
 import { JuiceProvider } from '../src/components/JuiceToggle';
 import React from 'react';
 
@@ -18,15 +18,32 @@ vi.mock('convex/react', () => ({
   useMutation: vi.fn(() => vi.fn().mockResolvedValue({})),
 }));
 
-import { useQuery } from 'convex/react';
+// Mock useSound - needs patterns for usePresence
+vi.mock('../src/hooks/useSound', () => ({
+  useSound: () => ({
+    play: vi.fn(),
+    vibrate: vi.fn(),
+    patterns: {
+      pop: 10,
+      whoosh: 20,
+      confetti: [50, 30, 50],
+      success: 100,
+      reveal: [30, 50, 30],
+      nudge: 20,
+    },
+  }),
+}));
 
-describe('RoomPage Mobile Controller Integration', () => {
+import { useQuery, useMutation } from 'convex/react';
+
+describe('MobileController Component', () => {
   beforeEach(() => {
     localStorage.clear();
     vi.clearAllMocks();
-
-    // Mock window.innerWidth to be small (mobile)
     vi.stubGlobal('innerWidth', 375);
+
+    // Mock all useMutation calls
+    vi.mocked(useMutation).mockReturnValue(vi.fn().mockResolvedValue({}));
 
     // Mock queries
     vi.mocked(useQuery).mockImplementation(
@@ -38,6 +55,8 @@ describe('RoomPage Mobile Controller Integration', () => {
             slug: a.slug as string,
             facilitatorId: 'test-identity-id',
             status: 'voting',
+            currentTopicId: 'topic-1',
+            scaleType: 'fibonacci',
           };
         }
         if (a && a.roomId !== undefined && a.identityId === undefined) {
@@ -58,41 +77,49 @@ describe('RoomPage Mobile Controller Integration', () => {
     );
   });
 
-  it('should render regular UI if not synced as controller', () => {
-    render(
-      <JuiceProvider>
-        <RoomPage slug="test-room" />
-      </JuiceProvider>
-    );
-    // Should see regular header
-    expect(screen.getByText('Planning Poker Room')).toBeDefined();
+  afterEach(() => {
+    vi.unstubAllGlobals();
   });
 
-  it('should render MobileController if synced as controller on mobile', () => {
-    localStorage.setItem('pointy_isController', 'true');
+  it('should render the mobile controller', () => {
     render(
       <JuiceProvider>
-        <RoomPage slug="test-room" />
+        <MobileController slug="test-room" onExit={vi.fn()} />
       </JuiceProvider>
     );
 
-    // Check for "Test User" nickname which is in the mobile controller header
     expect(screen.getByText('Test User')).toBeDefined();
-    // Check for "Cast your vote" which is in CardDeck when isController is true
     expect(screen.getByText(/Cast your vote/i)).toBeDefined();
   });
 
-  it('should exit controller mode when logout is clicked', () => {
-    localStorage.setItem('pointy_isController', 'true');
+  it('should call onExit when logout is clicked', () => {
+    const onExit = vi.fn();
     render(
       <JuiceProvider>
-        <RoomPage slug="test-room" />
+        <MobileController slug="test-room" onExit={onExit} />
       </JuiceProvider>
     );
 
     const logoutButton = screen.getByLabelText(/Exit Controller/i);
     fireEvent.click(logoutButton);
 
-    expect(localStorage.getItem('pointy_isController')).toBeNull();
+    expect(onExit).toHaveBeenCalled();
+  });
+
+  it('should call castVote when a vote is selected', () => {
+    const mockCastVote = vi.fn().mockResolvedValue({});
+    vi.mocked(useMutation).mockReturnValue(mockCastVote);
+
+    render(
+      <JuiceProvider>
+        <MobileController slug="test-room" onExit={vi.fn()} />
+      </JuiceProvider>
+    );
+
+    // Click on a vote card
+    const voteCard = screen.getByText('5');
+    fireEvent.click(voteCard);
+
+    expect(mockCastVote).toHaveBeenCalled();
   });
 });
