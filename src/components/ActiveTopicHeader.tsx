@@ -1,5 +1,5 @@
 import type { Id } from '../../convex/_generated/dataModel';
-import { Play, CheckCircle2 } from 'lucide-react';
+import { Play, CheckCircle2, Settings } from 'lucide-react';
 import { RoundTimer } from './RoundTimer';
 
 interface ActiveTopicHeaderProps {
@@ -16,6 +16,7 @@ interface ActiveTopicHeaderProps {
   isFacilitator: boolean;
   onReveal: () => void;
   onConfirmNext: () => void;
+  onOpenSettings?: () => void;
   revealDisabled?: boolean;
 }
 
@@ -28,6 +29,7 @@ export function ActiveTopicHeader({
   isFacilitator,
   onReveal,
   onConfirmNext,
+  onOpenSettings,
   revealDisabled = false,
 }: ActiveTopicHeaderProps) {
   if (!activeTopic) return null;
@@ -38,7 +40,7 @@ export function ActiveTopicHeader({
         <div className="mt-1 flex items-center justify-center w-10 h-10 rounded-xl bg-[var(--accent)] text-white font-mono font-bold shadow-lg shadow-[var(--accent)]/20 shrink-0">
           {activeTopic.order}
         </div>
-        <div>
+        <div className="flex-1">
           <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-[var(--text-tertiary)] mb-1 block">
             Currently Estimating
           </span>
@@ -58,33 +60,43 @@ export function ActiveTopicHeader({
           />
         )}
 
-        {isFacilitator && (
-          <div className="flex items-center gap-3 shrink-0">
-            {roomStatus === 'voting' ? (
-              <button
-                onClick={onReveal}
-                disabled={revealDisabled}
-                className="group flex items-center gap-2 px-6 py-3 bg-[var(--accent)] text-white text-sm font-bold rounded-xl hover:brightness-110 transition-all shadow-lg active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:grayscale"
-                title={
-                  revealDisabled
-                    ? 'Waiting for all players to vote'
-                    : 'Reveal votes'
-                }
-              >
-                <Play className="w-4 h-4 fill-current transition-transform group-hover:translate-x-0.5" />
-                Reveal Votes
-              </button>
-            ) : (
-              <button
-                onClick={onConfirmNext}
-                className="group flex items-center gap-2 px-6 py-3 bg-[var(--bg-tertiary)] text-[var(--text-primary)] text-sm font-bold rounded-xl border border-[var(--border-subtle)] hover:border-[var(--accent)] transition-all active:scale-95"
-              >
-                <CheckCircle2 className="w-4 h-4 text-[var(--success)] transition-transform group-hover:scale-110" />
-                Confirm & Next
-              </button>
-            )}
-          </div>
-        )}
+        <div className="flex items-center gap-3 shrink-0">
+          {isFacilitator && roomStatus === 'voting' && (
+            <button
+              onClick={onReveal}
+              disabled={revealDisabled}
+              className="group flex items-center gap-2 px-6 py-3 bg-[var(--accent)] text-white text-sm font-bold rounded-xl hover:brightness-110 transition-all shadow-lg active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:grayscale"
+              title={
+                revealDisabled
+                  ? 'Waiting for all players to vote'
+                  : 'Reveal votes'
+              }
+            >
+              <Play className="w-4 h-4 fill-current transition-transform group-hover:translate-x-0.5" />
+              Reveal Votes
+            </button>
+          )}
+
+          {isFacilitator && roomStatus === 'revealed' && (
+            <button
+              onClick={onConfirmNext}
+              className="group flex items-center gap-2 px-6 py-3 bg-[var(--bg-tertiary)] text-[var(--text-primary)] text-sm font-bold rounded-xl border border-[var(--border-subtle)] hover:border-[var(--accent)] transition-all active:scale-95"
+            >
+              <CheckCircle2 className="w-4 h-4 text-[var(--success)] transition-transform group-hover:scale-110" />
+              Confirm & Next
+            </button>
+          )}
+
+          {isFacilitator && onOpenSettings && (
+            <button
+              onClick={onOpenSettings}
+              className="p-3 rounded-xl bg-[var(--bg-tertiary)] text-[var(--text-tertiary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-glass)] transition-all border border-[var(--border-subtle)]"
+              title="Room Settings"
+            >
+              <Settings className="w-5 h-5" />
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

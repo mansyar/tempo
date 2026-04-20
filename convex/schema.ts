@@ -8,6 +8,8 @@ export default defineSchema({
     facilitatorId: v.string(), // identityId of current facilitator
     currentTopicId: v.optional(v.id('topics')),
     timerStartedAt: v.optional(v.number()),
+    autoReveal: v.optional(v.boolean()), // if true, reveal once everyone has voted
+    scaleType: v.optional(v.union(v.literal('fibonacci'), v.literal('tshirt'))),
     updatedAt: v.number(),
   })
     .index('by_slug', ['slug'])

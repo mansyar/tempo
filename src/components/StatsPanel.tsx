@@ -52,16 +52,54 @@ export function StatsPanel({ players, votes }: StatsPanelProps) {
   const tooltipText =
     'Calculated from numeric votes only. Special votes (?, ☕) are excluded.';
 
+  // Distribution
+  const counts: Record<string, number> = {};
+  votes.forEach((v) => {
+    if (v.value !== null) {
+      const val = v.value.toString();
+      counts[val] = (counts[val] || 0) + 1;
+    }
+  });
+  const sortedValues = Object.keys(counts).sort((a, b) => {
+    const na = Number(a),
+      nb = Number(b);
+    if (!isNaN(na) && !isNaN(nb)) return na - nb;
+    return a.localeCompare(b);
+  });
+
   return (
     <div className="flex flex-col items-center gap-8">
-      <div className="flex justify-center gap-8 sm:gap-12 animate-in fade-in slide-in-from-top-4 duration-500">
-        <StatItem label="Average" value={stats.average} tooltip={tooltipText} />
-        <StatItem label="Median" value={stats.median} tooltip={tooltipText} />
-        <StatItem
-          label="Mode"
-          value={stats.mode.join(', ') || '-'}
-          tooltip={tooltipText}
-        />
+      {stats.count > 0 && (
+        <div className="flex justify-center gap-8 sm:gap-12 animate-in fade-in slide-in-from-top-4 duration-500">
+          <StatItem
+            label="Average"
+            value={stats.average}
+            tooltip={tooltipText}
+          />
+          <StatItem label="Median" value={stats.median} tooltip={tooltipText} />
+          <StatItem
+            label="Mode"
+            value={stats.mode.join(', ') || '-'}
+            tooltip={tooltipText}
+          />
+        </div>
+      )}
+
+      {/* Distribution Section */}
+      <div className="flex flex-wrap justify-center gap-3 animate-in fade-in duration-700">
+        {sortedValues.map((val) => (
+          <div
+            key={val}
+            className="flex flex-col items-center p-3 min-w-[60px] bg-[var(--bg-tertiary)] border border-[var(--border-subtle)] rounded-xl"
+          >
+            <span className="text-xl font-black text-[var(--text-primary)]">
+              {val}
+            </span>
+            <span className="text-[10px] font-bold text-[var(--text-tertiary)] uppercase tracking-wider">
+              {counts[val]} {counts[val] === 1 ? 'vote' : 'votes'}
+            </span>
+          </div>
+        ))}
       </div>
 
       {isSplit && outlierPlayers.length > 0 && (

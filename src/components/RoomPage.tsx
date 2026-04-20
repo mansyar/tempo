@@ -3,6 +3,7 @@ import { api } from '../../convex/_generated/api';
 import { useIdentity } from '../hooks/useIdentity';
 import JoinModal from './JoinModal';
 import MobileController from './MobileController';
+import RoomSettingsModal from './RoomSettingsModal';
 import { PresenceSidebar } from './PresenceSidebar';
 import { TopicSidebar } from './TopicSidebar';
 import { ConfirmEstimateModal } from './ConfirmEstimateModal';
@@ -117,6 +118,7 @@ export function RoomPage({ slug }: RoomPageProps) {
   const [hasJoined, setHasJoined] = useState(() => !!nickname);
   const [isBatchAddOpen, setIsBatchAddOpen] = useState(false);
   const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [confirmEstimateState, setConfirmEstimateState] = useState<{
     isOpen: boolean;
     suggested: string;
@@ -344,22 +346,34 @@ export function RoomPage({ slug }: RoomPageProps) {
             isFacilitator={isFacilitator}
             onReveal={handleReveal}
             onConfirmNext={handleConfirmNext}
+            onOpenSettings={() => setIsSettingsOpen(true)}
             revealDisabled={revealDisabled}
           />
         ) : (
           isFacilitator && (
             <div className="mb-12 island-shell p-8 rounded-3xl bg-[var(--bg-secondary)] border border-dashed border-[var(--border-subtle)] text-center rise-in">
-              <h2 className="text-xl font-bold text-[var(--text-secondary)] mb-4">
+              <h2 className="text-xl font-bold text-[var(--text-secondary)] mb-2">
                 No active topic. Ready to start?
               </h2>
-              <button
-                onClick={() =>
-                  nextTopic({ roomId: room._id, identityId: identityId! })
-                }
-                className="px-8 py-3 bg-[var(--accent)] text-white font-bold rounded-xl hover:brightness-110 transition-all shadow-lg"
-              >
-                Start Estimation
-              </button>
+              <p className="text-sm text-[var(--text-tertiary)] mb-8">
+                Choose your scale in settings or click below to begin.
+              </p>
+              <div className="flex flex-wrap justify-center gap-4">
+                <button
+                  onClick={() =>
+                    nextTopic({ roomId: room._id, identityId: identityId! })
+                  }
+                  className="px-8 py-3 bg-[var(--accent)] text-white font-bold rounded-xl hover:brightness-110 transition-all shadow-lg"
+                >
+                  Start Estimation
+                </button>
+                <button
+                  onClick={() => setIsSettingsOpen(true)}
+                  className="px-8 py-3 bg-[var(--bg-tertiary)] text-[var(--text-primary)] font-bold rounded-xl border border-[var(--border-subtle)] hover:border-[var(--accent)] transition-all"
+                >
+                  Room Settings
+                </button>
+              </div>
             </div>
           )
         )}
@@ -420,7 +434,11 @@ export function RoomPage({ slug }: RoomPageProps) {
         </div>
       </div>
 
-      <CardDeck onSelect={handleVote} selectedVote={myVote} />
+      <CardDeck
+        onSelect={handleVote}
+        selectedVote={myVote}
+        scaleType={room.scaleType}
+      />
 
       <div className="fixed bottom-24 right-4 z-50 pointer-events-auto sm:right-8 sm:bottom-28">
         <EmojiActionBar onSelect={sendReaction} />
@@ -438,6 +456,14 @@ export function RoomPage({ slug }: RoomPageProps) {
               onSubmit={handleBatchAdd}
             />
           </Suspense>
+          <RoomSettingsModal
+            isOpen={isSettingsOpen}
+            onClose={() => setIsSettingsOpen(false)}
+            roomId={room._id}
+            identityId={identityId!}
+            initialAutoReveal={room.autoReveal}
+            initialScaleType={room.scaleType}
+          />
           <ConfirmEstimateModal
             isOpen={confirmEstimateState.isOpen}
             onClose={() =>

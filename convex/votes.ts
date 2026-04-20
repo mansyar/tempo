@@ -83,6 +83,41 @@ export const cast = mutation({
       }
     }
 
+    // 3. Auto-Reveal logic
+    if (room && room.status === 'voting' && room.autoReveal) {
+      const onlinePlayers = await ctx.db
+        .query('players')
+        .filter(
+          (q) =>
+            q.eq(q.field('roomId'), args.roomId) &&
+            q.eq(q.field('isOnline'), true)
+        )
+        .collect();
+
+      const allVotes = await ctx.db
+        .query('votes')
+        .withIndex('by_room', (q) => q.eq('roomId', args.roomId))
+        .collect();
+
+      const uniqueOnlineIds = new Set(onlinePlayers.map((p) => p.identityId));
+      const votedIds = new Set(
+        allVotes.filter((v) => v.value !== null).map((v) => v.identityId)
+      );
+      const onlineVotedCount = Array.from(votedIds).filter((id) =>
+        uniqueOnlineIds.has(id)
+      ).length;
+
+      if (
+        onlineVotedCount >= uniqueOnlineIds.size &&
+        uniqueOnlineIds.size > 0
+      ) {
+        await ctx.db.patch(args.roomId, {
+          status: 'revealed',
+          updatedAt: Date.now(),
+        });
+      }
+    }
+
     return voteId;
   },
 });

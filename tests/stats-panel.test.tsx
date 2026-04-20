@@ -21,9 +21,23 @@ describe('StatsPanel', () => {
     expect(screen.getByText('Average')).toBeDefined();
     expect(screen.getByText('5.33')).toBeDefined();
     expect(screen.getByText('Median')).toBeDefined();
-    expect(screen.getByText('5')).toBeDefined();
+    // Use getAllByText because '5' now appears in stats and distribution
+    expect(screen.getAllByText('5').length).toBeGreaterThan(0);
     expect(screen.getByText('Mode')).toBeDefined();
     expect(screen.getByText('3, 5, 8')).toBeDefined();
+  });
+
+  it('renders vote distribution counts', () => {
+    const votes = [
+      { identityId: '1', value: '3' },
+      { identityId: '2', value: '5' },
+      { identityId: '3', value: '5' },
+    ];
+
+    render(<StatsPanel players={players} votes={votes} />);
+
+    expect(screen.getByText('1 vote')).toBeDefined(); // for '3'
+    expect(screen.getByText('2 votes')).toBeDefined(); // for '5'
   });
 
   it('shows "Needs Discussion" badge and outlier names when spread > 2', () => {

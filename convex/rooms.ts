@@ -220,3 +220,26 @@ export const resetTimer = mutation({
     });
   },
 });
+
+export const updateSettings = mutation({
+  args: {
+    roomId: v.id('rooms'),
+    identityId: v.string(),
+    autoReveal: v.optional(v.boolean()),
+    scaleType: v.optional(v.union(v.literal('fibonacci'), v.literal('tshirt'))),
+  },
+  handler: async (ctx, args) => {
+    const room = await ctx.db.get(args.roomId);
+    if (!room) throw new Error('Room not found');
+
+    if (room.facilitatorId !== args.identityId) {
+      throw new Error('Only the facilitator can update room settings');
+    }
+
+    await ctx.db.patch(args.roomId, {
+      autoReveal: args.autoReveal ?? room.autoReveal,
+      scaleType: args.scaleType ?? room.scaleType,
+      updatedAt: Date.now(),
+    });
+  },
+});
