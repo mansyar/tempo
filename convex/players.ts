@@ -114,9 +114,12 @@ export const markOffline = mutation({
   args: {},
   handler: async (ctx) => {
     const cutoff = Date.now() - 30000; // 30 seconds timeout
+
+    // We can't filter by roomId easily for all rooms at once with this index
+    // Let's use a simpler query or update the index
     const onlinePlayers = await ctx.db
       .query('players')
-      .withIndex('by_online', (q) => q.eq('isOnline', true))
+      .filter((q) => q.eq(q.field('isOnline'), true))
       .collect();
 
     for (const player of onlinePlayers) {
@@ -151,5 +154,34 @@ export const claimFacilitator = mutation({
       facilitatorId: args.identityId,
       updatedAt: Date.now(),
     });
+  },
+});
+
+export const nudge = mutation({
+  args: {
+    roomId: v.id('rooms'),
+    identityId: v.string(), // The one nudging
+    targetIdentityId: v.string(), // The one being nudged
+  },
+  handler: async (ctx, args) => {
+    const room = await ctx.db.get(args.roomId);
+    if (!room) throw new Error('Room not found');
+
+    if (room.facilitatorId !== args.identityId) {
+      throw new Error('Only the facilitator can nudge players');
+    }
+
+    const player = await ctx.db
+      .query('players')
+      .withIndex('by_identity', (q) =>
+        q.eq('roomId', args.roomId).eq('identityId', args.targetIdentityId)
+      )
+      .unique();
+
+    if (player) {
+      await ctx.db.patch(player._id, {
+        lastNudgedAt: Date.now(),
+      });
+    }
   },
 });

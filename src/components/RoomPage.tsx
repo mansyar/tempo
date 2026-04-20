@@ -146,7 +146,7 @@ export function RoomPage({ slug }: RoomPageProps) {
   }, [room, identityId, nickname, joinRoom]);
 
   // Presence hook
-  usePresence(room?._id, identityId!, hasJoined);
+  usePresence(room?._id, identityId!, hasJoined, players);
   // Celebration Effect
   useEffect(() => {
     if (room?.status === 'revealed' && votes) {
@@ -411,6 +411,8 @@ export function RoomPage({ slug }: RoomPageProps) {
                 <PresenceSidebar
                   roomId={room._id}
                   facilitatorId={room.facilitatorId}
+                  myIdentityId={identityId!}
+                  votes={votes}
                 />
               </SectionErrorBoundary>
             </div>

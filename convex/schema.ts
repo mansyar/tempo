@@ -19,10 +19,11 @@ export default defineSchema({
     name: v.string(),
     isOnline: v.boolean(),
     lastHeartbeat: v.number(),
+    lastNudgedAt: v.optional(v.number()),
   })
     .index('by_room', ['roomId'])
     .index('by_identity', ['roomId', 'identityId'])
-    .index('by_online', ['isOnline']),
+    .index('by_online', ['roomId', 'isOnline']),
 
   votes: defineTable({
     roomId: v.id('rooms'),

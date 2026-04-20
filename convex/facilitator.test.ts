@@ -107,3 +107,57 @@ test('players:join auto-assigns facilitator if current is offline', async () => 
   const room = await t.run(async (ctx) => await ctx.db.get(roomId));
   expect(room!.facilitatorId).toBe(newcomerId);
 });
+
+test('players:nudge updates lastNudgedAt and is facilitator-only', async () => {
+  const t = convexTest(schema, {
+    players: async () => players,
+    rooms: async () => rooms,
+    '_generated/api': async () => apiModule,
+    '_generated/server': async () => serverModule,
+  });
+
+  const facId = 'fac';
+  const playerId = 'player';
+  const { roomId } = await t.mutation(api.rooms.create, {
+    slug: 'test',
+    facilitatorId: facId,
+  });
+
+  await t.mutation(api.players.join, {
+    roomId,
+    identityId: facId,
+    name: 'Fac',
+  });
+  await t.mutation(api.players.join, {
+    roomId,
+    identityId: playerId,
+    name: 'Player',
+  });
+
+  // 1. Non-facilitator attempts nudge
+  await expect(
+    t.mutation(api.players.nudge, {
+      roomId,
+      identityId: playerId,
+      targetIdentityId: facId,
+    })
+  ).rejects.toThrow('Only the facilitator can nudge players');
+
+  // 2. Facilitator nudges player
+  await t.mutation(api.players.nudge, {
+    roomId,
+    identityId: facId,
+    targetIdentityId: playerId,
+  });
+
+  const player = await t.run(async (ctx) => {
+    return await ctx.db
+      .query('players')
+      .withIndex('by_identity', (q) =>
+        q.eq('roomId', roomId).eq('identityId', playerId)
+      )
+      .unique();
+  });
+  expect(player?.lastNudgedAt).toBeDefined();
+  expect(typeof player?.lastNudgedAt).toBe('number');
+});
