@@ -39,7 +39,7 @@
   - [ ] Ensure dynamic titles reflect "Tempo" branding
   - [ ] Test meta tags render correctly
 
-- [ ] **Task 1.5: Update PWA Manifest**
+- [x] **Task 1.5: Update PWA Manifest** [de415b7]
   - [ ] Update public/manifest.json with Tempo branding
   - [ ] Update name to "Tempo", short_name to "Tempo"
   - [ ] Update description to "Scrum Tools for Modern Teams"
