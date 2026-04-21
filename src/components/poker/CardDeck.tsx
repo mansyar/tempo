@@ -44,12 +44,12 @@ export function CardDeck({
   }
 
   return (
-    <div className="w-full bg-retro-blue border-t-4 border-black p-6 sm:p-8 brutal-shadow">
+    <div className="w-full bg-retro-blue border-t-4 border-black p-4 sm:p-5 brutal-shadow">
       <div className="page-wrap max-w-5xl mx-auto">
-        <h3 className="text-center text-xs font-black uppercase tracking-widest mb-8">
+        <h3 className="text-center text-[10px] font-black uppercase tracking-[0.2em] mb-4">
           — Choose your estimate —
         </h3>
-        <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
+        <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
           {deckValues.map((val) => (
             <PokerCard
               key={val}
