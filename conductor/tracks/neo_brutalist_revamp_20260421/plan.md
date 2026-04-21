@@ -7,10 +7,10 @@
   - [x] Implement global `.brutal-border` (4px solid #000, 8px radius) and `.brutal-shadow` (6px offset) classes.
   - [x] Add the `bg-grid` radial-gradient pattern to the global styles.
   - [x] Integrate "Space Grotesk" via Google Fonts and set as default typeface.
-- [ ] Task: Implement Global Page Layout Foundation
-  - [ ] Write tests to verify typography and global style application.
-  - [ ] Implement the `translate(4px, 4px)` active state logic for all `.brutal-shadow` elements.
-  - [ ] Update the root layout to include the `bg-grid` background and basic Neo-Brutalist container rules.
+- [x] Task: Implement Global Page Layout Foundation 3257c31
+  - [x] Write tests to verify typography and global style application.
+  - [x] Implement the `translate(4px, 4px)` active state logic for all `.brutal-shadow` elements.
+  - [x] Update the root layout to include the `bg-grid` background and basic Neo-Brutalist container rules.
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: Foundations & Global Styling' (Protocol in workflow.md)
 
 ## Phase 2: Landing Page Revamp
