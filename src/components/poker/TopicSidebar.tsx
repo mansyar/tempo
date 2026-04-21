@@ -174,7 +174,7 @@ export function TopicSidebar({
   return (
     <div className="flex flex-col h-full bg-white overflow-hidden">
       {/* Header */}
-      <div className="p-4 border-b-4 border-black flex items-center justify-between bg-retro-yellow z-10">
+      <div className="p-3 border-b-4 border-black flex items-center justify-between bg-retro-yellow z-10">
         <div className="flex items-center gap-2">
           <ListPlus className="w-5 h-5 text-black" />
           <h2 className="font-black uppercase text-black tracking-tight">
@@ -194,7 +194,7 @@ export function TopicSidebar({
       </div>
 
       {/* Content */}
-      <div className="flex-1 overflow-y-auto overflow-x-hidden p-4 space-y-6 text-left bg-grid">
+      <div className={`flex-1 overflow-y-auto overflow-x-hidden p-2 space-y-3 text-left bg-grid ${!isPendingExpanded && !isHistoryExpanded ? 'no-scrollbar' : ''}`}>
         {/* Add Topic Input (Facilitator Only) */}
         {isFacilitator && (
           <section>
@@ -205,7 +205,7 @@ export function TopicSidebar({
                 onChange={(e) => setNewTopicTitle(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleAddTopic()}
                 placeholder="ADD A TOPIC..."
-                className="w-full bg-white brutal-border py-3 pl-3 pr-10 text-sm font-black uppercase focus:outline-none focus:bg-retro-yellow transition-colors brutal-shadow"
+                className="w-full bg-white brutal-border py-1.5 pl-3 pr-10 text-xs font-black uppercase focus:outline-none focus:bg-retro-yellow transition-colors brutal-shadow"
               />
               <button
                 onClick={handleAddTopic}
@@ -220,15 +220,15 @@ export function TopicSidebar({
 
         {/* Pending Topics */}
         <section>
-          <div className="flex items-center gap-2 mb-3 bg-black text-white px-2 py-1 brutal-border w-fit">
-            <Clock className="w-4 h-4" />
-            <h3 className="text-[10px] font-black uppercase tracking-widest">
+          <div className="flex items-center gap-2 mb-1.5 bg-black text-white px-2 py-0.5 brutal-border w-fit">
+            <Clock className="w-3.5 h-3.5" />
+            <h3 className="text-[8px] font-black uppercase tracking-widest">
               Pending
             </h3>
           </div>
-          <div className="space-y-3">
+          <div className="space-y-2">
             {pendingTopics.length === 0 ? (
-              <p className="text-sm font-bold uppercase opacity-60 italic py-2">
+              <p className="text-xs font-bold uppercase opacity-60 italic py-1">
                 No topics in queue
               </p>
             ) : (
@@ -236,14 +236,14 @@ export function TopicSidebar({
                 {visiblePending.map((topic, _index) => (
                   <div
                     key={topic._id}
-                    className={`p-4 brutal-border flex items-center gap-3 group transition-all brutal-shadow ${
+                    className={`p-1.5 brutal-border flex items-center gap-2 group transition-all brutal-shadow ${
                       topic.status === 'active'
-                        ? 'bg-retro-green translate-x-1 translate-y-1 shadow-sm'
+                        ? 'bg-retro-green translate-x-0.5 translate-y-0.5 shadow-none'
                         : 'bg-white hover:bg-gray-50'
                     }`}
                   >
                     <span
-                      className={`text-xs font-black px-2 py-1 brutal-border shrink-0 ${
+                      className={`text-[10px] font-black px-1.5 py-0.5 brutal-border shrink-0 ${
                         topic.status === 'active'
                           ? 'bg-black text-white'
                           : 'bg-retro-yellow text-black'
@@ -263,12 +263,12 @@ export function TopicSidebar({
                           if (e.key === 'Enter') handleUpdateTopic();
                           if (e.key === 'Escape') setEditingTopicId(null);
                         }}
-                        className="text-sm font-black uppercase flex-1 bg-white brutal-border px-2 py-1 outline-none"
+                        className="text-xs font-black uppercase flex-1 bg-white brutal-border px-1.5 py-0.5 outline-none"
                       />
                     ) : (
                       <span
                         onClick={() => startEditing(topic._id, topic.title)}
-                        className={`text-sm font-black uppercase flex-1 break-words py-0.5 ${
+                        className={`text-xs font-black uppercase flex-1 break-words py-0.5 ${
                           topic.status === 'active'
                             ? 'text-black'
                             : 'text-gray-800'
@@ -340,10 +340,10 @@ export function TopicSidebar({
 
         {/* History */}
         <section>
-          <div className="flex items-center justify-between mb-3 bg-black text-white px-2 py-1 brutal-border">
+          <div className="flex items-center justify-between mb-1.5 bg-black text-white px-2 py-0.5 brutal-border">
             <div className="flex items-center gap-2">
-              <History className="w-4 h-4" />
-              <h3 className="text-[10px] font-black uppercase tracking-widest">
+              <History className="w-3 h-3" />
+              <h3 className="text-[8px] font-black uppercase tracking-widest">
                 History
               </h3>
             </div>
@@ -392,9 +392,9 @@ export function TopicSidebar({
               </div>
             )}
           </div>
-          <div className="space-y-3">
+          <div className="space-y-2">
             {completedTopics.length === 0 ? (
-              <p className="text-sm font-bold uppercase opacity-60 italic py-2">
+              <p className="text-xs font-bold uppercase opacity-60 italic py-1">
                 Empty history
               </p>
             ) : (
@@ -402,14 +402,14 @@ export function TopicSidebar({
                 {visibleHistory.map((topic) => (
                   <div
                     key={topic._id}
-                    className="p-4 brutal-border bg-white flex items-center gap-3 transition-all brutal-shadow hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-sm"
+                    className="p-1.5 brutal-border bg-white flex items-center gap-2 transition-all brutal-shadow hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-sm"
                   >
-                    <CheckCircle2 className="w-4 h-4 text-black shrink-0" />
-                    <span className="text-sm font-black uppercase text-black flex-1 break-words py-0.5">
+                    <CheckCircle2 className="w-3 h-3 text-black shrink-0" />
+                    <span className="text-xs font-black uppercase text-black flex-1 break-words py-0.5">
                       {topic.title}
                     </span>
                     {topic.finalEstimate && (
-                      <span className="text-sm font-black text-white bg-black px-2 py-1 brutal-border shrink-0">
+                      <span className="text-[10px] font-black text-white bg-black px-1.5 py-0.5 brutal-border shrink-0">
                         {topic.finalEstimate}
                       </span>
                     )}
