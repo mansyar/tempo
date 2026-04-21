@@ -112,8 +112,8 @@ describe('Footer Component', () => {
 describe('Header Component', () => {
   it('renders header with logo and navigation', () => {
     renderWithJuice(<Header />);
-    expect(screen.getByText('Pointy')).toBeDefined();
-    expect(screen.getByRole('link', { name: /Pointy/ })).toBeDefined();
+    expect(screen.getByText('Tempo')).toBeDefined();
+    expect(screen.getByRole('link', { name: /Tempo/ })).toBeDefined();
   });
 });
 

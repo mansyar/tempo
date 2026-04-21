@@ -1,26 +1,39 @@
-import { Link } from '@tanstack/react-router';
+import { Link, useLocation } from '@tanstack/react-router';
 import ThemeToggle from './ThemeToggle';
 import JuiceToggle from './JuiceToggle';
 
 export default function Header() {
+  const location = useLocation();
+  const isRoom =
+    location.pathname.startsWith('/room/') ||
+    location.pathname.startsWith('/poker/');
+
   return (
     <header className="sticky top-0 z-50 border-b border-[var(--border-subtle)] bg-[var(--bg-secondary)] px-4 backdrop-blur-lg bg-opacity-80">
       <nav className="page-wrap flex flex-wrap items-center gap-x-3 gap-y-2 py-3 sm:py-4">
-        <h2 className="m-0 flex-shrink-0 text-base font-semibold tracking-tight">
-          <Link
-            to="/"
-            className="inline-flex items-center gap-2 rounded-full border border-[var(--border-subtle)] bg-[var(--bg-tertiary)] px-3 py-1.5 text-sm text-[var(--text-primary)] no-underline shadow-sm sm:px-4 sm:py-2 hover:border-[var(--border-focus)] transition-all"
-          >
-            <span className="text-xl">◆</span>
-            Pointy
-          </Link>
-        </h2>
+        <div className="flex items-center gap-2">
+          <h2 className="m-0 flex-shrink-0 text-base font-semibold tracking-tight">
+            <Link
+              to="/"
+              className="inline-flex items-center gap-2 rounded-full border border-[var(--border-subtle)] bg-[var(--bg-tertiary)] px-3 py-1.5 text-sm text-[var(--text-primary)] no-underline shadow-sm sm:px-4 sm:py-2 hover:border-[var(--border-focus)] transition-all"
+            >
+              <span className="text-xl">◈</span>
+              Tempo
+            </Link>
+          </h2>
+          {isRoom && (
+            <div className="flex items-center gap-2 text-sm font-medium text-[var(--text-secondary)] animate-in fade-in slide-in-from-left-2">
+              <span>▸</span>
+              <span className="text-[var(--text-primary)]">Poker</span>
+            </div>
+          )}
+        </div>
 
         <div className="ml-auto flex items-center gap-1.5 sm:ml-0 sm:gap-2">
           <JuiceToggle />
           <ThemeToggle />
           <a
-            href="https://github.com/mansyar/pointy-planning-poker"
+            href="https://github.com/mansyar/tempo"
             target="_blank"
             rel="noreferrer"
             className="hidden rounded-xl p-2 text-[var(--text-secondary)] transition hover:bg-[var(--bg-tertiary)] hover:text-[var(--text-primary)] sm:block"
