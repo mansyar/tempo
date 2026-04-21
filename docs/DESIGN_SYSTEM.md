@@ -117,32 +117,45 @@ Based on a 4px grid:
 
 ## 7. Component Inventory
 
-### 7.1 Shared Components (All Tools)
+### 7.1 Shared Components (`src/components/shared/`)
 
-| Component             | Variant(s)                                | Notes                      |
-| --------------------- | ----------------------------------------- | -------------------------- |
-| `Button`              | primary, secondary, ghost, danger         | Sizes: sm, md, lg          |
-| `Avatar`              | online, offline, voted, waiting, speaking | Colored ring indicator     |
-| `PresenceSidebar`     | —                                         | Player list with status    |
-| `ReactionOverlay`     | —                                         | Floating emoji layer       |
-| `ThemeToggle`         | sun/moon icon                             | Animated icon swap         |
-| `NicknameInput`       | —                                         | Landing + Join modal       |
-| `FacilitatorControls` | —                                         | Tool-specific control bar  |
-| `Toast`               | info, success, warning                    | Auto-dismiss notifications |
-| `ToolCard`            | poker, standup                            | Landing hub tool selector  |
+Common UI elements used across multiple tools.
 
-### 7.2 Planning Poker Components
+| Component              | Description                              | Notes                   |
+| ---------------------- | ---------------------------------------- | ----------------------- |
+| `AriaLiveAnnouncer`    | Hidden region for screen readers         | Accessibility helper    |
+| `ClaimBanner`          | Facilitator claim interface              | Permission management   |
+| `EmojiActionBar`       | Toolbar for sending reactions            | Interactive feedback    |
+| `EmojiBurst`           | Floating emoji animation layer           | Sensory juice           |
+| `Footer`               | Global page footer                       | branding + links        |
+| `Header`               | Global navigation header                 | tool-aware breadcrumbs  |
+| `InviteModal`          | Share link and QR sync generator         | Room invitation         |
+| `JoinModal`            | Nickname entry for new players           | Session onboarding      |
+| `JuiceToggle`          | Sound/Haptic/Animation master switch     | User preference         |
+| `LandingPage`          | Main tool selector and entry point       | Tool hub                |
+| `OfflineBanner`        | Connection status indicator              | Real-time feedback      |
+| `PresenceSidebar`      | Real-time player list and status         | Collaborative awareness |
+| `SectionErrorBoundary` | Graceful failure wrapper for UI sections | Stability               |
+| `ThemeToggle`          | Light/Dark/Auto mode switch              | Appearance              |
 
-| Component            | Variant(s)                           | Notes                      |
-| -------------------- | ------------------------------------ | -------------------------- |
-| `Card` (Poker)       | faceDown, faceUp, selected, disabled | 3D flip animation          |
-| `CardDeck`           | horizontal (desktop), fan (mobile)   | Contains Card children     |
-| `TopicItem`          | pending, active, completed           | Drag handle, inline edit   |
-| `TopicQueue`         | sidebar panel                        | Collapsible on mobile      |
-| `StatsPanel`         | overlay / modal                      | Bar chart, consensus badge |
-| `PokerTable`         | voting, revealed                     | Central game area          |
-| `ConsensusIndicator` | unanimous, near, split               | Color-coded badge          |
-| `Confetti`           | —                                    | Canvas/particle overlay    |
+### 7.2 Planning Poker Components (`src/components/poker/`)
+
+Components specific to the Estimation/Poker module.
+
+| Component              | Description                           | Notes                    |
+| ---------------------- | ------------------------------------- | ------------------------ |
+| `ActiveTopicHeader`    | Hero section for the current topic    | Primary focus            |
+| `BatchAddModal`        | Multi-line topic entry interface      | Facilitator efficiency   |
+| `CardDeck`             | Interactive voting interface          | Scrollable/Responsive    |
+| `CardGrid`             | Player cards and voting status        | Live sync table          |
+| `ConfirmEstimateModal` | Final point entry before advancing    | Consensus recording      |
+| `MobileController`     | Specialized UI for QR-synced phones   | Secondary screen         |
+| `PokerCard`            | 3D interactive card component         | Physics-based animations |
+| `RoomPage`             | Main poker orchestration component    | State management         |
+| `RoomSettingsModal`    | Auto-reveal and scale type config     | Room customization       |
+| `RoundTimer`           | Synchronized countdown for voting     | Engagement               |
+| `StatsPanel`           | Voting results, average, and outliers | Consensus analysis       |
+| `TopicSidebar`         | Queue management and history          | Sidebar orchestration    |
 
 ### 7.3 Daily Standup Components
 
