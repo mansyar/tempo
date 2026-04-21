@@ -1,8 +1,0 @@
-{
-  "track_id": "neo_brutalist_revamp_20260421",
-  "type": "feature",
-  "status": "new",
-  "created_at": "2026-04-21T14:00:00Z",
-  "updated_at": "2026-04-21T14:00:00Z",
-  "description": "This track focuses on a complete frontend UI revamp of the Tempo application to implement a 'Neo-Brutalist' design system, strictly modeling the aesthetics from the provided @ui-design/design-5-brutalist mockups. Your objective is to override the current clean/corporate UI to use the 'Space Grotesk' font alongside bright, contrasting background colors (e.g., retro yellows, pinks, blues, and greens). You must update the global Tailwind configurations and CSS to utilize heavy styling characterized by solid 4px black borders, hard 6px offset black shadows (box-shadow that shift on click), bold uppercase typography, and dotted/grid backgrounds. This implementation involves systematically replacing all existing glassmorphism, subtle shadows, and soft gradients across the application—specifically targeting the Landing Page, Room Layout, Poker Cards, structural sidebars, and interactive modals—ensuring every component reflects this raw, unapologetic, high-contrast retro aesthetic."
-}
