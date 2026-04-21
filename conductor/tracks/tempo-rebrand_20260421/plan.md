@@ -153,7 +153,7 @@
   - [ ] Update all imports referencing these components
   - [ ] Run tests to verify no breaking changes
 
-- [ ] **Task 4.4: Create Poker Components Directory**
+- [x] **Task 4.4: Create Poker Components Directory** [0d4a9e3]
   - [ ] Move poker-specific components to src/components/poker/
   - [ ] Move ActiveTopicHeader.tsx
   - [ ] Move BatchAddModal.tsx
