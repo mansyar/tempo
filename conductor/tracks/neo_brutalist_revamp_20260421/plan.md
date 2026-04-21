@@ -13,7 +13,7 @@
   - [x] Update the root layout to include the `bg-grid` background and basic Neo-Brutalist container rules.
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: Foundations & Global Styling' (Protocol in workflow.md)
 
-## Phase 2: Landing Page Revamp
+## Phase 2: Landing Page Revamp [checkpoint: 5c5db5e]
 
 - [x] Task: Redesign Landing Page Hero & Structure 7b1a11a
   - [x] Write tests for the new Landing Page component structure.
