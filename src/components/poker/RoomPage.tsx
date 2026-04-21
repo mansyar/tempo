@@ -412,7 +412,7 @@ export function RoomPage({ slug }: RoomPageProps) {
           </section>
 
           <aside className="space-y-8 flex flex-col min-h-[500px]">
-            <div className="island-shell rounded-2xl flex-1 flex flex-col overflow-hidden">
+            <div className="brutal-border brutal-shadow bg-retro-blue flex-1 flex flex-col overflow-hidden">
               <SectionErrorBoundary name="Topic Sidebar">
                 <TopicSidebar
                   roomId={room._id}
@@ -422,7 +422,7 @@ export function RoomPage({ slug }: RoomPageProps) {
                 />
               </SectionErrorBoundary>
             </div>
-            <div className="island-shell p-6 rounded-2xl shrink-0">
+            <div className="brutal-border brutal-shadow bg-white p-6 shrink-0">
               <SectionErrorBoundary name="Presence Sidebar">
                 <PresenceSidebar
                   roomId={room._id}

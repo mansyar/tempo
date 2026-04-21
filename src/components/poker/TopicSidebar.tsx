@@ -164,19 +164,19 @@ export function TopicSidebar({
   };
 
   return (
-    <div className="flex flex-col h-full bg-[var(--bg-secondary)] overflow-hidden">
+    <div className="flex flex-col h-full bg-white overflow-hidden">
       {/* Header */}
-      <div className="p-4 border-b border-[var(--border-subtle)] flex items-center justify-between bg-[var(--bg-secondary)] z-10">
+      <div className="p-4 border-b-4 border-black flex items-center justify-between bg-retro-yellow z-10">
         <div className="flex items-center gap-2">
-          <ListPlus className="w-5 h-5 text-[var(--text-secondary)]" />
-          <h2 className="font-semibold text-[var(--text-primary)]">
+          <ListPlus className="w-5 h-5 text-black" />
+          <h2 className="font-black uppercase text-black tracking-tight">
             Topic Queue
           </h2>
         </div>
         {isFacilitator && (
           <button
             onClick={onOpenBatchAdd}
-            className="p-1.5 rounded-sm bg-[var(--bg-tertiary)] hover:bg-[var(--accent)] text-[var(--text-secondary)] hover:text-white transition-all"
+            className="p-1.5 brutal-border bg-white hover:bg-retro-pink transition-all brutal-shadow hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-sm"
             aria-label="Batch Add"
             title="Batch Add"
           >
@@ -186,7 +186,7 @@ export function TopicSidebar({
       </div>
 
       {/* Content */}
-      <div className="flex-1 overflow-y-auto overflow-x-hidden p-4 space-y-6 text-left">
+      <div className="flex-1 overflow-y-auto overflow-x-hidden p-4 space-y-6 text-left bg-grid">
         {/* Add Topic Input (Facilitator Only) */}
         {isFacilitator && (
           <section>
@@ -196,15 +196,15 @@ export function TopicSidebar({
                 value={newTopicTitle}
                 onChange={(e) => setNewTopicTitle(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleAddTopic()}
-                placeholder="Add a topic..."
-                className="w-full bg-[var(--bg-primary)] border border-[var(--border-subtle)] rounded-md py-2 pl-3 pr-10 text-sm focus:outline-none focus:border-[var(--accent)] transition-colors text-[var(--text-primary)]"
+                placeholder="ADD A TOPIC..."
+                className="w-full bg-white brutal-border py-3 pl-3 pr-10 text-sm font-black uppercase focus:outline-none focus:bg-retro-yellow transition-colors brutal-shadow"
               />
               <button
                 onClick={handleAddTopic}
-                className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-[var(--text-tertiary)] hover:text-[var(--accent)] transition-colors"
+                className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-black hover:text-retro-pink transition-colors"
                 aria-label="Submit Topic"
               >
-                <ListPlus className="w-4 h-4" />
+                <ListPlus className="w-5 h-5" />
               </button>
             </div>
           </section>
@@ -212,15 +212,15 @@ export function TopicSidebar({
 
         {/* Pending Topics */}
         <section>
-          <div className="flex items-center gap-2 mb-3">
-            <Clock className="w-4 h-4 text-[var(--text-tertiary)]" />
-            <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--text-tertiary)]">
+          <div className="flex items-center gap-2 mb-3 bg-black text-white px-2 py-1 brutal-border w-fit">
+            <Clock className="w-4 h-4" />
+            <h3 className="text-[10px] font-black uppercase tracking-widest">
               Pending
             </h3>
           </div>
-          <div className="space-y-2">
+          <div className="space-y-3">
             {pendingTopics.length === 0 ? (
-              <p className="text-sm text-[var(--text-tertiary)] italic py-2">
+              <p className="text-sm font-bold uppercase opacity-60 italic py-2">
                 No topics in queue
               </p>
             ) : (
@@ -228,17 +228,17 @@ export function TopicSidebar({
                 {visiblePending.map((topic, _index) => (
                   <div
                     key={topic._id}
-                    className={`p-3 rounded-md border flex items-center gap-3 group transition-all ${
+                    className={`p-4 brutal-border flex items-center gap-3 group transition-all brutal-shadow ${
                       topic.status === 'active'
-                        ? 'border-[var(--accent)] bg-[var(--bg-primary)] ring-1 ring-[var(--accent)]/20 shadow-sm'
-                        : 'border-[var(--border-subtle)] bg-[var(--bg-primary)]'
+                        ? 'bg-retro-green translate-x-1 translate-y-1 shadow-sm'
+                        : 'bg-white hover:bg-gray-50'
                     }`}
                   >
                     <span
-                      className={`text-xs font-mono px-1.5 py-0.5 rounded shrink-0 ${
+                      className={`text-xs font-black px-2 py-1 brutal-border shrink-0 ${
                         topic.status === 'active'
-                          ? 'bg-[var(--accent)] text-white'
-                          : 'bg-[var(--bg-tertiary)] text-[var(--text-secondary)] border border-[var(--border-subtle)]'
+                          ? 'bg-black text-white'
+                          : 'bg-retro-yellow text-black'
                       }`}
                     >
                       {topic.order}
@@ -255,29 +255,29 @@ export function TopicSidebar({
                           if (e.key === 'Enter') handleUpdateTopic();
                           if (e.key === 'Escape') setEditingTopicId(null);
                         }}
-                        className="text-sm flex-1 bg-[var(--bg-secondary)] border border-[var(--accent)] rounded px-1 py-0.5 outline-none text-[var(--text-primary)]"
+                        className="text-sm font-black uppercase flex-1 bg-white brutal-border px-2 py-1 outline-none"
                       />
                     ) : (
                       <span
                         onClick={() => startEditing(topic._id, topic.title)}
-                        className={`text-sm flex-1 break-words py-0.5 ${
+                        className={`text-sm font-black uppercase flex-1 break-words py-0.5 ${
                           topic.status === 'active'
-                            ? 'text-[var(--text-primary)] font-medium'
-                            : 'text-[var(--text-secondary)]'
-                        } ${isFacilitator ? 'cursor-pointer hover:text-[var(--text-primary)]' : ''}`}
+                            ? 'text-black'
+                            : 'text-gray-800'
+                        } ${isFacilitator ? 'cursor-pointer hover:underline decoration-2' : ''}`}
                       >
                         {topic.title}
                       </span>
                     )}
 
                     {isFacilitator && topic.status !== 'active' && (
-                      <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity shrink-0 self-start">
+                      <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity shrink-0 self-start">
                         <button
                           onClick={() =>
                             handleReorder(topic._id, topic.order, 'up')
                           }
                           disabled={topic.order === 1}
-                          className="p-1 text-[var(--text-tertiary)] hover:text-[var(--text-primary)] disabled:opacity-30"
+                          className="p-1 brutal-border bg-white hover:bg-retro-blue disabled:opacity-30"
                           aria-label="Move Up"
                         >
                           <ChevronUp className="w-3.5 h-3.5" />
@@ -287,14 +287,14 @@ export function TopicSidebar({
                             handleReorder(topic._id, topic.order, 'down')
                           }
                           disabled={topic.order === pendingTopics.length}
-                          className="p-1 text-[var(--text-tertiary)] hover:text-[var(--text-primary)] disabled:opacity-30"
+                          className="p-1 brutal-border bg-white hover:bg-retro-blue disabled:opacity-30"
                           aria-label="Move Down"
                         >
                           <ChevronDown className="w-3.5 h-3.5" />
                         </button>
                         <button
                           onClick={() => handleRemoveTopic(topic._id)}
-                          className="p-1 text-[var(--text-tertiary)] hover:text-[var(--danger)]"
+                          className="p-1 brutal-border bg-white hover:bg-retro-pink"
                           aria-label="Remove Topic"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
@@ -303,7 +303,7 @@ export function TopicSidebar({
                     )}
 
                     {topic.status === 'active' && (
-                      <div className="w-2 h-2 rounded-full bg-[var(--accent)] animate-pulse shrink-0" />
+                      <div className="w-3 h-3 brutal-border bg-black animate-ping shrink-0" />
                     )}
                   </div>
                 ))}
@@ -332,10 +332,10 @@ export function TopicSidebar({
 
         {/* History */}
         <section>
-          <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center justify-between mb-3 bg-black text-white px-2 py-1 brutal-border">
             <div className="flex items-center gap-2">
-              <History className="w-4 h-4 text-[var(--text-tertiary)]" />
-              <h3 className="text-xs font-bold uppercase tracking-wider text-[var(--text-tertiary)]">
+              <History className="w-4 h-4" />
+              <h3 className="text-[10px] font-black uppercase tracking-widest">
                 History
               </h3>
             </div>
@@ -343,40 +343,40 @@ export function TopicSidebar({
               <div className="relative">
                 <button
                   onClick={() => setIsExportMenuOpen(!isExportMenuOpen)}
-                  className="p-1 rounded-md text-[var(--text-tertiary)] hover:text-[var(--accent)] hover:bg-[var(--bg-tertiary)] transition-all"
+                  className="p-1 brutal-border bg-white text-black hover:bg-retro-pink transition-all"
                   title="Export Session"
                 >
                   <Download className="w-3.5 h-3.5" />
                 </button>
 
                 {isExportMenuOpen && (
-                  <div className="absolute right-0 bottom-full mb-2 w-48 bg-[var(--bg-secondary)] border border-[var(--border-subtle)] rounded-xl shadow-2xl z-[60] overflow-hidden island-shell animate-in slide-in-from-bottom-2">
-                    <div className="p-2 border-b border-[var(--border-subtle)] bg-[var(--bg-tertiary)]/50">
-                      <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--text-tertiary)] px-2">
+                  <div className="absolute right-0 bottom-full mb-2 w-48 bg-white brutal-border brutal-shadow z-[60] overflow-hidden">
+                    <div className="p-2 border-b-4 border-black bg-retro-yellow">
+                      <p className="text-[10px] font-black uppercase tracking-widest text-black">
                         Export Format
                       </p>
                     </div>
                     <div className="p-1">
                       <button
                         onClick={() => handleExport('markdown')}
-                        className="w-full flex items-center gap-3 px-3 py-2 text-xs font-medium text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)] rounded-lg transition-colors"
+                        className="w-full flex items-center gap-3 px-3 py-2 text-xs font-black uppercase text-black hover:bg-retro-blue transition-colors"
                       >
-                        <FileText className="w-3.5 h-3.5 text-[var(--accent)]" />
-                        Markdown Table
+                        <FileText className="w-3.5 h-3.5" />
+                        Markdown
                       </button>
                       <button
                         onClick={() => handleExport('summary')}
-                        className="w-full flex items-center gap-3 px-3 py-2 text-xs font-medium text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)] rounded-lg transition-colors"
+                        className="w-full flex items-center gap-3 px-3 py-2 text-xs font-black uppercase text-black hover:bg-retro-pink transition-colors"
                       >
-                        <ListPlus className="w-3.5 h-3.5 text-[var(--success)]" />
-                        Plain Text Summary
+                        <ListPlus className="w-3.5 h-3.5" />
+                        Summary
                       </button>
                       <button
                         onClick={() => handleExport('csv')}
-                        className="w-full flex items-center gap-3 px-3 py-2 text-xs font-medium text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)] rounded-lg transition-colors"
+                        className="w-full flex items-center gap-3 px-3 py-2 text-xs font-black uppercase text-black hover:bg-retro-green transition-colors"
                       >
-                        <Download className="w-3.5 h-3.5 text-[var(--warning)]" />
-                        CSV Data
+                        <Download className="w-3.5 h-3.5" />
+                        CSV
                       </button>
                     </div>
                   </div>
@@ -384,9 +384,9 @@ export function TopicSidebar({
               </div>
             )}
           </div>
-          <div className="space-y-2">
+          <div className="space-y-3">
             {completedTopics.length === 0 ? (
-              <p className="text-sm text-[var(--text-tertiary)] italic py-2">
+              <p className="text-sm font-bold uppercase opacity-60 italic py-2">
                 Empty history
               </p>
             ) : (
@@ -395,14 +395,14 @@ export function TopicSidebar({
                 .map((topic) => (
                   <div
                     key={topic._id}
-                    className="p-3 rounded-md border border-[var(--border-subtle)] bg-[var(--bg-tertiary)]/30 opacity-70 flex items-center gap-3 transition-opacity hover:opacity-100"
+                    className="p-4 brutal-border bg-white flex items-center gap-3 transition-all brutal-shadow hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-sm"
                   >
-                    <CheckCircle2 className="w-4 h-4 text-[var(--success)] shrink-0" />
-                    <span className="text-sm text-[var(--text-secondary)] flex-1 break-words py-0.5">
+                    <CheckCircle2 className="w-4 h-4 text-black shrink-0" />
+                    <span className="text-sm font-black uppercase text-black flex-1 break-words py-0.5">
                       {topic.title}
                     </span>
                     {topic.finalEstimate && (
-                      <span className="text-sm font-mono font-bold text-[var(--accent)] shrink-0 bg-[var(--bg-primary)] px-1.5 py-0.5 rounded border border-[var(--border-subtle)]">
+                      <span className="text-sm font-black text-white bg-black px-2 py-1 brutal-border shrink-0">
                         {topic.finalEstimate}
                       </span>
                     )}
