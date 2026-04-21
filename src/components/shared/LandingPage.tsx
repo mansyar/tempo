@@ -82,19 +82,8 @@ export function LandingPage() {
   };
 
   return (
-    <main className="px-4 pb-16 pt-24 flex flex-col items-center">
-      {/* Ticker Tape */}
-      <div className="fixed top-0 left-0 w-full bg-black text-white py-2 overflow-hidden z-50 brutal-border border-x-0 border-t-0">
-        <div className="flex whitespace-nowrap marquee-content animate-[marquee_60s_linear_infinite]">
-          {Array.from({ length: 10 }).map((_, i) => (
-            <span key={i} className="mx-8 font-black uppercase tracking-widest">
-              Tempo • High-Juice Collaboration • Agile Done Raw • Ephemeral & Secure • 
-            </span>
-          ))}
-        </div>
-      </div>
-
-      <section className="relative w-full max-w-4xl text-center py-12 sm:py-20">
+    <main className="flex flex-col items-center min-h-screen w-full relative overflow-x-hidden pt-20 sm:pt-32">
+      <section className="relative w-full max-w-4xl text-center py-12 sm:py-20 px-4">
         {/* Decorative Badges */}
         <div className="absolute -top-4 -left-8 hidden lg:block brutal-badge rotate-[-12deg] bg-retro-pink p-3 brutal-border brutal-shadow font-black uppercase text-sm">
           No Friction
@@ -171,16 +160,16 @@ export function LandingPage() {
           </div>
         </div>
 
-        <div className="mt-20 brutal-border border-x-0 border-b-0 pt-16">
-          <p className="text-sm font-black mb-8 uppercase tracking-widest">
-            — Or Join Active Session —
+        <div className="mt-32 bg-white brutal-border p-8 brutal-shadow relative w-full max-w-2xl mx-auto">
+          <p className="text-sm font-black mb-8 uppercase tracking-[0.2em] absolute -top-4 left-1/2 -translate-x-1/2 bg-black text-white px-4 py-1 brutal-border whitespace-nowrap">
+            Join Active Session
           </p>
           <form
             onSubmit={(e) => {
               e.preventDefault();
               handleJoinRoom();
             }}
-            className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto items-stretch"
+            className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto items-stretch mt-4"
           >
             <input
               type="text"

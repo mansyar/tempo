@@ -57,7 +57,6 @@ html,
 body,
 #app {
   min-height: 100%;
-  overflow: hidden;
 }
 
 body {
@@ -140,8 +139,42 @@ pre code {
 
 /* Common Layout Utilities */
 .page-wrap {
-  width: min(1080px, calc(100% - 2rem));
+  width: 100%;
+  max-width: 1400px;
   margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+.brutal-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.25rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  border: var(--brutal-border-width) solid #000;
+  border-radius: var(--brutal-radius);
+  box-shadow: 4px 4px 0px 0px #000;
+  transition: all 0.1s;
+  cursor: pointer;
+}
+
+.brutal-btn:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0px 0px #000;
+}
+
+.brutal-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0px 0px 0px 0px #000;
+}
+
+.brutal-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
 .island-shell {

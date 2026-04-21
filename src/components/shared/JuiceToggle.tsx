@@ -53,13 +53,13 @@ export default function JuiceToggle() {
       type="button"
       onClick={toggle}
       title={enabled ? 'Disable sensory juice' : 'Enable sensory juice'}
-      className={`rounded-full border border-[var(--border-subtle)] px-3 py-1.5 text-sm font-semibold transition-all hover:-translate-y-0.5 shadow-sm ${
+      className={`brutal-btn py-1.5 text-[10px] ${
         enabled
-          ? 'bg-[var(--bg-tertiary)] text-[var(--accent)]'
-          : 'bg-[var(--bg-secondary)] text-[var(--text-tertiary)] opacity-60'
+          ? 'bg-retro-green text-black'
+          : 'bg-white text-black opacity-40'
       }`}
     >
-      {enabled ? 'Juice On' : 'Juice Off'}
+      Juice: {enabled ? 'ON' : 'OFF'}
     </button>
   );
 }

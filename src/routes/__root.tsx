@@ -95,7 +95,24 @@ function RootComponent() {
         <AriaLiveAnnouncer />
         <OfflineBanner />
         <FloatingAccents />
-        {!isRoomRoute && <Header />}
+        {!isRoomRoute && (
+          <div className="sticky top-0 z-[60] w-full flex flex-col">
+            <Header />
+            <div className="w-full bg-black text-white py-2 overflow-hidden brutal-border border-x-0 border-t-0">
+              <div className="flex whitespace-nowrap marquee-content animate-[marquee_60s_linear_infinite]">
+                {Array.from({ length: 10 }).map((_, i) => (
+                  <span
+                    key={i}
+                    className="mx-8 font-black uppercase tracking-widest text-[10px]"
+                  >
+                    Tempo • High-Juice Collaboration • Agile Done Raw •
+                    Ephemeral & Secure •
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
         <Outlet />
         {!isRoomRoute && <Footer />}
       </JuiceProvider>
