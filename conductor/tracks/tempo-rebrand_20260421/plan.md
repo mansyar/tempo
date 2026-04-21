@@ -142,7 +142,7 @@
   - [ ] Update all imports referencing these components
   - [ ] Run tests to verify no breaking changes
 
-- [ ] **Task 4.3: Extract Shared Components (Part 2)**
+- [x] **Task 4.3: Extract Shared Components (Part 2)** [d5a529e]
   - [ ] Move components to src/components/shared/ (JuiceToggle through LandingPage)
   - [ ] Move JuiceToggle.tsx
   - [ ] Move OfflineBanner.tsx
