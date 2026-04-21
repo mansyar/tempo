@@ -9,7 +9,7 @@ interface CardGridProps {
 
 export function CardGrid({ players, votes, revealed }: CardGridProps) {
   return (
-    <div className="flex flex-wrap items-center justify-center gap-12 sm:gap-16 w-full max-w-5xl py-10">
+    <div className="flex flex-wrap items-center justify-center gap-12 sm:gap-16 w-full py-10">
       <AnimatePresence>
         {players.map((player, index) => {
           const vote = votes.find((v) => v.identityId === player.identityId);

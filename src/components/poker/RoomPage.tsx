@@ -357,7 +357,7 @@ export function RoomPage({ slug }: RoomPageProps) {
 
               <div className="flex-1 flex flex-col items-center justify-center p-4 relative min-h-0 overflow-hidden">
                 {room.status === 'revealed' && votes && players && (
-                  <div className="w-full max-w-4xl mb-6">
+                  <div className="w-full max-w-7xl mb-6">
                     <SectionErrorBoundary name="Statistics">
                       <Suspense
                         fallback={
@@ -371,19 +371,21 @@ export function RoomPage({ slug }: RoomPageProps) {
                 )}
 
                 <div className="w-full flex-1 flex items-center justify-center overflow-y-auto custom-scrollbar p-6">
-                  <SectionErrorBoundary name="Voting Grid">
-                    {players && votes ? (
-                      <CardGrid
-                        players={players}
-                        votes={votes}
-                        revealed={room.status === 'revealed'}
-                      />
-                    ) : (
-                      <div className="text-3xl italic font-black">
-                        LOADING...
-                      </div>
-                    )}
-                  </SectionErrorBoundary>
+                  <div className="w-full max-w-none">
+                    <SectionErrorBoundary name="Voting Grid">
+                      {players && votes ? (
+                        <CardGrid
+                          players={players}
+                          votes={votes}
+                          revealed={room.status === 'revealed'}
+                        />
+                      ) : (
+                        <div className="text-3xl italic font-black text-center">
+                          LOADING...
+                        </div>
+                      )}
+                    </SectionErrorBoundary>
+                  </div>
                 </div>
               </div>
             </div>

@@ -35,29 +35,29 @@ export function ActiveTopicHeader({
   if (!activeTopic) return null;
 
   return (
-    <header className="w-full bg-retro-pink brutal-border border-t-0 border-l-0 border-r-0 p-8 sm:p-12 flex flex-col items-center justify-center relative shrink-0">
-      <div className="absolute top-6 right-6 flex gap-6">
+    <header className="w-full bg-retro-pink brutal-border border-t-0 border-l-0 border-r-0 p-4 sm:p-6 flex flex-col items-center justify-center relative shrink-0">
+      <div className="absolute top-4 right-4 flex gap-4">
         {onOpenSettings && (
           <button
             onClick={onOpenSettings}
-            className="p-3 brutal-border bg-white text-black hover:bg-retro-yellow transition-all brutal-shadow hover:translate-x-1 hover:translate-y-1 hover:shadow-none"
+            className="p-2 brutal-border bg-white text-black hover:bg-retro-yellow transition-all brutal-shadow hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none"
             title="Room Settings"
           >
-            <Settings className="w-6 h-6" />
+            <Settings className="w-5 h-5" />
           </button>
         )}
       </div>
 
-      <div className="flex flex-col items-center max-w-5xl w-full text-center">
-        <div className="mb-6 bg-black text-white px-4 py-2 brutal-border text-xs font-black tracking-[0.3em] uppercase">
+      <div className="flex flex-col items-center w-full text-center">
+        <div className="mb-2 bg-black text-white px-2 py-0.5 brutal-border text-[10px] font-black tracking-[0.2em] uppercase">
           {roomStatus === 'revealed' ? 'Estimation Complete' : 'Now Estimating'}
         </div>
 
-        <h2 className="text-5xl sm:text-8xl font-black uppercase text-black border-b-8 border-black inline-block pb-4 mb-8 tracking-tighter leading-[0.9]">
+        <h2 className="text-3xl sm:text-5xl font-black uppercase text-black border-b-4 border-black inline-block pb-1 mb-4 tracking-tighter leading-[0.9]">
           {activeTopic.title}
         </h2>
 
-        <div className="flex flex-wrap items-center justify-center gap-10">
+        <div className="flex flex-wrap items-center justify-center gap-6">
           <RoundTimer
             roomId={roomId}
             identityId={identityId}
@@ -66,11 +66,11 @@ export function ActiveTopicHeader({
           />
 
           {isFacilitator && (
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-4">
               {roomStatus === 'revealed' ? (
                 <button
                   onClick={onConfirmNext}
-                  className="px-10 py-5 bg-black text-white text-2xl font-black uppercase brutal-border brutal-shadow hover:bg-retro-green hover:text-black hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all"
+                  className="px-6 py-2 bg-black text-white text-lg font-black uppercase brutal-border brutal-shadow hover:bg-retro-green hover:text-black hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all"
                 >
                   Next Topic
                 </button>
@@ -78,7 +78,7 @@ export function ActiveTopicHeader({
                 <button
                   onClick={onReveal}
                   disabled={revealDisabled}
-                  className="px-10 py-5 bg-white text-black text-2xl font-black uppercase brutal-border brutal-shadow hover:bg-retro-yellow hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:translate-x-0 disabled:hover:translate-y-0"
+                  className="px-6 py-2 bg-white text-black text-lg font-black uppercase brutal-border brutal-shadow hover:bg-retro-yellow hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:translate-x-0 disabled:hover:translate-y-0"
                 >
                   Reveal Votes
                 </button>
