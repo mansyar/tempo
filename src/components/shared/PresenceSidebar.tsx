@@ -38,37 +38,28 @@ export function PresenceSidebar({
   const isFacilitator = myIdentityId === facilitatorId;
 
   return (
-    <div className="flex flex-col gap-4">
-      <h2 className="text-xs font-bold uppercase tracking-widest text-[var(--text-tertiary)]">
-        Players — {players.filter((p) => p.isOnline).length}/{players.length}
-      </h2>
-      <ul className="flex flex-col gap-2">
+    <div className="flex flex-col gap-6">
+      <ul className="flex flex-col gap-3">
         {players.map((player) => (
           <li
             key={player._id}
-            className="flex items-center justify-between group"
+            className={`flex items-center justify-between p-3 brutal-border transition-all ${player.isOnline ? 'bg-white' : 'bg-gray-100 opacity-60'}`}
           >
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-4">
               <div className="relative">
-                <div className="w-8 h-8 rounded-full bg-[var(--bg-tertiary)] flex items-center justify-center text-sm font-bold border border-[var(--border-subtle)]">
+                <div className="w-12 h-12 brutal-border bg-retro-yellow flex items-center justify-center text-xl font-black">
                   {player.name.charAt(0).toUpperCase()}
                 </div>
-                <div
-                  className={`absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-[var(--bg-primary)] ${
-                    player.isOnline
-                      ? 'bg-[var(--success)]'
-                      : 'bg-[var(--text-tertiary)]'
-                  }`}
-                />
+                {player.isOnline && (
+                  <div className="absolute -top-2 -right-2 w-4 h-4 brutal-border bg-retro-green" />
+                )}
               </div>
               <div className="flex flex-col">
-                <span
-                  className={`text-sm font-medium ${player.isOnline ? 'text-[var(--text-primary)]' : 'text-[var(--text-tertiary)]'}`}
-                >
+                <span className="text-base font-black uppercase text-black">
                   {player.name}
                 </span>
                 {player.identityId === facilitatorId && (
-                  <span className="text-[10px] uppercase tracking-tighter text-[var(--warning)] font-bold">
+                  <span className="text-[10px] uppercase font-black text-retro-pink">
                     👑 Facilitator
                   </span>
                 )}
@@ -83,10 +74,10 @@ export function PresenceSidebar({
               ) && (
                 <button
                   onClick={() => handleNudge(player.identityId, player.name)}
-                  className="p-1.5 rounded-lg text-[var(--text-tertiary)] hover:text-[var(--accent)] hover:bg-[var(--bg-tertiary)] transition-all opacity-0 group-hover:opacity-100"
+                  className="p-2 brutal-border bg-white text-black hover:bg-retro-pink transition-all brutal-shadow hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none"
                   title={`Nudge ${player.name}`}
                 >
-                  <Bell className="w-3.5 h-3.5" />
+                  <Bell className="w-4 h-4" />
                 </button>
               )}
           </li>

@@ -61,33 +61,33 @@ export function RoundTimer({
   const isUrgent = timeLeft !== null && timeLeft <= 10 && timeLeft > 0;
 
   return (
-    <div className="flex items-center gap-3 bg-[var(--bg-tertiary)] px-4 py-2 rounded-2xl border border-[var(--border-subtle)] shadow-inner">
+    <div className="flex items-center gap-4 bg-white px-6 py-3 brutal-border brutal-shadow">
       <div
-        className={`flex items-center gap-2 ${isUrgent ? 'animate-pulse text-red-500' : 'text-[var(--text-secondary)]'}`}
+        className={`flex items-center gap-3 ${isUrgent ? 'animate-pulse text-retro-pink' : 'text-black'}`}
       >
-        <Timer className="w-4 h-4" />
-        <span className="font-mono font-bold text-lg min-w-[3ch]">
-          {timeLeft !== null ? `${timeLeft}s` : '--'}
+        <Timer className="w-6 h-6" />
+        <span className="font-black text-2xl min-w-[3ch]">
+          {timeLeft !== null ? `${timeLeft}S` : '--'}
         </span>
       </div>
 
       {isFacilitator && (
-        <div className="flex items-center gap-1 border-l border-[var(--border-subtle)] pl-2 ml-1">
+        <div className="flex items-center gap-2 border-l-4 border-black pl-4 ml-2">
           {timeLeft === null ? (
             <button
               onClick={handleStart}
-              className="p-1.5 hover:bg-[var(--bg-secondary)] rounded-lg text-[var(--accent)] transition-colors"
+              className="p-2 hover:bg-retro-green brutal-border transition-colors bg-white brutal-shadow hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none"
               title="Start Timer"
             >
-              <Play className="w-4 h-4 fill-current" />
+              <Play className="w-5 h-5 fill-current" />
             </button>
           ) : (
             <button
               onClick={handleReset}
-              className="p-1.5 hover:bg-[var(--bg-secondary)] rounded-lg text-[var(--text-tertiary)] hover:text-[var(--text-primary)] transition-colors"
+              className="p-2 hover:bg-retro-pink brutal-border transition-colors bg-white brutal-shadow hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none"
               title="Reset Timer"
             >
-              <RotateCcw className="w-4 h-4" />
+              <RotateCcw className="w-5 h-5" />
             </button>
           )}
         </div>

@@ -309,9 +309,9 @@ export function RoomPage({ slug }: RoomPageProps) {
   const revealDisabled = currentTopicVotes.length < onlinePlayers.length;
 
   return (
-    <div className="h-screen flex flex-col overflow-hidden uppercase font-black">
+    <div className="h-screen w-screen flex flex-col overflow-hidden uppercase font-black bg-white">
       {/* Ticker Tape Header */}
-      <div className="bg-black text-white py-1 brutal-border border-l-0 border-r-0 border-t-0 flex items-center text-sm tracking-wider overflow-hidden shrink-0">
+      <div className="bg-black text-white py-2 brutal-border border-l-0 border-r-0 border-t-0 flex items-center text-base tracking-widest overflow-hidden shrink-0">
         <div className="flex whitespace-nowrap marquee-content animate-[marquee_20s_linear_infinite]">
           {Array.from({ length: 5 }).map((_, i) => (
             <span key={i} className="mx-8">
@@ -321,8 +321,8 @@ export function RoomPage({ slug }: RoomPageProps) {
         </div>
       </div>
 
-      <div className="flex-1 flex w-full min-h-0 relative">
-        <aside className="w-80 bg-retro-blue brutal-border border-t-0 border-l-0 border-b-0 flex flex-col shrink-0 z-10">
+      <div className="flex-1 flex w-full min-h-0 relative overflow-hidden">
+        <aside className="w-96 bg-white brutal-border border-t-0 border-l-0 border-b-0 flex flex-col shrink-0 z-10 overflow-hidden">
           <SectionErrorBoundary name="Topic Sidebar">
             <TopicSidebar
               roomId={room._id}
@@ -341,7 +341,7 @@ export function RoomPage({ slug }: RoomPageProps) {
           />
 
           {activeTopic ? (
-            <div className="flex-1 flex flex-col min-h-0">
+            <div className="flex-1 flex flex-col min-h-0 overflow-hidden">
               <ActiveTopicHeader
                 roomId={room._id}
                 identityId={identityId!}
@@ -355,13 +355,13 @@ export function RoomPage({ slug }: RoomPageProps) {
                 revealDisabled={revealDisabled}
               />
 
-              <div className="flex-1 flex flex-col items-center justify-center p-8 relative min-h-0 overflow-y-auto">
+              <div className="flex-1 flex flex-col items-center justify-center p-4 relative min-h-0 overflow-hidden">
                 {room.status === 'revealed' && votes && players && (
-                  <div className="w-full max-w-4xl mb-12">
+                  <div className="w-full max-w-5xl mb-8">
                     <SectionErrorBoundary name="Statistics">
                       <Suspense
                         fallback={
-                          <div className="h-48 brutal-border animate-pulse bg-white" />
+                          <div className="h-64 brutal-border animate-pulse bg-white" />
                         }
                       >
                         <StatsPanel players={players} votes={votes} />
@@ -370,43 +370,45 @@ export function RoomPage({ slug }: RoomPageProps) {
                   </div>
                 )}
 
-                <SectionErrorBoundary name="Voting Grid">
-                  {players && votes ? (
-                    <CardGrid
-                      players={players}
-                      votes={votes}
-                      revealed={room.status === 'revealed'}
-                    />
-                  ) : (
-                    <div className="text-2xl italic font-black">
-                      Loading voting area...
-                    </div>
-                  )}
-                </SectionErrorBoundary>
+                <div className="w-full flex-1 flex items-center justify-center overflow-y-auto custom-scrollbar p-10">
+                  <SectionErrorBoundary name="Voting Grid">
+                    {players && votes ? (
+                      <CardGrid
+                        players={players}
+                        votes={votes}
+                        revealed={room.status === 'revealed'}
+                      />
+                    ) : (
+                      <div className="text-4xl italic font-black">
+                        LOADING...
+                      </div>
+                    )}
+                  </SectionErrorBoundary>
+                </div>
               </div>
             </div>
           ) : (
-            <div className="flex-1 flex items-center justify-center p-8">
+            <div className="flex-1 flex items-center justify-center p-12">
               {isFacilitator && (
-                <div className="bg-white brutal-border brutal-shadow p-12 text-center max-w-xl">
-                  <h2 className="text-4xl font-black mb-4">
+                <div className="bg-white brutal-border brutal-shadow p-16 text-center max-w-2xl">
+                  <h2 className="text-6xl font-black mb-6">
                     NO ACTIVE TOPIC.
                   </h2>
-                  <p className="text-xl font-bold mb-12 opacity-60">
+                  <p className="text-2xl font-bold mb-16 opacity-60">
                     CHOOSE YOUR SCALE IN SETTINGS OR HIT THE BUTTON TO COMMENCE.
                   </p>
-                  <div className="flex flex-col gap-6">
+                  <div className="flex flex-col gap-8">
                     <button
                       onClick={() =>
                         nextTopic({ roomId: room._id, identityId: identityId! })
                       }
-                      className="w-full py-6 bg-retro-green text-black text-2xl font-black brutal-border brutal-shadow hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all"
+                      className="w-full py-8 bg-retro-green text-black text-3xl font-black brutal-border brutal-shadow hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all"
                     >
                       START ESTIMATION
                     </button>
                     <button
                       onClick={() => setIsSettingsOpen(true)}
-                      className="w-full py-4 bg-retro-yellow text-black text-xl font-black brutal-border brutal-shadow hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all"
+                      className="w-full py-6 bg-retro-yellow text-black text-2xl font-black brutal-border brutal-shadow hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all"
                     >
                       ROOM SETTINGS
                     </button>
@@ -425,9 +427,12 @@ export function RoomPage({ slug }: RoomPageProps) {
           </div>
         </main>
 
-        {/* Presence Floating Sidebar (now as a small overlay if needed, or integrated) */}
-        <div className="absolute top-4 right-4 z-20 w-64 pointer-events-none">
-           <div className="pointer-events-auto bg-white brutal-border brutal-shadow p-4">
+        {/* Presence Floating Sidebar */}
+        <div className="absolute top-6 right-6 z-20 w-80 pointer-events-none">
+           <div className="pointer-events-auto bg-white brutal-border brutal-shadow p-6">
+              <div className="mb-4 flex items-center justify-between border-b-4 border-black pb-2">
+                <h3 className="text-sm font-black tracking-widest">PLAYERS — {onlinePlayers.length}/{players?.length || 0}</h3>
+              </div>
               <SectionErrorBoundary name="Presence Sidebar">
                 <PresenceSidebar
                   roomId={room._id}
@@ -438,7 +443,7 @@ export function RoomPage({ slug }: RoomPageProps) {
               </SectionErrorBoundary>
               <button
                 onClick={() => setIsInviteModalOpen(true)}
-                className="w-full mt-4 py-2 bg-black text-white text-xs font-black uppercase brutal-border hover:bg-retro-pink transition-colors"
+                className="w-full mt-6 py-4 bg-black text-white text-sm font-black uppercase brutal-border hover:bg-retro-pink transition-colors brutal-shadow hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-sm"
               >
                 Invite Players
               </button>
@@ -446,7 +451,7 @@ export function RoomPage({ slug }: RoomPageProps) {
         </div>
       </div>
 
-      <div className="fixed bottom-32 right-4 z-50 pointer-events-auto sm:right-8">
+      <div className="fixed bottom-40 right-6 z-50 pointer-events-auto">
         <EmojiActionBar onSelect={sendReaction} />
       </div>
 
