@@ -11,7 +11,7 @@
   - [x] Write tests to verify typography and global style application.
   - [x] Implement the `translate(4px, 4px)` active state logic for all `.brutal-shadow` elements.
   - [x] Update the root layout to include the `bg-grid` background and basic Neo-Brutalist container rules.
-- [ ] Task: Conductor - User Manual Verification 'Phase 1: Foundations & Global Styling' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 1: Foundations & Global Styling' (Protocol in workflow.md)
 
 ## Phase 2: Landing Page Revamp [checkpoint: 5c5db5e]
 
@@ -23,9 +23,9 @@
   - [x] Write tests for card interactions (hover/click feedback).
   - [x] Implement the "Shadow Shift" active state using `translate(4px, 4px)`.
   - [x] Replace existing card styles with the `brutal-border` and vibrant background colors.
-- [ ] Task: Conductor - User Manual Verification 'Phase 2: Landing Page Revamp' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 2: Landing Page Revamp' (Protocol in workflow.md)
 
-## Phase 3: Room & Poker UI Revamp
+## Phase 3: Room & Poker UI Revamp [checkpoint: ca9f310]
 
 - [x] Task: Redesign Poker Room Layout & Sidebar 3948dd2
   - [x] Write tests for the updated Room sidebar and participant list.
@@ -35,14 +35,18 @@
   - [x] Write tests for the redesigned Poker cards and their 3D transform states.
   - [x] Update cards to use snappy transforms and rigid transitions.
   - [x] Revamp all interactive modals (Invite, Settings, etc.) with Neo-Brutalist styling.
-- [ ] Task: Conductor - User Manual Verification 'Phase 3: Room & Poker UI Revamp' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 3: Room & Poker UI Revamp' (Protocol in workflow.md)
 
-## Phase 4: Global Interactions & Final Polish
+## Phase 4: Global Interactions & Final Polish [checkpoint: 6f98503]
 
-- [ ] Task: Implement Universal Interaction Feedback & Accents
-  - [ ] Verify "Shadow Shift" feedback is active on all interactive elements across the app.
-  - [ ] Add subtle floating background elements (circles/squares) as background accents.
-- [ ] Task: Accessibility Audit & Responsive Refinement
-  - [ ] Run automated and manual accessibility checks for WCAG 2.1 AA compliance.
-  - [ ] Fine-tune mobile responsive scaling for all new components.
-- [ ] Task: Conductor - User Manual Verification 'Phase 4: Global Interactions & Final Polish' (Protocol in workflow.md)
+- [x] Task: Implement Universal Interaction Feedback & Accents [checkpoint: 7c5b305]
+  - [x] Verify "Shadow Shift" feedback is active on all interactive elements across the app.
+  - [x] Add subtle floating background elements (circles/squares) as background accents.
+- [x] Task: Accessibility Audit & Responsive Refinement
+  - [x] Run automated and manual accessibility checks for WCAG 2.1 AA compliance.
+  - [x] Fine-tune mobile responsive scaling for all new components.
+- [x] Task: Conductor - User Manual Verification 'Phase 4: Global Interactions & Final Polish' (Protocol in workflow.md)
+
+## Phase: Review Fixes
+
+- [x] Task: Apply review suggestions efdd12f
