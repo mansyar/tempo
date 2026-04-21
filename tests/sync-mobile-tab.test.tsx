@@ -1,7 +1,6 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { InviteModal } from '../src/components/InviteModal';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import React from 'react';
 
 // Mock useIdentity
 vi.mock('../src/hooks/useIdentity', () => ({
@@ -21,7 +20,10 @@ import { useMutation } from 'convex/react';
 describe('InviteModal Sync Controller Tab', () => {
   const mockOnClose = vi.fn();
   const roomUrl = 'http://localhost:3000/room/test-room';
-  const mockCreateSyncToken = vi.fn().mockResolvedValue('test-token-123');
+  const mockCreateSyncToken = Object.assign(
+    vi.fn().mockResolvedValue('test-token-123'),
+    { withOptimisticUpdate: vi.fn().mockReturnThis() }
+  );
 
   beforeEach(() => {
     vi.clearAllMocks();

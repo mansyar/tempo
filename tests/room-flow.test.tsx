@@ -19,7 +19,7 @@ describe('Room Flow', () => {
     vi.mocked(useNavigate).mockReturnValue(navigate);
 
     const createRoom = vi.fn().mockResolvedValue({ slug: 'test-slug' });
-    vi.mocked(useMutation).mockReturnValue(createRoom);
+    vi.mocked(useMutation).mockReturnValue(createRoom as unknown as ReturnType<typeof useMutation>);
 
     render(<App />);
 

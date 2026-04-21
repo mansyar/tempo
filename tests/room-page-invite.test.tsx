@@ -2,7 +2,6 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { RoomPage } from '../src/components/RoomPage';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { useQuery, useMutation } from 'convex/react';
-import React from 'react';
 
 vi.mock('convex/react', () => ({
   useQuery: vi.fn(),
@@ -65,7 +64,11 @@ describe('RoomPage Invite Flow', () => {
       }
       return []; // Default to empty array for players, votes, topics
     });
-    vi.mocked(useMutation).mockReturnValue(vi.fn().mockResolvedValue({}));
+    vi.mocked(useMutation).mockReturnValue(
+      Object.assign(vi.fn().mockResolvedValue({}), {
+        withOptimisticUpdate: vi.fn().mockReturnThis(),
+      })
+    );
   });
 
   it('should open InviteModal when "Copy Invite" is clicked', async () => {

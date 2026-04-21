@@ -9,6 +9,7 @@ const HAPTIC_PATTERNS = {
   confetti: [50, 30, 50],
   success: 100,
   reveal: [30, 50, 30],
+  nudge: [40, 60, 40],
 };
 
 // Lazy initialization of audio objects to avoid issues with SSR and tests

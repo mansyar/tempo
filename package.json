@@ -21,6 +21,7 @@
     "*.{ts,tsx}": [
       "eslint --fix",
       "prettier --write",
+      "pnpm typecheck",
       "vitest related --run",
       "pnpm tsx scripts/check-file-length.ts"
     ],

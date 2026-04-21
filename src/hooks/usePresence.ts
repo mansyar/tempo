@@ -23,7 +23,7 @@ export function usePresence(
     const me = players.find((p) => p.identityId === identityId);
     if (me?.lastNudgedAt && me.lastNudgedAt !== lastNudgeRef.current) {
       // Trigger haptic and visual feedback
-      vibrate(patterns.nudge);
+      vibrate(patterns.nudge || [40, 60, 40]);
       toast.info('The facilitator is waiting for your vote!', {
         icon: '👋',
         duration: 5000,
@@ -33,7 +33,7 @@ export function usePresence(
   }, [players, identityId, vibrate, patterns.nudge]);
 
   useEffect(() => {
-    if (!hasJoined || !identityId) return;
+    if (!hasJoined || !identityId || !roomId) return;
 
     // 1. Set up heartbeat interval (10s)
     const interval = setInterval(() => {

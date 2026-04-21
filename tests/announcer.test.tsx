@@ -4,7 +4,6 @@ import {
   AriaLiveAnnouncer,
   announce,
 } from '../src/components/AriaLiveAnnouncer';
-import React from 'react';
 
 describe('AriaLiveAnnouncer Component', () => {
   beforeEach(() => {

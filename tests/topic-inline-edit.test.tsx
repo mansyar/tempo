@@ -19,7 +19,9 @@ describe('TopicSidebar Inline Editing', () => {
         status: 'pending',
       },
     ]);
-    vi.mocked(useMutation).mockReturnValue(vi.fn());
+    vi.mocked(useMutation).mockReturnValue(
+      Object.assign(vi.fn(), { withOptimisticUpdate: vi.fn().mockReturnThis() })
+    );
 
     render(
       <TopicSidebar
@@ -38,7 +40,9 @@ describe('TopicSidebar Inline Editing', () => {
   });
 
   it('saves changes on Enter key', async () => {
-    const updateMutation = vi.fn();
+    const updateMutation = Object.assign(vi.fn(), {
+      withOptimisticUpdate: vi.fn().mockReturnThis(),
+    });
     vi.mocked(useQuery).mockReturnValue([
       {
         _id: '1' as Id<'topics'>,
@@ -79,7 +83,9 @@ describe('TopicSidebar Inline Editing', () => {
   });
 
   it('saves changes on blur', async () => {
-    const updateMutation = vi.fn();
+    const updateMutation = Object.assign(vi.fn(), {
+      withOptimisticUpdate: vi.fn().mockReturnThis(),
+    });
     vi.mocked(useQuery).mockReturnValue([
       {
         _id: '1' as Id<'topics'>,
@@ -125,7 +131,9 @@ describe('TopicSidebar Inline Editing', () => {
         status: 'pending',
       },
     ]);
-    vi.mocked(useMutation).mockReturnValue(vi.fn());
+    vi.mocked(useMutation).mockReturnValue(
+      Object.assign(vi.fn(), { withOptimisticUpdate: vi.fn().mockReturnThis() })
+    );
 
     render(
       <TopicSidebar

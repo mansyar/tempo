@@ -1,4 +1,4 @@
-import { mutation, query, MutationCtx } from './_generated/server';
+import { mutation, query, type MutationCtx } from './_generated/server';
 import { v } from 'convex/values';
 import {
   uniqueNamesGenerator,

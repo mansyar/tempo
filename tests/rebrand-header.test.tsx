@@ -1,9 +1,9 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import React, { ReactNode } from 'react';
+import { type ReactNode, type ReactElement } from 'react';
 import Header from '../src/components/Header';
 import { JuiceProvider } from '../src/components/JuiceToggle';
-import { useLocation, Location } from '@tanstack/react-router';
+import { useLocation } from '@tanstack/react-router';
 
 // Mock TanStack Router
 vi.mock('@tanstack/react-router', () => ({
@@ -38,8 +38,8 @@ Object.defineProperty(window, 'matchMedia', {
   })),
 });
 
-const renderWithJuice = (ui: React.ReactElement) => {
-  return render(<JuiceProvider initialJuice={true}>{ui}</JuiceProvider>);
+const renderWithJuice = (ui: ReactElement) => {
+  return render(<JuiceProvider>{ui}</JuiceProvider>);
 };
 
 describe('Header Rebranding', () => {
@@ -67,7 +67,7 @@ describe('Header Rebranding', () => {
   it('shows tool context breadcrumb on room pages', () => {
     vi.mocked(useLocation).mockReturnValue({
       pathname: '/room/test-slug',
-    } as unknown as Location);
+    } as unknown as ReturnType<typeof useLocation>);
     renderWithJuice(<Header />);
     // Spec says: "◈ Tempo ▸ Poker"
     expect(screen.queryByText('Tempo')).toBeTruthy();

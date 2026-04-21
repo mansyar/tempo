@@ -3,11 +3,13 @@ import tailwindcss from '@tailwindcss/vite';
 import viteReact from '@vitejs/plugin-react';
 
 export default defineConfig({
+  // @ts-expect-error: type mismatch between vite and vitest config due to peer dependencies
   plugins: [tailwindcss(), viteReact()],
   test: {
     environment: 'jsdom',
     globals: true,
     coverage: {
+      provider: 'v8',
       exclude: [
         '**/_generated/**',
         'src/routeTree.gen.ts',

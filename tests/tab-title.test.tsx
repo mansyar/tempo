@@ -45,14 +45,14 @@ describe('Dynamic Tab Title', () => {
   });
 
   const mockQueries = (status: 'voting' | 'revealed') => {
-    vi.mocked(useQuery).mockImplementation((_func, _args) => {
-      const args = _args as {
+    vi.mocked(useQuery).mockImplementation((...args: unknown[]) => {
+      const a = args[1] as {
         slug?: string;
         roomId?: string;
         identityId?: string;
       };
       // getBySlug
-      if (args?.slug === 'test-room') {
+      if (a?.slug === 'test-room') {
         return {
           _id: 'room1' as Id<'rooms'>,
           status,
@@ -61,8 +61,8 @@ describe('Dynamic Tab Title', () => {
         };
       }
       // listByRoom (players, topics, votes)
-      if (args?.roomId === 'room1') {
-        if (args.identityId) {
+      if (a?.roomId === 'room1') {
+        if (a.identityId) {
           // votes
           return status === 'revealed'
             ? [{ identityId: 'user1', value: '5' }]

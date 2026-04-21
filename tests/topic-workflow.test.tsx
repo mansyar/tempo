@@ -2,7 +2,6 @@ import { render, screen } from '@testing-library/react';
 import { ActiveTopicHeader } from '../src/components/ActiveTopicHeader';
 import { describe, it, expect, vi } from 'vitest';
 import type { Id } from '../convex/_generated/dataModel';
-import React from 'react';
 
 // Mock convex
 vi.mock('convex/react', () => ({

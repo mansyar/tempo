@@ -1,13 +1,17 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { TopicSidebar } from '../src/components/TopicSidebar';
-import React from 'react';
 
 // Mock convex
-vi.mock('convex/react', () => ({
-  useQuery: vi.fn(),
-  useMutation: vi.fn().mockReturnValue(vi.fn()),
-}));
+vi.mock('convex/react', () => {
+  const mockMutation = Object.assign(vi.fn().mockResolvedValue({}), {
+    withOptimisticUpdate: vi.fn().mockReturnThis(),
+  });
+  return {
+    useQuery: vi.fn(),
+    useMutation: vi.fn(() => mockMutation),
+  };
+});
 
 import { useQuery } from 'convex/react';
 
@@ -39,9 +43,8 @@ describe('TopicSidebar Export UI', () => {
   });
 
   it('should show export button for facilitator when history exists', () => {
-    vi.mocked(useQuery).mockImplementation(
-      (_apiFunc: unknown, args: unknown) => {
-        const a = args as Record<string, unknown>;
+    vi.mocked(useQuery).mockImplementation((...args: unknown[]) => {
+      const a = args[1] as Record<string, unknown>;
         if (a && a.roomId) {
           return [
             {
@@ -73,10 +76,9 @@ describe('TopicSidebar Export UI', () => {
   });
 
   it('should open export menu when button is clicked', () => {
-    vi.mocked(useQuery).mockImplementation(
-      (_apiFunc: unknown, args: unknown) => {
-        const a = args as Record<string, unknown>;
-        if (a && a.roomId) {
+    vi.mocked(useQuery).mockImplementation((...args: unknown[]) => {
+      const a = args[1] as Record<string, unknown>;
+      if (a && a.roomId) {
           return [
             {
               _id: 't1',
@@ -112,9 +114,8 @@ describe('TopicSidebar Export UI', () => {
   });
 
   it('should trigger download when a format is selected', async () => {
-    vi.mocked(useQuery).mockImplementation(
-      (_apiFunc: unknown, args: unknown) => {
-        const a = args as Record<string, unknown>;
+    vi.mocked(useQuery).mockImplementation((...args: unknown[]) => {
+      const a = args[1] as Record<string, unknown>;
         if (a && a.roomId) {
           return [
             {

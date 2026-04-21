@@ -1,7 +1,6 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { PresenceSidebar } from '../src/components/PresenceSidebar';
-import React from 'react';
 
 // Mock convex
 vi.mock('convex/react', () => ({
@@ -51,7 +50,9 @@ describe('PresenceSidebar Nudge UI', () => {
   });
 
   it('should call nudgePlayer when button is clicked', async () => {
-    const mockNudge = vi.fn().mockResolvedValue({});
+    const mockNudge = Object.assign(vi.fn().mockResolvedValue({}), {
+      withOptimisticUpdate: vi.fn().mockReturnThis(),
+    });
     vi.mocked(useMutation).mockReturnValue(mockNudge);
     vi.mocked(useQuery).mockReturnValue([
       { _id: 'p1', identityId: facId, name: 'Fac', isOnline: true },

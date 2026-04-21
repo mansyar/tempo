@@ -235,7 +235,7 @@ export function RoomPage({ slug }: RoomPageProps) {
     const stats = calculateStats(votes.map((v) => v.value));
     setConfirmEstimateState({
       isOpen: true,
-      suggested: stats.average,
+      suggested: String(stats.average),
     });
   };
 

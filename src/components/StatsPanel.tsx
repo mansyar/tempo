@@ -1,4 +1,3 @@
-import React from 'react';
 import { calculateStats, identifyOutliers } from '../utils/stats';
 
 interface StatsPanelProps {

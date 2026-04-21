@@ -11,7 +11,7 @@ vi.stubGlobal(
 
 import { renderHook } from '@testing-library/react';
 import { useSound } from '../src/hooks/useSound';
-import React from 'react';
+import type { ReactNode } from 'react';
 import { JuiceProvider } from '../src/components/JuiceToggle';
 
 describe('useSound Haptics', () => {
@@ -34,7 +34,7 @@ describe('useSound Haptics', () => {
     vi.clearAllMocks();
   });
 
-  const wrapper = ({ children }: { children: React.ReactNode }) => (
+  const wrapper = ({ children }: { children: ReactNode }) => (
     <JuiceProvider>{children}</JuiceProvider>
   );
 

@@ -6,10 +6,17 @@ import ThemeToggle from '../src/components/ThemeToggle';
 import { RoomPage } from '../src/components/RoomPage';
 import { Route as RootLayout } from '../src/routes/__root';
 import { JuiceProvider } from '../src/components/JuiceToggle';
-import { ReactNode } from 'react';
+import { type ReactNode } from 'react';
 import * as convex from 'convex/react';
 import type { Id } from '../convex/_generated/dataModel';
-import React from 'react';
+
+// Helper to create a mock mutation with withOptimisticUpdate
+const createMockMutation = (resolvedValue = {}) => {
+  const mockFn = vi.fn().mockResolvedValue(resolvedValue);
+  return Object.assign(mockFn, {
+    withOptimisticUpdate: vi.fn().mockReturnValue(mockFn),
+  });
+};
 
 // Mock TanStack Router
 vi.mock('@tanstack/react-router', async (importOriginal) => {
@@ -45,7 +52,7 @@ vi.mock('@tanstack/react-router', async (importOriginal) => {
 // Mock Convex
 vi.mock('convex/react', () => ({
   useQuery: vi.fn(),
-  useMutation: vi.fn(() => vi.fn().mockResolvedValue({})),
+  useMutation: vi.fn(() => createMockMutation()),
   ConvexReactClient: vi.fn().mockImplementation(() => ({})),
   ConvexProvider: ({ children }: { children: ReactNode }) => (
     <div>{children}</div>
@@ -149,13 +156,11 @@ describe('RoomPage Component', () => {
 
   it('renders room content when loaded and joined', async () => {
     mockIdentity.nickname = ''; // Start empty to trigger JoinModal
-    vi.mocked(convex.useMutation).mockReturnValue(
-      vi.fn().mockResolvedValue({})
-    );
+    vi.mocked(convex.useMutation).mockReturnValue(createMockMutation());
     // Mock multiple queries
     vi.mocked(convex.useQuery).mockImplementation(
-      (apiFn: unknown, args: unknown) => {
-        const a = args as Record<string, unknown>;
+      (...args: unknown[]) => {
+        const a = args[1] as Record<string, unknown>;
         if (a && a.slug !== undefined) {
           return {
             _id: 'room-id' as unknown as Id<'rooms'>,
@@ -199,8 +204,8 @@ describe('RoomPage Component', () => {
     mockIdentity.nickname = '';
     vi.spyOn(console, 'error').mockImplementation(() => {});
     vi.mocked(convex.useQuery).mockImplementation(
-      (apiFn: unknown, args: unknown) => {
-        const a = args as Record<string, unknown>;
+      (...args: unknown[]) => {
+        const a = args[1] as Record<string, unknown>;
         if (a && a.slug !== undefined) {
           return {
             _id: 'room-id' as unknown as Id<'rooms'>,
@@ -214,9 +219,12 @@ describe('RoomPage Component', () => {
         return null;
       }
     );
-    vi.mocked(convex.useMutation).mockReturnValue(() => {
-      return Promise.reject(new Error('Join failed'));
-    });
+    vi.mocked(convex.useMutation).mockReturnValue(
+      Object.assign(
+        vi.fn().mockRejectedValue(new Error('Join failed')),
+        { withOptimisticUpdate: vi.fn().mockReturnThis() }
+      )
+    );
 
     renderWithJuice(<RoomPage slug="test-room" />);
     const joinBtn = screen.getByText('Mock Join');
@@ -235,13 +243,13 @@ describe('RoomPage Component', () => {
 
   it('handles vote, reveal, and confirm interactions', async () => {
     mockIdentity.nickname = 'Tester';
-    const mockMutation = vi.fn().mockResolvedValue({});
+    const mockMutation = createMockMutation();
 
     vi.mocked(convex.useMutation).mockReturnValue(mockMutation);
 
     vi.mocked(convex.useQuery).mockImplementation(
-      (apiFn: unknown, args: unknown) => {
-        const a = args as Record<string, unknown>;
+      (...args: unknown[]) => {
+        const a = args[1] as Record<string, unknown>;
         if (a && a.slug !== undefined) {
           return {
             _id: 'room-id',
@@ -358,12 +366,10 @@ describe('IndexRoute', () => {
 describe('PokerRoute', () => {
   it('renders poker route', async () => {
     mockIdentity.nickname = '';
-    vi.mocked(convex.useMutation).mockReturnValue(
-      vi.fn().mockResolvedValue({})
-    );
+    vi.mocked(convex.useMutation).mockReturnValue(createMockMutation() as unknown as ReturnType<typeof convex.useMutation>);
     vi.mocked(convex.useQuery).mockImplementation(
-      (apiFn: unknown, args: unknown) => {
-        const a = args as Record<string, unknown>;
+      (...args: unknown[]) => {
+        const a = args[1] as Record<string, unknown>;
         if (a && a.slug !== undefined) {
           return {
             _id: 'room-id' as unknown as Id<'rooms'>,
@@ -405,3 +411,4 @@ describe('PokerRoute', () => {
     expect(await screen.findByText(/test-room/)).toBeDefined();
   });
 });
+

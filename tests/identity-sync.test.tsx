@@ -10,7 +10,9 @@ vi.mock('convex/react', () => ({
 import { useMutation } from 'convex/react';
 
 describe('useIdentity sync logic', () => {
-  const mockVerifySyncToken = vi.fn();
+  const mockVerifySyncToken = Object.assign(vi.fn(), {
+    withOptimisticUpdate: vi.fn().mockReturnThis(),
+  });
 
   beforeEach(() => {
     localStorage.clear();
@@ -19,13 +21,14 @@ describe('useIdentity sync logic', () => {
 
     // Mock window.location
     const originalLocation = window.location;
-    // @ts-expect-error - window.location is read-only
-    delete window.location;
-    window.location = {
-      ...originalLocation,
-      search: '',
-      pathname: '/room/test-room',
-    } as Location;
+    Object.defineProperty(window, 'location', {
+      configurable: true,
+      value: {
+        ...originalLocation,
+        search: '',
+        pathname: '/room/test-room',
+      },
+    });
   });
 
   it('should not sync if no sync token in URL', async () => {

@@ -2,7 +2,6 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { MobileController } from '../src/components/MobileController';
 import { JuiceProvider } from '../src/components/JuiceToggle';
-import React from 'react';
 
 // Mock useIdentity
 vi.mock('../src/hooks/useIdentity', () => ({
@@ -13,10 +12,15 @@ vi.mock('../src/hooks/useIdentity', () => ({
 }));
 
 // Mock convex
-vi.mock('convex/react', () => ({
-  useQuery: vi.fn(),
-  useMutation: vi.fn(() => vi.fn().mockResolvedValue({})),
-}));
+vi.mock('convex/react', () => {
+  const mockMutation = Object.assign(vi.fn().mockResolvedValue({}), {
+    withOptimisticUpdate: vi.fn().mockReturnThis(),
+  });
+  return {
+    useQuery: vi.fn(),
+    useMutation: vi.fn(() => mockMutation),
+  };
+});
 
 // Mock useSound - needs patterns for usePresence
 vi.mock('../src/hooks/useSound', () => ({
@@ -43,13 +47,16 @@ describe('MobileController Component', () => {
     vi.stubGlobal('innerWidth', 375);
 
     // Mock all useMutation calls
-    vi.mocked(useMutation).mockReturnValue(vi.fn().mockResolvedValue({}));
+    vi.mocked(useMutation).mockReturnValue(
+      Object.assign(vi.fn().mockResolvedValue({}), {
+        withOptimisticUpdate: vi.fn().mockReturnThis(),
+      })
+    );
 
     // Mock queries
-    vi.mocked(useQuery).mockImplementation(
-      (_apiFunc: unknown, args: unknown) => {
-        const a = args as Record<string, unknown>;
-        if (a && a.slug !== undefined) {
+    vi.mocked(useQuery).mockImplementation((...args: unknown[]) => {
+      const a = args[1] as Record<string, unknown>;
+      if (a && a.slug !== undefined) {
           return {
             _id: 'room-123',
             slug: a.slug as string,
@@ -107,7 +114,9 @@ describe('MobileController Component', () => {
   });
 
   it('should call castVote when a vote is selected', () => {
-    const mockCastVote = vi.fn().mockResolvedValue({});
+    const mockCastVote = Object.assign(vi.fn().mockResolvedValue({}), {
+      withOptimisticUpdate: vi.fn().mockReturnThis(),
+    });
     vi.mocked(useMutation).mockReturnValue(mockCastVote);
 
     render(

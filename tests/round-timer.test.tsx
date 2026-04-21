@@ -1,7 +1,6 @@
 import { render, screen, act, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { RoundTimer } from '../src/components/RoundTimer';
-import React from 'react';
 import type { Id } from '../convex/_generated/dataModel';
 import { useMutation } from 'convex/react';
 
@@ -16,7 +15,9 @@ describe('RoundTimer Component', () => {
 
   beforeEach(() => {
     vi.useFakeTimers();
-    vi.mocked(useMutation).mockReturnValue(vi.fn());
+    vi.mocked(useMutation).mockReturnValue(
+      Object.assign(vi.fn(), { withOptimisticUpdate: vi.fn().mockReturnThis() })
+    );
   });
 
   afterEach(() => {
@@ -97,7 +98,9 @@ describe('RoundTimer Component', () => {
   });
 
   it('should call startTimer when facilitator clicks start button', () => {
-    const startTimerMock = vi.fn();
+    const startTimerMock = Object.assign(vi.fn(), {
+      withOptimisticUpdate: vi.fn().mockReturnThis(),
+    });
     vi.mocked(useMutation).mockReturnValue(startTimerMock);
 
     render(
@@ -115,7 +118,9 @@ describe('RoundTimer Component', () => {
   });
 
   it('should call resetTimer when facilitator clicks reset button', () => {
-    const resetTimerMock = vi.fn();
+    const resetTimerMock = Object.assign(vi.fn(), {
+      withOptimisticUpdate: vi.fn().mockReturnThis(),
+    });
     vi.mocked(useMutation).mockReturnValue(resetTimerMock);
 
     const startTime = Date.now();

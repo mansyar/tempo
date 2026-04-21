@@ -7,7 +7,7 @@ import * as serverModule from './_generated/server';
 
 test('migration: backfillToolType', async () => {
   const t = convexTest(schema, {
-    // @ts-expect-error - migrations is a new module not yet in api types
+    // @ts-expect-error: convex-test type mismatch
     migrations: async () => migrations,
     '_generated/api': async () => apiModule,
     '_generated/server': async () => serverModule,
@@ -27,6 +27,7 @@ test('migration: backfillToolType', async () => {
   expect(roomBefore?.toolType).toBeUndefined();
 
   // 2. Run migration
+  // @ts-expect-error: convex-test mutation type mismatch
   await t.mutation(migrations.backfillToolType, {});
 
   // 3. Verify

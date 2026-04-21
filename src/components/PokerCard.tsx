@@ -1,5 +1,5 @@
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { ReactNode } from 'react';
+import { type ReactNode } from 'react';
 
 interface PokerCardProps {
   value: string | number;

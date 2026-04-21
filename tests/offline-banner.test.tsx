@@ -1,7 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { OfflineBanner } from '../src/components/OfflineBanner';
-import React from 'react';
 
 describe('OfflineBanner Component', () => {
   let addEventListenerSpy: ReturnType<typeof vi.spyOn>;

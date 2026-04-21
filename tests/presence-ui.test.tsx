@@ -31,6 +31,7 @@ describe('PresenceSidebar', () => {
       <PresenceSidebar
         roomId={'room1' as unknown as Id<'rooms'>}
         facilitatorId="user1"
+        myIdentityId="user1"
       />
     );
 
@@ -43,7 +44,9 @@ describe('PresenceSidebar', () => {
 
 describe('ClaimBanner', () => {
   it('renders when the facilitator is offline', () => {
-    const claimMutation = vi.fn();
+    const claimMutation = Object.assign(vi.fn(), {
+      withOptimisticUpdate: vi.fn().mockReturnThis(),
+    });
     vi.mocked(useMutation).mockReturnValue(claimMutation);
 
     // Mock players list where facilitator is offline

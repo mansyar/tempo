@@ -1,13 +1,16 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, waitFor } from '@testing-library/react';
-import React from 'react';
 import { RoomPage } from '../src/components/RoomPage';
 import { useQuery } from 'convex/react';
+import type { Id } from '../convex/_generated/dataModel';
 
 // Mock Convex
 vi.mock('convex/react', () => ({
   useQuery: vi.fn(),
-  useMutation: vi.fn(() => vi.fn().mockResolvedValue({})),
+  useMutation: vi.fn(() => ({
+    mutate: vi.fn().mockResolvedValue({}),
+    withOptimisticUpdate: vi.fn().mockReturnThis(),
+  })),
 }));
 
 // Mock useIdentity
@@ -35,27 +38,27 @@ vi.mock('../src/components/JuiceToggle', () => ({
 
 describe('Meta Tags & Title Rebranding', () => {
   it('updates tab title to use Tempo branding', async () => {
-    vi.mocked(useQuery).mockImplementation((_func, _args: unknown) => {
-      const args = _args as {
+    vi.mocked(useQuery).mockImplementation((...args: unknown[]) => {
+      const a = args[1] as {
         slug?: string;
         roomId?: string;
         identityId?: string;
       };
-      if (args?.slug === 'test-room') {
+      if (a?.slug === 'test-room') {
         return {
-          _id: 'room1',
+          _id: 'room1' as Id<'rooms'>,
           status: 'voting',
-          currentTopicId: 'topic1',
+          currentTopicId: 'topic1' as Id<'topics'>,
           facilitatorId: 'user1',
         };
       }
-      if (_args?.roomId === 'room1') {
-        if (_args.identityId) return [];
+      if (a?.roomId === 'room1') {
+        if (a.identityId) return [];
         return [
           {
             identityId: 'user1',
             name: 'Tester',
-            _id: 'topic1',
+            _id: 'topic1' as Id<'topics'>,
             title: 'Test Topic',
             status: 'active',
             order: 1,

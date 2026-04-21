@@ -127,7 +127,9 @@ describe('TopicSidebar', () => {
   });
 
   it('allows facilitator to add a topic', async () => {
-    const addMutation = vi.fn();
+    const addMutation = Object.assign(vi.fn(), {
+      withOptimisticUpdate: vi.fn().mockReturnThis(),
+    });
     vi.mocked(useQuery).mockReturnValue([]);
     vi.mocked(useMutation).mockReturnValue(addMutation);
 
@@ -154,7 +156,9 @@ describe('TopicSidebar', () => {
   });
 
   it('allows facilitator to remove a topic', async () => {
-    const removeMutation = vi.fn();
+    const removeMutation = Object.assign(vi.fn(), {
+      withOptimisticUpdate: vi.fn().mockReturnThis(),
+    });
     vi.mocked(useQuery).mockReturnValue([
       {
         _id: '1' as Id<'topics'>,
@@ -186,7 +190,9 @@ describe('TopicSidebar', () => {
   });
 
   it('allows facilitator to reorder topics', async () => {
-    const reorderMutation = vi.fn();
+    const reorderMutation = Object.assign(vi.fn(), {
+      withOptimisticUpdate: vi.fn().mockReturnThis(),
+    });
     vi.mocked(useQuery).mockReturnValue([
       { _id: '1' as Id<'topics'>, title: 'T1', order: 1, status: 'pending' },
       { _id: '2' as Id<'topics'>, title: 'T2', order: 2, status: 'pending' },

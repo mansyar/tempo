@@ -9,12 +9,16 @@ import * as players from '../convex/players';
 import { api } from '../convex/_generated/api';
 import * as apiModule from '../convex/_generated/api';
 import * as serverModule from '../convex/_generated/server';
-import React from 'react';
 
 // Mock convex react
-vi.mock('convex/react', () => ({
-  useMutation: vi.fn(() => vi.fn().mockResolvedValue({})),
-}));
+vi.mock('convex/react', () => {
+  const mockFn = vi.fn().mockResolvedValue({});
+  return {
+    useMutation: vi.fn(() =>
+      Object.assign(mockFn, { withOptimisticUpdate: vi.fn().mockReturnThis() })
+    ),
+  };
+});
 
 import { useMutation } from 'convex/react';
 
@@ -28,7 +32,9 @@ describe('RoomSettings UI', () => {
   });
 
   it('should call updateSettings when Save is clicked', async () => {
-    const mockUpdate = vi.fn().mockResolvedValue({});
+    const mockUpdate = Object.assign(vi.fn().mockResolvedValue({}), {
+      withOptimisticUpdate: vi.fn().mockReturnThis(),
+    });
     vi.mocked(useMutation).mockReturnValue(mockUpdate);
 
     render(

@@ -2,7 +2,6 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { toast } from 'sonner';
 import { InviteModal } from '../src/components/InviteModal';
-import React from 'react';
 
 vi.mock('sonner', () => ({
   toast: {

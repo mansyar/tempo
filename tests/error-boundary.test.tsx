@@ -1,7 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import SectionErrorBoundary from '../src/components/SectionErrorBoundary';
-import React from 'react';
 
 const BuggyComponent = () => {
   throw new Error('Test Error');

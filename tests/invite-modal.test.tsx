@@ -1,7 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { InviteModal } from '../src/components/InviteModal';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import React from 'react';
 
 // Mock useIdentity
 vi.mock('../src/hooks/useIdentity', () => ({

@@ -1,6 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import React from 'react';
 import { LandingPage } from '../src/components/LandingPage';
 import { JuiceProvider } from '../src/components/JuiceToggle';
 import { useNavigate } from '@tanstack/react-router';
@@ -26,8 +25,13 @@ vi.mock('../src/hooks/useIdentity', () => ({
 }));
 
 const renderWithJuice = (ui: React.ReactElement) => {
-  return render(<JuiceProvider initialJuice={true}>{ui}</JuiceProvider>);
+  return render(
+    <JuiceProvider>
+      {ui}
+    </JuiceProvider>
+  );
 };
+
 
 describe('Landing Page Rebranding', () => {
   it('renders landing page with Tempo branding', () => {
@@ -48,7 +52,7 @@ describe('Landing Page Rebranding', () => {
     vi.mocked(useNavigate).mockReturnValue(navigate);
 
     const createRoom = vi.fn().mockResolvedValue({ slug: 'new-poker-room' });
-    vi.mocked(useMutation).mockReturnValue(createRoom);
+    vi.mocked(useMutation).mockReturnValue(createRoom as unknown as ReturnType<typeof useMutation>);
 
     renderWithJuice(<LandingPage />);
 
