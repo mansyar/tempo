@@ -15,10 +15,10 @@
 
 ## Phase 2: Landing Page Revamp
 
-- [ ] Task: Redesign Landing Page Hero & Structure
-  - [ ] Write tests for the new Landing Page component structure.
-  - [ ] Implement the Hero section with `mix-blend-multiply` headers and `rotate-12` badges.
-  - [ ] Add the scrolling ticker-tape component for key value propositions.
+- [x] Task: Redesign Landing Page Hero & Structure 7b1a11a
+  - [x] Write tests for the new Landing Page component structure.
+  - [x] Implement the Hero section with `mix-blend-multiply` headers and `rotate-12` badges.
+  - [x] Add the scrolling ticker-tape component for key value propositions.
 - [ ] Task: Revamp Landing Feature Cards
   - [ ] Write tests for card interactions (hover/click feedback).
   - [ ] Implement the "Shadow Shift" active state using `translate(4px, 4px)`.
