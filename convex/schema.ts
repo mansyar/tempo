@@ -10,6 +10,7 @@ export default defineSchema({
     timerStartedAt: v.optional(v.number()),
     autoReveal: v.optional(v.boolean()), // if true, reveal once everyone has voted
     scaleType: v.optional(v.union(v.literal('fibonacci'), v.literal('tshirt'))),
+    toolType: v.optional(v.union(v.literal('poker'), v.literal('standup'))),
     updatedAt: v.number(),
   })
     .index('by_slug', ['slug'])
