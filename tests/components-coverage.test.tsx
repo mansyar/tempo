@@ -98,11 +98,10 @@ Object.defineProperty(window, 'matchMedia', {
 const renderWithJuice = (ui: React.ReactElement) => {
   return render(<JuiceProvider>{ui}</JuiceProvider>);
 };
-
 describe('Footer Component', () => {
   it('renders footer with copyright', () => {
     render(<Footer />);
-    expect(screen.getByText(/Pointy/)).toBeDefined();
+    expect(screen.getByText(/© 2026 Tempo/)).toBeDefined();
     expect(
       screen.getByText(/Built with TanStack Start & Convex/)
     ).toBeDefined();
