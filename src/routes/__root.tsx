@@ -9,6 +9,7 @@ import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
 import { TanStackDevtools } from '@tanstack/react-devtools';
 import Footer from '../components/shared/Footer';
 import Header from '../components/shared/Header';
+import { FloatingAccents } from '../components/shared/FloatingAccents';
 import { OfflineBanner } from '../components/shared/OfflineBanner';
 import { AriaLiveAnnouncer } from '../components/shared/AriaLiveAnnouncer';
 import { JuiceProvider } from '../components/shared/JuiceToggle';
@@ -93,6 +94,7 @@ function RootComponent() {
         <Toaster richColors closeButton position="top-center" />
         <AriaLiveAnnouncer />
         <OfflineBanner />
+        <FloatingAccents />
         {!isRoomRoute && <Header />}
         <Outlet />
         {!isRoomRoute && <Footer />}

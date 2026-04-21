@@ -312,7 +312,7 @@ export function RoomPage({ slug }: RoomPageProps) {
     <div className="h-[100dvh] w-screen flex flex-col overflow-hidden uppercase font-black bg-white">
       {/* Ticker Tape Header */}
       <div className="bg-black text-white py-2 brutal-border border-l-0 border-r-0 border-t-0 flex items-center text-base tracking-widest overflow-hidden shrink-0">
-        <div className="flex whitespace-nowrap marquee-content animate-[marquee_20s_linear_infinite]">
+        <div className="flex whitespace-nowrap marquee-content animate-[marquee_60s_linear_infinite]">
           {Array.from({ length: 5 }).map((_, i) => (
             <span key={i} className="mx-8">
               ROOM: {slug} // {onlinePlayers.length} ONLINE // {room.status === 'revealed' ? 'VOTES REVEALED' : 'ESTIMATION IN PROGRESS'} // NO LURKERS ALLOWED // 
@@ -373,15 +373,15 @@ export function RoomPage({ slug }: RoomPageProps) {
                 </div>
                 <button
                   onClick={() => setIsInviteModalOpen(true)}
-                  className="px-3 py-1 bg-black text-white text-[10px] font-black uppercase brutal-border hover:bg-retro-pink transition-colors brutal-shadow hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none shrink-0"
+                  className="px-3 py-1 bg-black text-white text-[10px] font-black uppercase brutal-border hover:bg-retro-pink transition-all brutal-shadow shrink-0"
                 >
                   Invite
                 </button>
               </div>
 
-              <div className="flex-1 flex flex-col items-center justify-center p-4 relative min-h-0 overflow-hidden">
+              <div className="flex-1 flex flex-col items-center justify-center p-2 relative min-h-0 overflow-hidden">
                 {room.status === 'revealed' && votes && players && (
-                  <div className="w-full max-w-7xl mb-6">
+                  <div className="w-full max-w-7xl mb-4">
                     <SectionErrorBoundary name="Statistics">
                       <Suspense
                         fallback={
@@ -394,7 +394,7 @@ export function RoomPage({ slug }: RoomPageProps) {
                   </div>
                 )}
 
-                <div className="w-full flex-1 flex items-center justify-center overflow-y-auto custom-scrollbar p-6">
+                <div className="w-full flex-1 flex items-center justify-center overflow-y-auto custom-scrollbar p-4">
                   <div className="w-full max-w-none">
                     <SectionErrorBoundary name="Voting Grid">
                       {players && votes ? (
@@ -428,13 +428,13 @@ export function RoomPage({ slug }: RoomPageProps) {
                       onClick={() =>
                         nextTopic({ roomId: room._id, identityId: identityId! })
                       }
-                      className="flex-1 py-3 bg-retro-green text-black text-lg font-black brutal-border brutal-shadow hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all uppercase"
+                      className="flex-1 py-3 bg-retro-green text-black text-lg font-black brutal-border brutal-shadow transition-all uppercase"
                     >
                       Start Estimation
                     </button>
                     <button
                       onClick={() => setIsSettingsOpen(true)}
-                      className="flex-1 py-3 bg-retro-yellow text-black text-lg font-black brutal-border brutal-shadow hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all uppercase"
+                      className="flex-1 py-3 bg-retro-yellow text-black text-lg font-black brutal-border brutal-shadow transition-all uppercase"
                     >
                       Settings
                     </button>
@@ -452,29 +452,6 @@ export function RoomPage({ slug }: RoomPageProps) {
             />
           </div>
         </main>
-
-        {/* Presence Floating Sidebar */}
-        <div className="absolute top-4 right-4 z-20 w-72 pointer-events-none">
-           <div className="pointer-events-auto bg-white brutal-border brutal-shadow p-4">
-              <div className="mb-3 flex items-center justify-between border-b-2 border-black pb-1">
-                <h3 className="text-[10px] font-black tracking-widest">PLAYERS — {onlinePlayers.length}/{players?.length || 0}</h3>
-              </div>
-              <SectionErrorBoundary name="Presence Sidebar">
-                <PresenceSidebar
-                  roomId={room._id}
-                  facilitatorId={room.facilitatorId}
-                  myIdentityId={identityId!}
-                  votes={votes}
-                />
-              </SectionErrorBoundary>
-              <button
-                onClick={() => setIsInviteModalOpen(true)}
-                className="w-full mt-4 py-3 bg-black text-white text-xs font-black uppercase brutal-border hover:bg-retro-pink transition-colors brutal-shadow hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-sm"
-              >
-                Invite Players
-              </button>
-           </div>
-        </div>
       </div>
 
       <div className="fixed bottom-40 right-6 z-50 pointer-events-auto">

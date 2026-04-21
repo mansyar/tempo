@@ -81,7 +81,7 @@ export function InviteModal({ isOpen, onClose, roomUrl }: InviteModalProps) {
       <div className="bg-white brutal-border brutal-shadow w-full max-w-md p-8 text-center relative">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-2 text-black hover:text-retro-pink transition-colors brutal-border bg-white"
+          className="absolute top-4 right-4 p-2 text-black hover:text-retro-pink transition-all brutal-border brutal-shadow bg-white"
           aria-label="Close"
         >
           <X className="w-5 h-5" />
@@ -134,7 +134,7 @@ export function InviteModal({ isOpen, onClose, roomUrl }: InviteModalProps) {
             <div className="space-y-4">
               <button
                 onClick={handleCopy}
-                className="w-full flex items-center justify-center gap-2 brutal-border bg-white px-6 py-4 font-black uppercase text-black transition hover:bg-retro-blue brutal-shadow hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-sm"
+                className="w-full flex items-center justify-center gap-2 brutal-border bg-white px-6 py-4 font-black uppercase text-black transition-all hover:bg-retro-blue brutal-shadow"
               >
                 {copied ? (
                   <>
@@ -152,7 +152,7 @@ export function InviteModal({ isOpen, onClose, roomUrl }: InviteModalProps) {
               {canShare && (
                 <button
                   onClick={handleShare}
-                  className="w-full flex items-center justify-center gap-2 brutal-border bg-retro-pink px-6 py-4 font-black uppercase text-black transition hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-sm brutal-shadow"
+                  className="w-full flex items-center justify-center gap-2 brutal-border bg-retro-pink px-6 py-4 font-black uppercase text-black transition-all brutal-shadow"
                 >
                   <Share className="w-5 h-5" />
                   Share

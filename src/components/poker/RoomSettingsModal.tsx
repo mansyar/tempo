@@ -48,7 +48,7 @@ export function RoomSettingsModal({
       <div className="bg-white brutal-border brutal-shadow w-full max-w-md p-8 relative">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-2 text-black hover:text-retro-pink transition-colors brutal-border bg-white"
+          className="absolute top-4 right-4 p-2 text-black hover:text-retro-pink transition-all brutal-border brutal-shadow bg-white"
           aria-label="Close"
         >
           <X className="w-5 h-5" />
@@ -135,13 +135,13 @@ export function RoomSettingsModal({
         <div className="mt-12 flex gap-4">
           <button
             onClick={onClose}
-            className="flex-1 px-6 py-4 brutal-border bg-white text-xs font-black uppercase text-black hover:bg-gray-100 transition-all brutal-shadow hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-sm"
+            className="flex-1 px-6 py-4 brutal-border bg-white text-xs font-black uppercase text-black hover:bg-gray-100 transition-all brutal-shadow"
           >
             Cancel
           </button>
           <button
             onClick={handleSave}
-            className="flex-1 px-6 py-4 brutal-border bg-black text-xs font-black uppercase text-white hover:bg-retro-pink transition-all brutal-shadow hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-sm"
+            className="flex-1 px-6 py-4 brutal-border bg-black text-xs font-black uppercase text-white hover:bg-retro-pink transition-all brutal-shadow"
           >
             Save
           </button>

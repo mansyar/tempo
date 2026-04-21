@@ -30,7 +30,7 @@ function FeatureCard({
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: 0.1 * index + 0.5 }}
-      className={`relative h-full w-full brutal-border ${bgColor} p-8 brutal-shadow hover:translate-x-1 hover:translate-y-1 hover:shadow-sm transition-all`}
+      className={`relative h-full w-full brutal-border ${bgColor} p-8 brutal-shadow transition-all`}
     >
       <div className="flex flex-col items-center text-center h-full justify-center">
         <div className="mb-6 bg-white p-4 brutal-border brutal-shadow">
@@ -85,7 +85,7 @@ export function LandingPage() {
     <main className="px-4 pb-16 pt-24 flex flex-col items-center">
       {/* Ticker Tape */}
       <div className="fixed top-0 left-0 w-full bg-black text-white py-2 overflow-hidden z-50 brutal-border border-x-0 border-t-0">
-        <div className="flex whitespace-nowrap marquee-content animate-[marquee_15s_linear_infinite]">
+        <div className="flex whitespace-nowrap marquee-content animate-[marquee_60s_linear_infinite]">
           {Array.from({ length: 10 }).map((_, i) => (
             <span key={i} className="mx-8 font-black uppercase tracking-widest">
               Tempo • High-Juice Collaboration • Agile Done Raw • Ephemeral & Secure • 
@@ -131,9 +131,9 @@ export function LandingPage() {
           <button
             onClick={handleCreatePokerRoom}
             disabled={!nickname.trim()}
-            className="group relative flex flex-col items-center gap-6 brutal-border bg-retro-blue p-8 transition-all brutal-shadow hover:translate-x-1 hover:translate-y-1 hover:shadow-sm disabled:opacity-50 disabled:grayscale disabled:cursor-not-allowed"
+            className="group relative flex flex-col items-center gap-6 brutal-border bg-retro-blue p-8 transition-all brutal-shadow disabled:opacity-50 disabled:grayscale disabled:cursor-not-allowed"
           >
-            <div className="bg-white p-5 brutal-border brutal-shadow group-hover:shadow-none group-hover:translate-x-1 group-hover:translate-y-1 transition-all">
+            <div className="bg-white p-5 brutal-border brutal-shadow transition-all">
               <Target className="w-10 h-10" />
             </div>
             <div className="text-center">
@@ -180,18 +180,18 @@ export function LandingPage() {
               e.preventDefault();
               handleJoinRoom();
             }}
-            className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto"
+            className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto items-stretch"
           >
             <input
               type="text"
               placeholder="PASTE LINK OR SLUG..."
               value={joinSlug}
               onChange={(e) => setJoinSlug(e.target.value)}
-              className="flex-grow brutal-border bg-white px-4 py-4 text-sm font-bold uppercase focus:bg-retro-yellow focus:outline-none"
+              className="flex-grow brutal-border bg-white px-4 py-4 text-sm font-bold uppercase focus:bg-retro-yellow focus:outline-none brutal-shadow w-full"
             />
             <button
               type="submit"
-              className="brutal-border bg-black px-8 py-4 text-sm font-black text-white uppercase hover:bg-retro-pink transition-all brutal-shadow"
+              className="brutal-border bg-black px-8 py-4 text-sm font-black text-white uppercase hover:bg-retro-pink transition-all brutal-shadow whitespace-nowrap"
             >
               Join
             </button>

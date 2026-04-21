@@ -27,24 +27,18 @@ export function StatsPanel({ players, votes }: StatsPanelProps) {
     value: string | number;
     tooltip: string;
   }) => (
-    <div className="flex flex-col items-center group relative">
-      <span
-        className="text-[var(--text-tertiary)] text-[10px] uppercase font-bold tracking-widest mb-1 cursor-help border-b border-dotted border-[var(--text-tertiary)]"
-        title={tooltip}
-      >
+    <div
+      className="flex flex-col items-center px-3 py-1.5 brutal-border bg-white brutal-shadow cursor-help"
+      title={tooltip}
+    >
+      <span className="text-[7px] font-black uppercase tracking-widest opacity-60">
         {label}
       </span>
       <span
-        className={`text-3xl font-black ${label === 'Average' ? 'text-[var(--accent)]' : 'text-[var(--text-primary)]'}`}
+        className={`text-xl font-black uppercase ${label === 'Average' ? 'text-retro-pink' : 'text-black'}`}
       >
         {value}
       </span>
-      {/* Custom Tooltip */}
-      <div className="absolute bottom-full mb-2 hidden group-hover:block z-50">
-        <div className="bg-[var(--bg-tertiary)] text-[var(--text-primary)] text-[10px] px-2 py-1 rounded shadow-lg border border-[var(--border-subtle)] whitespace-nowrap">
-          {tooltip}
-        </div>
-      </div>
     </div>
   );
 
@@ -67,9 +61,9 @@ export function StatsPanel({ players, votes }: StatsPanelProps) {
   });
 
   return (
-    <div className="flex flex-col items-center gap-8">
+    <div className="flex flex-wrap items-center justify-center gap-6 w-full">
       {stats.count > 0 && (
-        <div className="flex justify-center gap-8 sm:gap-12 animate-in fade-in slide-in-from-top-4 duration-500">
+        <div className="flex items-center gap-3 shrink-0">
           <StatItem
             label="Average"
             value={stats.average}
@@ -85,46 +79,47 @@ export function StatsPanel({ players, votes }: StatsPanelProps) {
       )}
 
       {/* Distribution Section */}
-      <div className="flex flex-wrap justify-center gap-3 animate-in fade-in duration-700">
+      <div className="flex flex-wrap items-center gap-2">
+        <div className="bg-black text-white px-2 py-0.5 brutal-border text-[7px] font-black uppercase tracking-widest shrink-0">
+          DISTRO
+        </div>
         {sortedValues.map((val) => (
           <div
             key={val}
-            className="flex flex-col items-center p-3 min-w-[60px] bg-[var(--bg-tertiary)] border border-[var(--border-subtle)] rounded-xl"
+            className="flex items-center gap-2 px-2 py-1 bg-retro-blue brutal-border brutal-shadow shrink-0"
           >
-            <span className="text-xl font-black text-[var(--text-primary)]">
+            <span className="text-xs font-black text-black uppercase">
               {val}
             </span>
-            <span className="text-[10px] font-bold text-[var(--text-tertiary)] uppercase tracking-wider">
-              {counts[val]} {counts[val] === 1 ? 'vote' : 'votes'}
+            <span className="text-[7px] font-black text-black opacity-50 uppercase tracking-tighter">
+              {counts[val]}V
             </span>
           </div>
         ))}
       </div>
 
       {isSplit && outlierPlayers.length > 0 && (
-        <div className="flex flex-col items-center gap-2 animate-in fade-in zoom-in duration-500">
-          <div className="flex items-center gap-2 px-3 py-1 bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-full text-[10px] font-bold uppercase tracking-wider border border-red-200 dark:border-red-800/50">
-            <span>Needs Discussion</span>
+        <div className="flex items-center gap-3 p-2 bg-retro-pink brutal-border brutal-shadow shrink-0">
+          <div className="bg-black text-white px-1.5 py-0.5 brutal-border text-[7px] font-black uppercase tracking-widest shrink-0">
+            DISCUSS
           </div>
-          <div className="flex flex-wrap justify-center gap-x-4 gap-y-1">
-            {outlierPlayers.map((player) => {
+          <div className="flex gap-2">
+            {outlierPlayers.slice(0, 3).map((player) => {
               const vote = votes.find(
                 (v) => v.identityId === player.identityId
               );
               return (
                 <div
                   key={player.identityId}
-                  className="flex items-center gap-1.5"
+                  className="bg-white brutal-border px-1.5 py-0.5 text-[8px] font-black uppercase whitespace-nowrap"
                 >
-                  <span className="text-xs font-medium text-[var(--text-secondary)]">
-                    {player.name}
-                  </span>
-                  <span className="text-xs font-mono font-bold text-[var(--text-primary)]">
-                    ({vote?.value})
-                  </span>
+                  {player.name} ({vote?.value})
                 </div>
               );
             })}
+            {outlierPlayers.length > 3 && (
+              <div className="text-[8px] font-black">+MORE</div>
+            )}
           </div>
         </div>
       )}

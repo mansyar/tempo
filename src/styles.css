@@ -57,6 +57,7 @@ html,
 body,
 #app {
   min-height: 100%;
+  overflow: hidden;
 }
 
 body {
@@ -66,6 +67,16 @@ body {
   background-color: var(--bg-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  scrollbar-gutter: stable;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 .bg-grid {

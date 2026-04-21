@@ -40,7 +40,7 @@ export function BatchAddModal({
           </div>
           <button
             onClick={onClose}
-            className="p-2 text-black hover:text-retro-pink transition-colors brutal-border bg-white"
+            className="p-2 text-black hover:text-retro-pink transition-all brutal-border brutal-shadow bg-white"
             aria-label="Close"
           >
             <X className="w-5 h-5" />
@@ -71,7 +71,7 @@ export function BatchAddModal({
             <button
               type="submit"
               disabled={!titlesString.trim()}
-              className="px-8 py-4 bg-black text-white text-xs font-black uppercase brutal-border brutal-shadow hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-sm transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+              className="px-8 py-4 bg-black text-white text-xs font-black uppercase brutal-border brutal-shadow transition-all disabled:opacity-30 disabled:cursor-not-allowed"
             >
               Add Topics
             </button>
