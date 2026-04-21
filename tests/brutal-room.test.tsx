@@ -43,8 +43,7 @@ describe('Neo-Brutalist Room Layout', () => {
       </JuiceProvider>
     );
     const aside = document.querySelector('aside');
-    const sidebar = aside?.querySelector('.brutal-border');
-    expect(sidebar?.classList.contains('bg-retro-blue')).toBe(true);
+    expect(aside?.classList.contains('bg-retro-blue')).toBe(true);
   });
 
   it('should apply brutal-border and brutal-shadow to main layout containers', () => {

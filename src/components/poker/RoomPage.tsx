@@ -309,120 +309,125 @@ export function RoomPage({ slug }: RoomPageProps) {
   const revealDisabled = currentTopicVotes.length < onlinePlayers.length;
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <div className="flex-1 page-wrap px-4 py-8">
-        <ClaimBanner
-          roomId={room._id}
-          facilitatorId={room.facilitatorId}
-          identityId={identityId!}
-        />
-
-        <header className="mb-12 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
-          <div>
-            <h1 className="text-3xl font-bold tracking-tight">{slug}</h1>
-            <p className="text-sm text-[var(--text-secondary)] uppercase tracking-widest font-semibold mt-1">
-              Planning Poker Room
-            </p>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <span className="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:bg-green-900/30 dark:text-green-400">
-              Live
+    <div className="h-screen flex flex-col overflow-hidden uppercase font-black">
+      {/* Ticker Tape Header */}
+      <div className="bg-black text-white py-1 brutal-border border-l-0 border-r-0 border-t-0 flex items-center text-sm tracking-wider overflow-hidden shrink-0">
+        <div className="flex whitespace-nowrap marquee-content animate-[marquee_20s_linear_infinite]">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <span key={i} className="mx-8">
+              ROOM: {slug} // {onlinePlayers.length} ONLINE // {room.status === 'revealed' ? 'VOTES REVEALED' : 'ESTIMATION IN PROGRESS'} // NO LURKERS ALLOWED // 
             </span>
-            <button
-              onClick={() => setIsInviteModalOpen(true)}
-              className="text-xs font-semibold text-[var(--text-tertiary)] hover:text-[var(--text-primary)] transition-colors"
-            >
-              Copy Invite
-            </button>
-          </div>
-        </header>
+          ))}
+        </div>
+      </div>
 
-        {activeTopic ? (
-          <ActiveTopicHeader
+      <div className="flex-1 flex w-full min-h-0 relative">
+        <aside className="w-80 bg-retro-blue brutal-border border-t-0 border-l-0 border-b-0 flex flex-col shrink-0 z-10">
+          <SectionErrorBoundary name="Topic Sidebar">
+            <TopicSidebar
+              roomId={room._id}
+              facilitatorId={room.facilitatorId}
+              identityId={identityId!}
+              onOpenBatchAdd={() => setIsBatchAddOpen(true)}
+            />
+          </SectionErrorBoundary>
+        </aside>
+
+        <main className="flex-1 flex flex-col min-w-0 bg-grid overflow-hidden">
+          <ClaimBanner
             roomId={room._id}
+            facilitatorId={room.facilitatorId}
             identityId={identityId!}
-            roomStatus={room.status}
-            timerStartedAt={room.timerStartedAt}
-            activeTopic={activeTopic}
-            isFacilitator={isFacilitator}
-            onReveal={handleReveal}
-            onConfirmNext={handleConfirmNext}
-            onOpenSettings={() => setIsSettingsOpen(true)}
-            revealDisabled={revealDisabled}
           />
-        ) : (
-          isFacilitator && (
-            <div className="mb-12 island-shell p-8 rounded-3xl bg-[var(--bg-secondary)] border border-dashed border-[var(--border-subtle)] text-center rise-in">
-              <h2 className="text-xl font-bold text-[var(--text-secondary)] mb-2">
-                No active topic. Ready to start?
-              </h2>
-              <p className="text-sm text-[var(--text-tertiary)] mb-8">
-                Choose your scale in settings or click below to begin.
-              </p>
-              <div className="flex flex-wrap justify-center gap-4">
-                <button
-                  onClick={() =>
-                    nextTopic({ roomId: room._id, identityId: identityId! })
-                  }
-                  className="px-8 py-3 bg-[var(--accent)] text-white font-bold rounded-xl hover:brightness-110 transition-all shadow-lg"
-                >
-                  Start Estimation
-                </button>
-                <button
-                  onClick={() => setIsSettingsOpen(true)}
-                  className="px-8 py-3 bg-[var(--bg-tertiary)] text-[var(--text-primary)] font-bold rounded-xl border border-[var(--border-subtle)] hover:border-[var(--accent)] transition-all"
-                >
-                  Room Settings
-                </button>
-              </div>
-            </div>
-          )
-        )}
 
-        <div className="grid gap-12 lg:grid-cols-3">
-          <section className="lg:col-span-2">
-            {room.status === 'revealed' && votes && players && (
-              <div className="mb-12">
-                <SectionErrorBoundary name="Statistics">
-                  <Suspense
-                    fallback={
-                      <div className="h-48 island-shell animate-pulse bg-[var(--bg-secondary)]" />
-                    }
-                  >
-                    <StatsPanel players={players} votes={votes} />
-                  </Suspense>
+          {activeTopic ? (
+            <div className="flex-1 flex flex-col min-h-0">
+              <ActiveTopicHeader
+                roomId={room._id}
+                identityId={identityId!}
+                roomStatus={room.status}
+                timerStartedAt={room.timerStartedAt}
+                activeTopic={activeTopic}
+                isFacilitator={isFacilitator}
+                onReveal={handleReveal}
+                onConfirmNext={handleConfirmNext}
+                onOpenSettings={() => setIsSettingsOpen(true)}
+                revealDisabled={revealDisabled}
+              />
+
+              <div className="flex-1 flex flex-col items-center justify-center p-8 relative min-h-0 overflow-y-auto">
+                {room.status === 'revealed' && votes && players && (
+                  <div className="w-full max-w-4xl mb-12">
+                    <SectionErrorBoundary name="Statistics">
+                      <Suspense
+                        fallback={
+                          <div className="h-48 brutal-border animate-pulse bg-white" />
+                        }
+                      >
+                        <StatsPanel players={players} votes={votes} />
+                      </Suspense>
+                    </SectionErrorBoundary>
+                  </div>
+                )}
+
+                <SectionErrorBoundary name="Voting Grid">
+                  {players && votes ? (
+                    <CardGrid
+                      players={players}
+                      votes={votes}
+                      revealed={room.status === 'revealed'}
+                    />
+                  ) : (
+                    <div className="text-2xl italic font-black">
+                      Loading voting area...
+                    </div>
+                  )}
                 </SectionErrorBoundary>
               </div>
-            )}
-
-            <SectionErrorBoundary name="Voting Grid">
-              {players && votes ? (
-                <CardGrid
-                  players={players}
-                  votes={votes}
-                  revealed={room.status === 'revealed'}
-                />
-              ) : (
-                <div className="h-64 flex items-center justify-center italic text-[var(--text-tertiary)]">
-                  Loading voting area...
+            </div>
+          ) : (
+            <div className="flex-1 flex items-center justify-center p-8">
+              {isFacilitator && (
+                <div className="bg-white brutal-border brutal-shadow p-12 text-center max-w-xl">
+                  <h2 className="text-4xl font-black mb-4">
+                    NO ACTIVE TOPIC.
+                  </h2>
+                  <p className="text-xl font-bold mb-12 opacity-60">
+                    CHOOSE YOUR SCALE IN SETTINGS OR HIT THE BUTTON TO COMMENCE.
+                  </p>
+                  <div className="flex flex-col gap-6">
+                    <button
+                      onClick={() =>
+                        nextTopic({ roomId: room._id, identityId: identityId! })
+                      }
+                      className="w-full py-6 bg-retro-green text-black text-2xl font-black brutal-border brutal-shadow hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all"
+                    >
+                      START ESTIMATION
+                    </button>
+                    <button
+                      onClick={() => setIsSettingsOpen(true)}
+                      className="w-full py-4 bg-retro-yellow text-black text-xl font-black brutal-border brutal-shadow hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all"
+                    >
+                      ROOM SETTINGS
+                    </button>
+                  </div>
                 </div>
               )}
-            </SectionErrorBoundary>
-          </section>
-
-          <aside className="space-y-8 flex flex-col min-h-[500px]">
-            <div className="brutal-border brutal-shadow bg-retro-blue flex-1 flex flex-col overflow-hidden">
-              <SectionErrorBoundary name="Topic Sidebar">
-                <TopicSidebar
-                  roomId={room._id}
-                  facilitatorId={room.facilitatorId}
-                  identityId={identityId!}
-                  onOpenBatchAdd={() => setIsBatchAddOpen(true)}
-                />
-              </SectionErrorBoundary>
             </div>
-            <div className="brutal-border brutal-shadow bg-white p-6 shrink-0">
+          )}
+
+          <div className="shrink-0">
+            <CardDeck
+              onSelect={handleVote}
+              selectedVote={myVote}
+              scaleType={room.scaleType}
+            />
+          </div>
+        </main>
+
+        {/* Presence Floating Sidebar (now as a small overlay if needed, or integrated) */}
+        <div className="absolute top-4 right-4 z-20 w-64 pointer-events-none">
+           <div className="pointer-events-auto bg-white brutal-border brutal-shadow p-4">
               <SectionErrorBoundary name="Presence Sidebar">
                 <PresenceSidebar
                   roomId={room._id}
@@ -431,18 +436,17 @@ export function RoomPage({ slug }: RoomPageProps) {
                   votes={votes}
                 />
               </SectionErrorBoundary>
-            </div>
-          </aside>
+              <button
+                onClick={() => setIsInviteModalOpen(true)}
+                className="w-full mt-4 py-2 bg-black text-white text-xs font-black uppercase brutal-border hover:bg-retro-pink transition-colors"
+              >
+                Invite Players
+              </button>
+           </div>
         </div>
       </div>
 
-      <CardDeck
-        onSelect={handleVote}
-        selectedVote={myVote}
-        scaleType={room.scaleType}
-      />
-
-      <div className="fixed bottom-24 right-4 z-50 pointer-events-auto sm:right-8 sm:bottom-28">
+      <div className="fixed bottom-32 right-4 z-50 pointer-events-auto sm:right-8">
         <EmojiActionBar onSelect={sendReaction} />
       </div>
 
