@@ -73,7 +73,7 @@
   - [ ] Verify no data corruption occurs
   - [ ] Document migration steps
 
-- [ ] **Task 2.3: Update Room Creation Mutation**
+- [x] **Task 2.3: Update Room Creation Mutation** [fe07951]
   - [ ] Update rooms.create to accept toolType parameter
   - [ ] Modify mutation signature to accept toolType
   - [ ] Default to 'poker' for existing calls
