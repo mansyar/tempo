@@ -86,20 +86,20 @@ export function RoomPage({ slug }: RoomPageProps) {
   // Dynamic tab title
   useEffect(() => {
     if (!room) {
-      document.title = 'Pointy Poker';
+      document.title = 'Tempo - Planning Poker';
       return;
     }
 
     if (activeTopic) {
       const emoji = room.status === 'revealed' ? '✅' : '🤔';
       const status = room.status === 'revealed' ? 'Revealed' : 'Voting';
-      document.title = `${emoji} ${status}: ${activeTopic.title} | Pointy`;
+      document.title = `${emoji} ${status}: ${activeTopic.title} | Tempo`;
     } else {
-      document.title = 'Pointy Poker';
+      document.title = 'Tempo - Planning Poker';
     }
 
     return () => {
-      document.title = 'Pointy Poker';
+      document.title = 'Tempo - Planning Poker';
     };
   }, [room?.status, activeTopic?.title, room]);
 

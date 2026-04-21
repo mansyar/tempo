@@ -41,7 +41,7 @@ vi.mock('../src/components/JuiceToggle', () => ({
 
 describe('Dynamic Tab Title', () => {
   beforeEach(() => {
-    document.title = 'Pointy Poker';
+    document.title = 'Tempo - Planning Poker';
   });
 
   const mockQueries = (status: 'voting' | 'revealed') => {
@@ -91,7 +91,7 @@ describe('Dynamic Tab Title', () => {
 
     await waitFor(
       () => {
-        expect(document.title).toBe('🤔 Voting: Test Topic | Pointy');
+        expect(document.title).toBe('🤔 Voting: Test Topic | Tempo');
       },
       { timeout: 2000 }
     );
@@ -103,7 +103,7 @@ describe('Dynamic Tab Title', () => {
 
     await waitFor(
       () => {
-        expect(document.title).toBe('✅ Revealed: Test Topic | Pointy');
+        expect(document.title).toBe('✅ Revealed: Test Topic | Tempo');
       },
       { timeout: 2000 }
     );

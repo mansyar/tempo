@@ -32,6 +32,19 @@ export const Route = createRootRoute({
       {
         title: 'Tempo - Planning Poker',
       },
+      {
+        name: 'description',
+        content:
+          'Scrum Tools for Modern Teams. High-juice, real-time collaboration.',
+      },
+      {
+        property: 'og:title',
+        content: 'Tempo - Scrum Tools for Modern Teams',
+      },
+      {
+        property: 'og:description',
+        content: 'Real-time estimation and collaboration for agile teams.',
+      },
     ],
     links: [
       { rel: 'icon', href: '/favicon.ico' },
