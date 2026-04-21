@@ -31,10 +31,10 @@
   - [x] Write tests for the updated Room sidebar and participant list.
   - [x] Implement heavy borders, solid backgrounds, and the new font in the Room UI.
   - [x] Remove all glassmorphism and soft gradients from the Room layout.
-- [ ] Task: Revamp Poker Estimation Cards & Modals
-  - [ ] Write tests for the redesigned Poker cards and their 3D transform states.
-  - [ ] Update cards to use snappy transforms and rigid transitions.
-  - [ ] Revamp all interactive modals (Invite, Settings, etc.) with Neo-Brutalist styling.
+- [x] Task: Revamp Poker Estimation Cards & Modals f5aa5c4
+  - [x] Write tests for the redesigned Poker cards and their 3D transform states.
+  - [x] Update cards to use snappy transforms and rigid transitions.
+  - [x] Revamp all interactive modals (Invite, Settings, etc.) with Neo-Brutalist styling.
 - [ ] Task: Conductor - User Manual Verification 'Phase 3: Room & Poker UI Revamp' (Protocol in workflow.md)
 
 ## Phase 4: Global Interactions & Final Polish
