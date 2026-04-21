@@ -35,7 +35,7 @@ vi.mock('../src/hooks/useSound', () => ({
   })),
 }));
 
-vi.mock('../src/components/JuiceToggle', () => ({
+vi.mock('../src/components/shared/JuiceToggle', () => ({
   useJuice: vi.fn(() => ({ enabled: true })),
 }));
 

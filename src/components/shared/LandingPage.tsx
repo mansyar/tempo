@@ -1,7 +1,7 @@
 import { useNavigate } from '@tanstack/react-router';
-import { useIdentity } from '../hooks/useIdentity';
+import { useIdentity } from '../../hooks/useIdentity';
 import { useMutation } from 'convex/react';
-import { api } from '../../convex/_generated/api';
+import { api } from '../../../convex/_generated/api';
 import { useState } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { Zap, Target, Lock, Users, type LucideIcon } from 'lucide-react';

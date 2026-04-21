@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { PresenceSidebar } from '../src/components/PresenceSidebar';
+import { PresenceSidebar } from '../src/components/shared/PresenceSidebar';
 import { ClaimBanner } from '../src/components/shared/ClaimBanner';
 import { describe, it, expect, vi } from 'vitest';
 import { useQuery, useMutation } from 'convex/react';

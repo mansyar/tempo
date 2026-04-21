@@ -1,6 +1,6 @@
 import { Link, useLocation } from '@tanstack/react-router';
-import ThemeToggle from '../ThemeToggle';
-import JuiceToggle from '../JuiceToggle';
+import ThemeToggle from './ThemeToggle';
+import JuiceToggle from './JuiceToggle';
 
 export default function Header() {
   const location = useLocation();

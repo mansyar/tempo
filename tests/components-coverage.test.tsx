@@ -2,10 +2,10 @@ import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent, act } from '@testing-library/react';
 import Footer from '../src/components/shared/Footer';
 import Header from '../src/components/shared/Header';
-import ThemeToggle from '../src/components/ThemeToggle';
+import ThemeToggle from '../src/components/shared/ThemeToggle';
 import { RoomPage } from '../src/components/RoomPage';
 import { Route as RootLayout } from '../src/routes/__root';
-import { JuiceProvider } from '../src/components/JuiceToggle';
+import { JuiceProvider } from '../src/components/shared/JuiceToggle';
 import { type ReactNode } from 'react';
 import * as convex from 'convex/react';
 import type { Id } from '../convex/_generated/dataModel';
@@ -84,6 +84,14 @@ vi.mock('../src/hooks/useSound', () => ({
     vibrate: vi.fn(),
     patterns: { success: 100 },
   }),
+}));
+
+vi.mock('../src/hooks/useEmojiReactions', () => ({
+  useEmojiReactions: () => ({ localReactions: [], sendReaction: vi.fn() }),
+}));
+
+vi.mock('../src/hooks/usePresence', () => ({
+  usePresence: vi.fn(),
 }));
 
 // Mock matchMedia

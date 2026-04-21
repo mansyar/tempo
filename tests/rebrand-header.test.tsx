@@ -2,7 +2,7 @@ import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { type ReactNode, type ReactElement } from 'react';
 import Header from '../src/components/shared/Header';
-import { JuiceProvider } from '../src/components/JuiceToggle';
+import { JuiceProvider } from '../src/components/shared/JuiceToggle';
 import { useLocation } from '@tanstack/react-router';
 
 // Mock TanStack Router

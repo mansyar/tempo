@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import JuiceToggle, { JuiceProvider } from '../src/components/JuiceToggle';
+import JuiceToggle, { JuiceProvider } from '../src/components/shared/JuiceToggle';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 describe('JuiceToggle Component', () => {

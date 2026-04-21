@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { MobileController } from '../src/components/MobileController';
-import { JuiceProvider } from '../src/components/JuiceToggle';
+import { JuiceProvider } from '../src/components/shared/JuiceToggle';
 
 // Mock useIdentity
 vi.mock('../src/hooks/useIdentity', () => ({

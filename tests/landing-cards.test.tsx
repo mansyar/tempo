@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { LandingPage } from '../src/components/LandingPage';
+import { LandingPage } from '../src/components/shared/LandingPage';
 import { describe, it, expect, vi } from 'vitest';
 import { useNavigate } from '@tanstack/react-router';
 

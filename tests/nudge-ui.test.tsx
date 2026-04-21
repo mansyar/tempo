@@ -1,6 +1,6 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { PresenceSidebar } from '../src/components/PresenceSidebar';
+import { PresenceSidebar } from '../src/components/shared/PresenceSidebar';
 
 // Mock convex
 vi.mock('convex/react', () => ({

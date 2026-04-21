@@ -28,7 +28,7 @@ vi.mock('../src/hooks/useEmojiReactions', () => ({
   useEmojiReactions: () => ({ localReactions: [], sendReaction: vi.fn() }),
 }));
 
-vi.mock('../src/components/JuiceToggle', () => ({
+vi.mock('../src/components/shared/JuiceToggle', () => ({
   useJuice: () => ({ enabled: true }),
 }));
 

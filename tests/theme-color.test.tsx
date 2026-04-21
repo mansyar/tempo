@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, act } from '@testing-library/react';
-import ThemeToggle from '../src/components/ThemeToggle';
+import ThemeToggle from '../src/components/shared/ThemeToggle';
 
 describe('Theme Color Meta Tag', () => {
   let meta: HTMLMetaElement;

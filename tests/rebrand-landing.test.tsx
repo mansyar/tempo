@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { LandingPage } from '../src/components/LandingPage';
-import { JuiceProvider } from '../src/components/JuiceToggle';
+import { LandingPage } from '../src/components/shared/LandingPage';
+import { JuiceProvider } from '../src/components/shared/JuiceToggle';
 import { useNavigate } from '@tanstack/react-router';
 import { useMutation } from 'convex/react';
 

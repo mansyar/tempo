@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useJuice } from '../components/JuiceToggle';
+import { useJuice } from '../components/shared/JuiceToggle';
 
 type SoundType = 'pop' | 'whoosh' | 'confetti';
 

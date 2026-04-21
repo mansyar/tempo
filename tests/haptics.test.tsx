@@ -12,7 +12,7 @@ vi.stubGlobal(
 import { renderHook } from '@testing-library/react';
 import { useSound } from '../src/hooks/useSound';
 import type { ReactNode } from 'react';
-import { JuiceProvider } from '../src/components/JuiceToggle';
+import { JuiceProvider } from '../src/components/shared/JuiceToggle';
 
 describe('useSound Haptics', () => {
   beforeEach(() => {

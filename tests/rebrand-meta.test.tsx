@@ -33,7 +33,7 @@ vi.mock('../src/hooks/useEmojiReactions', () => ({
 vi.mock('../src/hooks/useSound', () => ({
   useSound: vi.fn(() => ({ play: vi.fn(), vibrate: vi.fn(), patterns: {} })),
 }));
-vi.mock('../src/components/JuiceToggle', () => ({
+vi.mock('../src/components/shared/JuiceToggle', () => ({
   useJuice: vi.fn(() => ({ enabled: true })),
 }));
 
