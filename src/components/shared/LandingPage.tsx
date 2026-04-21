@@ -17,72 +17,31 @@ function FeatureCard({
   desc: string;
   index: number;
 }) {
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-
-  const mouseXSpring = useSpring(x, { stiffness: 300, damping: 30 });
-  const mouseYSpring = useSpring(y, { stiffness: 300, damping: 30 });
-
-  const rotateX = useTransform(
-    mouseYSpring,
-    [-0.5, 0.5],
-    ['17.5deg', '-17.5deg']
-  );
-  const rotateY = useTransform(
-    mouseXSpring,
-    [-0.5, 0.5],
-    ['-17.5deg', '17.5deg']
-  );
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-
-    const width = rect.width;
-    const height = rect.height;
-
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
-
-    const xPct = mouseX / width - 0.5;
-    const yPct = mouseY / height - 0.5;
-
-    x.set(xPct);
-    y.set(yPct);
-  };
-
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
+  const colors = [
+    'bg-retro-yellow',
+    'bg-retro-pink',
+    'bg-retro-blue',
+    'bg-retro-green',
+  ];
+  const bgColor = colors[index % colors.length];
 
   return (
     <motion.div
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{
-        rotateY,
-        rotateX,
-        transformStyle: 'preserve-3d',
-      }}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, x: -20 }}
+      animate={{ opacity: 1, x: 0 }}
       transition={{ delay: 0.1 * index + 0.5 }}
-      className="relative h-48 w-full rounded-2xl bg-gradient-to-br from-[var(--bg-tertiary)] to-[var(--bg-secondary)] border border-[var(--border-subtle)] p-6 shadow-xl backdrop-blur-md"
+      className={`relative h-full w-full brutal-border ${bgColor} p-8 brutal-shadow hover:translate-x-1 hover:translate-y-1 hover:shadow-sm transition-all`}
     >
-      <div
-        style={{
-          transform: 'translateZ(50px)',
-          transformStyle: 'preserve-3d',
-        }}
-        className="flex flex-col items-center text-center h-full justify-center"
-      >
-        <div className="mb-4 rounded-full bg-[var(--bg-primary)] p-3 text-[var(--accent)] shadow-inner">
-          <Icon className="w-8 h-8" />
+      <div className="flex flex-col items-center text-center h-full justify-center">
+        <div className="mb-6 bg-white p-4 brutal-border brutal-shadow">
+          <Icon className="w-10 h-10" />
         </div>
-        <h3 className="text-lg font-bold text-[var(--text-primary)] uppercase tracking-wider mb-2">
+        <h3 className="text-2xl font-black uppercase mb-3 leading-none">
           {title}
         </h3>
-        <p className="text-sm text-[var(--text-secondary)]">{desc}</p>
+        <p className="text-sm font-bold uppercase opacity-90 leading-tight">
+          {desc}
+        </p>
       </div>
     </motion.div>
   );
@@ -240,7 +199,7 @@ export function LandingPage() {
         </div>
       </section>
 
-      <section className="mt-20 grid gap-8 sm:grid-cols-3 max-w-5xl w-full">
+      <section className="mt-20 grid gap-10 sm:grid-cols-3 max-w-6xl w-full px-4 pb-20">
         <FeatureCard
           icon={Zap}
           title="Real-time"
