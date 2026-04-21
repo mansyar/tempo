@@ -9,6 +9,7 @@ interface PresenceSidebarProps {
   facilitatorId: string;
   myIdentityId: string;
   votes?: { identityId: string; value: string | number | null }[];
+  layout?: 'vertical' | 'horizontal';
 }
 
 export function PresenceSidebar({
@@ -16,6 +17,7 @@ export function PresenceSidebar({
   facilitatorId,
   myIdentityId,
   votes,
+  layout = 'vertical',
 }: PresenceSidebarProps) {
   const players = useQuery(api.players.listByRoom, { roomId });
   const nudgePlayer = useMutation(api.players.nudge);
@@ -36,6 +38,46 @@ export function PresenceSidebar({
   };
 
   const isFacilitator = myIdentityId === facilitatorId;
+
+  if (layout === 'horizontal') {
+    return (
+      <ul className="flex items-center gap-2">
+        {players.map((player) => {
+          const hasVoted = votes?.some(
+            (v) => v.identityId === player.identityId && v.value !== null
+          );
+          return (
+            <li
+              key={player._id}
+              className={`flex items-center gap-2 px-2 py-1 brutal-border transition-all shrink-0 ${player.isOnline ? 'bg-white' : 'bg-gray-100 opacity-40'}`}
+              title={player.name}
+            >
+              <div className="relative">
+                <div className={`w-6 h-6 brutal-border flex items-center justify-center text-[10px] font-black ${hasVoted ? 'bg-retro-green' : 'bg-retro-yellow'}`}>
+                  {player.name.charAt(0).toUpperCase()}
+                </div>
+                {player.identityId === facilitatorId && (
+                   <div className="absolute -top-1.5 -right-1.5 text-[8px]">👑</div>
+                )}
+              </div>
+              <span className="text-[10px] font-black uppercase max-w-[60px] truncate">
+                {player.name}
+              </span>
+              
+              {isFacilitator && player.isOnline && player.identityId !== myIdentityId && !hasVoted && (
+                <button
+                  onClick={() => handleNudge(player.identityId, player.name)}
+                  className="p-0.5 brutal-border bg-white hover:bg-retro-pink transition-all"
+                >
+                  <Bell className="w-2.5 h-2.5" />
+                </button>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+    );
+  }
 
   return (
     <div className="flex flex-col gap-6">

@@ -355,6 +355,30 @@ export function RoomPage({ slug }: RoomPageProps) {
                 revealDisabled={revealDisabled}
               />
 
+              {/* Horizontal Player Bar */}
+              <div className="bg-white brutal-border border-t-0 border-l-0 border-r-0 p-2 flex items-center justify-between gap-4 shrink-0 overflow-x-auto no-scrollbar">
+                <div className="flex items-center gap-3 overflow-x-auto no-scrollbar py-1">
+                  <div className="bg-black text-white px-2 py-0.5 brutal-border text-[8px] font-black tracking-widest uppercase shrink-0">
+                    PLAYERS ({onlinePlayers.length}/{players?.length || 0})
+                  </div>
+                  <SectionErrorBoundary name="Presence Bar">
+                    <PresenceSidebar
+                      roomId={room._id}
+                      facilitatorId={room.facilitatorId}
+                      myIdentityId={identityId!}
+                      votes={votes}
+                      layout="horizontal"
+                    />
+                  </SectionErrorBoundary>
+                </div>
+                <button
+                  onClick={() => setIsInviteModalOpen(true)}
+                  className="px-3 py-1 bg-black text-white text-[10px] font-black uppercase brutal-border hover:bg-retro-pink transition-colors brutal-shadow hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none shrink-0"
+                >
+                  Invite
+                </button>
+              </div>
+
               <div className="flex-1 flex flex-col items-center justify-center p-4 relative min-h-0 overflow-hidden">
                 {room.status === 'revealed' && votes && players && (
                   <div className="w-full max-w-7xl mb-6">
