@@ -10,6 +10,7 @@
 
 import type * as cleanup from "../cleanup.js";
 import type * as crons from "../crons.js";
+import type * as migrations from "../migrations.js";
 import type * as players from "../players.js";
 import type * as reactions from "../reactions.js";
 import type * as rooms from "../rooms.js";
@@ -26,6 +27,7 @@ import type {
 declare const fullApi: ApiFromModules<{
   cleanup: typeof cleanup;
   crons: typeof crons;
+  migrations: typeof migrations;
   players: typeof players;
   reactions: typeof reactions;
   rooms: typeof rooms;

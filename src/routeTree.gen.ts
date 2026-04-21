@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as RoomSlugRouteImport } from './routes/room.$slug'
+import { Route as PokerSlugRouteImport } from './routes/poker.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,30 +23,39 @@ const RoomSlugRoute = RoomSlugRouteImport.update({
   path: '/room/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PokerSlugRoute = PokerSlugRouteImport.update({
+  id: '/poker/$slug',
+  path: '/poker/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/poker/$slug': typeof PokerSlugRoute
   '/room/$slug': typeof RoomSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/poker/$slug': typeof PokerSlugRoute
   '/room/$slug': typeof RoomSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/poker/$slug': typeof PokerSlugRoute
   '/room/$slug': typeof RoomSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/room/$slug'
+  fullPaths: '/' | '/poker/$slug' | '/room/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/room/$slug'
-  id: '__root__' | '/' | '/room/$slug'
+  to: '/' | '/poker/$slug' | '/room/$slug'
+  id: '__root__' | '/' | '/poker/$slug' | '/room/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  PokerSlugRoute: typeof PokerSlugRoute
   RoomSlugRoute: typeof RoomSlugRoute
 }
 
@@ -65,11 +75,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RoomSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/poker/$slug': {
+      id: '/poker/$slug'
+      path: '/poker/$slug'
+      fullPath: '/poker/$slug'
+      preLoaderRoute: typeof PokerSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  PokerSlugRoute: PokerSlugRoute,
   RoomSlugRoute: RoomSlugRoute,
 }
 export const routeTree = rootRouteImport
