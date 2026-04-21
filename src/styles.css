@@ -73,6 +73,16 @@ body {
   background-size: 20px 20px;
 }
 
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.bg-retro-yellow { background-color: #f7df1e; }
+.bg-retro-pink { background-color: #FF00E5; }
+.bg-retro-blue { background-color: #93c5fd; }
+.bg-retro-green { background-color: #4ade80; }
+
 .brutal-border {
   border: var(--brutal-border-width) solid #000;
   border-radius: var(--brutal-radius);

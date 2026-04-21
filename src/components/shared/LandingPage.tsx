@@ -123,82 +123,97 @@ export function LandingPage() {
   };
 
   return (
-    <main className="page-wrap px-4 pb-16 pt-14 flex flex-col items-center justify-center min-h-[85vh]">
-      <section className="island-shell rise-in relative overflow-hidden rounded-[2.5rem] px-6 py-12 sm:px-10 sm:py-16 w-full max-w-4xl text-center shadow-2xl">
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[var(--accent)] to-transparent opacity-50" />
+    <main className="px-4 pb-16 pt-24 flex flex-col items-center">
+      {/* Ticker Tape */}
+      <div className="fixed top-0 left-0 w-full bg-black text-white py-2 overflow-hidden z-50 brutal-border border-x-0 border-t-0">
+        <div className="flex whitespace-nowrap marquee-content animate-[marquee_15s_linear_infinite]">
+          {Array.from({ length: 10 }).map((_, i) => (
+            <span key={i} className="mx-8 font-black uppercase tracking-widest">
+              Tempo • High-Juice Collaboration • Agile Done Raw • Ephemeral & Secure • 
+            </span>
+          ))}
+        </div>
+      </div>
 
-        <div className="mb-8 flex justify-center text-5xl opacity-80 text-[var(--accent)]">
-          ◈
+      <section className="relative w-full max-w-4xl text-center py-12 sm:py-20">
+        {/* Decorative Badges */}
+        <div className="absolute -top-4 -left-8 hidden lg:block brutal-badge rotate-[-12deg] bg-retro-pink p-3 brutal-border brutal-shadow font-black uppercase text-sm">
+          No Friction
+        </div>
+        <div className="absolute top-10 -right-12 hidden lg:block brutal-badge rotate-[12deg] bg-retro-blue p-3 brutal-border brutal-shadow font-black uppercase text-sm">
+          Real-Time
         </div>
 
-        <h1 className="display-title mb-6 text-5xl leading-tight font-black tracking-tight text-[var(--text-primary)] sm:text-7xl">
+        <div className="mb-6 inline-block bg-retro-yellow px-4 py-1 brutal-border font-black uppercase tracking-tighter">
+          The New Standard
+        </div>
+
+        <h1 className="mb-8 text-7xl leading-[0.9] font-black tracking-tighter sm:text-9xl uppercase mix-blend-multiply italic">
           Tempo
         </h1>
 
-        <p className="mb-12 text-lg text-[var(--text-secondary)] sm:text-xl max-w-2xl mx-auto leading-relaxed">
-          Scrum Tools for Modern Teams. High-juice, real-time collaboration
-          without the friction.
+        <p className="mb-12 text-xl font-medium sm:text-2xl max-w-2xl mx-auto leading-tight">
+          Scrum Tools for Modern Teams. <br />
+          <span className="bg-retro-green px-2">High-juice, real-time collaboration</span> without the friction.
         </p>
 
-        <div className="mb-10 max-w-md mx-auto">
-          <div className="relative group">
-            <input
-              type="text"
-              placeholder="Enter your nickname"
-              value={nickname}
-              onChange={(e) => setNickname(e.target.value)}
-              className="w-full rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-tertiary)] px-5 py-4 text-lg text-[var(--text-primary)] focus:border-[var(--accent)] focus:outline-none transition-all group-hover:border-[var(--text-tertiary)]"
-            />
-          </div>
+        <div className="mb-12 max-w-md mx-auto">
+          <input
+            type="text"
+            placeholder="ENTER YOUR NICKNAME"
+            value={nickname}
+            onChange={(e) => setNickname(e.target.value)}
+            className="w-full brutal-border bg-white px-5 py-5 text-xl font-black uppercase placeholder:text-gray-400 focus:bg-retro-yellow focus:outline-none transition-all brutal-shadow"
+          />
         </div>
 
-        <div className="grid gap-6 sm:grid-cols-2 max-w-2xl mx-auto">
+        <div className="grid gap-8 sm:grid-cols-2 max-w-3xl mx-auto">
           {/* Tool: Planning Poker */}
           <button
             onClick={handleCreatePokerRoom}
             disabled={!nickname.trim()}
-            className="group relative flex flex-col items-center gap-4 rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-tertiary)] p-6 transition-all hover:border-[var(--accent)] hover:bg-[var(--bg-secondary)] hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+            className="group relative flex flex-col items-center gap-6 brutal-border bg-retro-blue p-8 transition-all brutal-shadow hover:translate-x-1 hover:translate-y-1 hover:shadow-sm disabled:opacity-50 disabled:grayscale disabled:cursor-not-allowed"
           >
-            <div className="rounded-full bg-[var(--bg-primary)] p-4 text-[var(--accent)] shadow-inner transition-transform group-hover:scale-110">
-              <Target className="w-8 h-8" />
+            <div className="bg-white p-5 brutal-border brutal-shadow group-hover:shadow-none group-hover:translate-x-1 group-hover:translate-y-1 transition-all">
+              <Target className="w-10 h-10" />
             </div>
             <div className="text-center">
-              <h3 className="text-xl font-bold text-[var(--text-primary)]">
+              <h3 className="text-2xl font-black uppercase leading-none mb-2">
                 Planning Poker
               </h3>
-              <p className="text-sm text-[var(--text-secondary)]">
+              <p className="text-sm font-bold uppercase opacity-80">
                 Real-time estimation
               </p>
             </div>
-            <div className="mt-2 w-full rounded-lg bg-[var(--accent)] py-3 text-sm font-black text-white transition-colors group-hover:bg-[var(--accent-hover)]">
-              🚀 Create Poker Room
+            <div className="w-full bg-black py-4 text-base font-black text-white uppercase group-hover:bg-retro-pink transition-colors">
+              🚀 Start Session
             </div>
           </button>
 
           {/* Tool: Daily Standup (Coming Soon) */}
-          <div className="group relative flex flex-col items-center gap-4 rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-tertiary)] p-6 opacity-60 grayscale transition-all">
-            <div className="absolute top-4 right-4 rounded-full bg-[var(--bg-primary)] px-2 py-1 text-[10px] font-black uppercase tracking-widest text-[var(--accent)] border border-[var(--border-subtle)]">
-              Coming Soon
+          <div className="group relative flex flex-col items-center gap-6 brutal-border bg-retro-pink p-8 opacity-40 grayscale">
+            <div className="absolute -top-4 -right-4 bg-black text-white px-3 py-1 text-xs font-black uppercase rotate-12 brutal-border">
+              Soon
             </div>
-            <div className="rounded-full bg-[var(--bg-primary)] p-4 text-[var(--text-tertiary)] shadow-inner">
-              <Users className="w-8 h-8" />
+            <div className="bg-white p-5 brutal-border">
+              <Users className="w-10 h-10" />
             </div>
             <div className="text-center">
-              <h3 className="text-xl font-bold text-[var(--text-primary)]">
+              <h3 className="text-2xl font-black uppercase leading-none mb-2">
                 Daily Standup
               </h3>
-              <p className="text-sm text-[var(--text-secondary)]">
-                Sync your ceremony
+              <p className="text-sm font-bold uppercase opacity-80">
+                Sync ceremonies
               </p>
             </div>
-            <div className="mt-2 w-full rounded-lg bg-[var(--bg-secondary)] py-3 text-sm font-black text-[var(--text-tertiary)] border border-[var(--border-subtle)]">
-              🔒 Unavailable
+            <div className="w-full bg-retro-tertiary py-4 text-base font-black text-black uppercase border-t-4 border-black">
+              Locked
             </div>
           </div>
         </div>
 
-        <div className="mt-12 border-t border-[var(--border-subtle)] pt-10">
-          <p className="text-xs text-[var(--text-tertiary)] mb-6 uppercase tracking-[0.2em] font-black">
+        <div className="mt-20 brutal-border border-x-0 border-b-0 pt-16">
+          <p className="text-sm font-black mb-8 uppercase tracking-widest">
             — Or Join Active Session —
           </p>
           <form
@@ -206,18 +221,18 @@ export function LandingPage() {
               e.preventDefault();
               handleJoinRoom();
             }}
-            className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
+            className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto"
           >
             <input
               type="text"
-              placeholder="Paste room link or slug..."
+              placeholder="PASTE LINK OR SLUG..."
               value={joinSlug}
               onChange={(e) => setJoinSlug(e.target.value)}
-              className="flex-grow rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-tertiary)] px-4 py-3 text-sm text-[var(--text-primary)] focus:outline-none transition-all"
+              className="flex-grow brutal-border bg-white px-4 py-4 text-sm font-bold uppercase focus:bg-retro-yellow focus:outline-none"
             />
             <button
               type="submit"
-              className="rounded-lg border border-[var(--border-subtle)] px-6 py-3 text-sm font-bold text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)] hover:text-[var(--text-primary)] transition-all"
+              className="brutal-border bg-black px-8 py-4 text-sm font-black text-white uppercase hover:bg-retro-pink transition-all brutal-shadow"
             >
               Join
             </button>
